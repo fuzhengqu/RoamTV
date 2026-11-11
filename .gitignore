@@ -72,6 +72,11 @@ Thumbs.db
 # All build tools (JDK 17, Gradle cache, SDK platform, AVD, keystore) live inside
 # the project so no file outside this repository is ever written.
 .tooling/
+
+# Local-only archive of the pre-TV phone UI. It is kept for reference while the
+# TV layer is being rebuilt and is never compiled or shipped. The same files
+# remain available in the repository history.
+V2rayNG/app/src/legacyPhone/
 /libs/
 scripts/__pycache__/
 *.keystore

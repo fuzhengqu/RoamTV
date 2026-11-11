@@ -4,8 +4,6 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
-import tv.roam.client.ui.compose.AppSnackbarManager
-import tv.roam.client.ui.compose.ToastType
 
 private val mainHandler by lazy { Handler(Looper.getMainLooper()) }
 
@@ -22,12 +20,8 @@ private fun Context.dispatchMessage(
     type: ToastType,
     long: Boolean = false
 ) {
-    val handledBySnackbar = AppSnackbarManager.show(
-        message = message,
-        type = type,
-        long = long
-    )
-    if (!handledBySnackbar) {
+    val handledByHost = ToastHostRegistry.host?.show(message, type, long) == true
+    if (!handledByHost) {
         val appContext = applicationContext
         val duration = if (long) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
         runOnMain {

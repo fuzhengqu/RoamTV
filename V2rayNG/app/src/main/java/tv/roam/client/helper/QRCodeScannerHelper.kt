@@ -5,13 +5,14 @@ import android.content.Intent
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import tv.roam.client.ui.ScannerActivity
 
 /**
- * Helper for scanning QR codes.
+ * Generic Activity-result helper for QR scanning.
  *
- * This class encapsulates the logic for launching the QR code scanner activity
- * and handling the scan result.
+ * The target Activity is supplied by the caller so this class has no dependency
+ * on any UI package. TV devices typically have no camera; callers should use
+ * the config-import channels (clipboard, pairing-code LAN push, document
+ * picker) instead of this helper.
  */
 class QRCodeScannerHelper(private val activity: ComponentActivity) {
     private var scanCallback: ((String?) -> Unit)? = null
@@ -27,13 +28,8 @@ class QRCodeScannerHelper(private val activity: ComponentActivity) {
             scanCallback = null
         }
 
-    /**
-     * Launch the QR code scanner activity.
-     *
-     * @param onResult Callback invoked with the scan result (null if cancelled or failed)
-     */
-    fun launch(onResult: (String?) -> Unit) {
+    fun launch(target: Class<out Activity>, onResult: (String?) -> Unit) {
         scanCallback = onResult
-        scanLauncher.launch(Intent(activity, ScannerActivity::class.java))
+        scanLauncher.launch(Intent(activity, target))
     }
 }

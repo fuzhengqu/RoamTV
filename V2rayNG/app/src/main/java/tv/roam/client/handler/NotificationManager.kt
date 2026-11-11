@@ -17,7 +17,6 @@ import tv.roam.client.dto.entities.ProfileItem
 import tv.roam.client.extension.delay
 import tv.roam.client.extension.toSpeedString
 import tv.roam.client.helper.NotificationHelper
-import tv.roam.client.ui.main.MainActivity
 import tv.roam.client.util.LogUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -69,8 +68,13 @@ object NotificationManager {
 
         val flags = PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
 
-        val startMainIntent = Intent(service, MainActivity::class.java)
-        val contentPendingIntent = PendingIntent.getActivity(service, NOTIFICATION_PENDING_INTENT_CONTENT, startMainIntent, flags)
+        // Resolve the launcher through PackageManager so this class has no
+        // dependency on any UI Activity name (the TV app is a single Activity).
+        val startMainIntent = service.packageManager
+            .getLaunchIntentForPackage(AppConfig.ANG_PACKAGE)
+        val contentPendingIntent = startMainIntent?.let {
+            PendingIntent.getActivity(service, NOTIFICATION_PENDING_INTENT_CONTENT, it, flags)
+        }
 
         val stopV2RayIntent = Intent(AppConfig.BROADCAST_ACTION_SERVICE)
         stopV2RayIntent.`package` = AppConfig.ANG_PACKAGE

@@ -9,7 +9,6 @@ import tv.roam.client.AppConfig.ANG_PACKAGE
 import tv.roam.client.handler.AppLocaleManager
 import tv.roam.client.handler.MmkvManager
 import tv.roam.client.handler.SettingsManager
-import tv.roam.client.ui.compose.ThemeManager
 
 class AngApplication : Application() {
     companion object {
@@ -45,7 +44,7 @@ class AngApplication : Application() {
         // Ensure critical preference defaults are present in MMKV early
         SettingsManager.initApp(this)
 
-        // Initialize theme state from MMKV
-        ThemeManager.refresh()
+        // RoamTV uses a single fixed deep-field TV theme; there is no
+        // runtime light/dark or dynamic-color state to restore.
     }
 }
