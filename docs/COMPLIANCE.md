@@ -10,7 +10,7 @@ RoamTV is derived from v2rayNG 2.3.15 (upstream `2dust/v2rayNG`, commit
 `57907cf354d9769200ed4717b4430d605abe0952`), licensed GPL-3.0. The full text
 is in `LICENSE` at the repository root and must remain verbatim. The
 modification declaration and date are in `NOTICE`. Third-party copyright and
-license texts are in `V2rayNG/app/src/main/assets/open_source_licenses.html`,
+license texts are in `android/app/src/main/assets/open_source_licenses.html`,
 `AndroidLibXrayLite/LICENSE` (LGPL-3.0) and `hev-socks5-tunnel/LICENSE`
 (MIT). None of these files may be removed from a source distribution.
 
@@ -19,9 +19,9 @@ license texts are in `V2rayNG/app/src/main/assets/open_source_licenses.html`,
 | Component | Version | Location |
 |---|---|---|
 | JDK | 17 (Temurin 17.0.21+9) | `.tooling/jdk17/` |
-| Gradle | 9.8.2 (wrapper) | `.tooling/gradle/`, `V2rayNG/gradle/wrapper/` |
-| Android Gradle Plugin | 9.5.1 | `V2rayNG/gradle/libs.versions.toml` |
-| Kotlin | 2.4.21 | `V2rayNG/gradle/libs.versions.toml` |
+| Gradle | 9.8.2 (wrapper) | `.tooling/gradle/`, `android/gradle/wrapper/` |
+| Android Gradle Plugin | 9.5.1 | `android/gradle/libs.versions.toml` |
+| Kotlin | 2.4.21 | `android/gradle/libs.versions.toml` |
 | Android SDK Platform | 37.2 (API 37, extension 24) | `.tooling/android-sdk/platforms/android-37.2/` |
 | Android Build Tools | 37.0.0 | `.tooling/android-sdk/build-tools/37.0.0/` |
 | Android NDK | 30.0.16248370 | external SDK, referenced read-only |
@@ -36,20 +36,19 @@ source scripts/env.sh
 
 ## 3. Native inputs (vendored)
 
-- `V2rayNG/app/libs/libv2ray.aar` — the Xray core AAR. Its source is the
+- `android/app/libs/libv2ray.aar` — the Xray core AAR. Its source is the
   `AndroidLibXrayLite` submodule (LGPL-3.0). The source revision must match
   the gitlink recorded by `git ls-tree HEAD AndroidLibXrayLite`.
-- `V2rayNG/app/libs/<abi>/libhev-socks5-tunnel.so` and
+- `android/app/libs/<abi>/libhev-socks5-tunnel.so` and
   `libhevsockstun.so` — built from the `hev-socks5-tunnel` submodule
   (MIT) with `compile-hevtun.sh` and NDK 30.0.16248370 for the four ABIs
   `armeabi-v7a`, `arm64-v8a`, `x86`, `x86_64`.
 
-These files are build inputs, not source. Their complete source is included
-in the submodules and in the release source archive.
-
-> Note: `.gitignore` must keep an explicit `!vendor/` / `!V2rayNG/app/libs/`
-> exception for vendored binaries so that `git archive` produces a complete
-> Corresponding Source. Verify with `git check-ignore -v` before tagging.
+These files are build inputs, not source. Their complete source is included in
+the submodules. Plain `git archive` does not copy submodule work trees, so the
+release source archive must be assembled from the main repository **and** each
+submodule (plus the vendored binaries used by the release) before the tag is
+published. This is a release-blocking check for M6.
 
 ## 4. Reproducing a release from source
 
@@ -60,8 +59,8 @@ cd RoamTV
 # .tooling/android-sdk/platforms/android-37.2 (see scripts/env.sh).
 source scripts/env.sh
 bash compile-hevtun.sh
-cp -r libs/. V2rayNG/app/libs/
-cd V2rayNG
+cp -r libs/. android/app/libs/
+cd android
 ./gradlew :app:assembleRelease
 ```
 

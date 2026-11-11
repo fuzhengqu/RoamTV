@@ -18,6 +18,14 @@ Download the latest release here / 在这里下载最新版本：
 
 ---
 
+## Remote controls / 遥控器操作
+
+- Directional pad: move focus. **OK**: select. **Back**: return one level.
+- **Menu** (or the on-screen More button): open actions for the focused item.
+- Play/Pause is reserved for quick connect/disconnect on the home screen.
+- 方向键移动焦点，**OK** 选择，**返回** 回上一级；**菜单键** 或页面上的“更多”
+  按钮打开当前项的操作。首页支持播放/暂停键快速连接或断开。
+
 ## Features / 功能
 
 - Connect / disconnect, server profiles and groups, subscriptions
@@ -44,17 +52,27 @@ Download the latest release here / 在这里下载最新版本：
 
 ## Development guide / 开发指南
 
-- The Android project is in the `V2rayNG/` Gradle directory. Open it in Android
+- The Android project is in the `android/` Gradle directory. Open it in Android
   Studio or use the Gradle wrapper.
-- All build tools (JDK 17, Gradle cache, SDK platform, AVD) live inside this
-  repository under `.tooling/`; no system-level environment variable is changed.
+- All build tools (a project-local JDK, Gradle cache, SDK platform, AVD) live
+  inside this repository under `.tooling/`; no system-level environment variable
+  is changed.
 - Full toolchain versions, native build steps and release reproduction are in
   [docs/COMPLIANCE.md](docs/COMPLIANCE.md).
-- Android 工程位于 `V2rayNG/` Gradle 目录，可用 Android Studio 或 Gradle wrapper 构建。
-- 全部构建工具（JDK 17、Gradle 缓存、SDK 平台、AVD）位于仓库内 `.tooling/`，
+- Android 工程位于 `android/` Gradle 目录，可用 Android Studio 或 Gradle wrapper 构建。
+- 全部构建工具（项目内 JDK、Gradle 缓存、SDK 平台、AVD）位于仓库内 `.tooling/`，
   不修改任何系统级环境变量。
 - 工具链版本、原生库构建步骤与发布复现方法见
   [docs/COMPLIANCE.md](docs/COMPLIANCE.md)。
+
+---
+
+## Privacy / 隐私
+
+RoamTV has no analytics, advertising, or telemetry. See [PRIVACY.md](PRIVACY.md)
+for what is stored on the device and which endpoints are contacted.
+RoamTV 不包含分析、广告或遥测；设备本地数据与网络端点说明见
+[PRIVACY.md](PRIVACY.md)。
 
 ---
 
