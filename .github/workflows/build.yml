@@ -92,6 +92,7 @@ jobs:
         ./gradlew :app:testPlaystoreDebugUnitTest :app:lintPlaystoreDebug :app:assemblePlaystoreDebug --console=plain
 
     - name: Decode Keystore
+      if: github.event_name == 'workflow_dispatch'
       uses: timheuer/base64-to-file@v2.0.0
       id: android_keystore
       with:
@@ -99,6 +100,7 @@ jobs:
         encodedString: ${{ secrets.APP_KEYSTORE_BASE64 }}
 
     - name: Build APK
+      if: github.event_name == 'workflow_dispatch'
       run: |
         cd ${{ github.workspace }}/android
         echo "sdk.dir=${ANDROID_HOME}" > local.properties
@@ -106,30 +108,37 @@ jobs:
         ./gradlew licenseFdroidReleaseReport
         ./gradlew assembleRelease -Pandroid.injected.signing.store.file=${{ steps.android_keystore.outputs.filePath }} -Pandroid.injected.signing.store.password=${{ secrets.APP_KEYSTORE_PASSWORD }} -Pandroid.injected.signing.key.alias=${{ secrets.APP_KEYSTORE_ALIAS }} -Pandroid.injected.signing.key.password=${{ secrets.APP_KEY_PASSWORD }}
     
+    - name: Upload debug APK
+      uses: actions/upload-artifact@v7
+      if: github.event_name != 'workflow_dispatch'
+      with:
+        name: debug-apk
+        path: ${{ github.workspace }}/android/app/build/outputs/apk/playstore/debug/*.apk
+
     - name: Upload arm64-v8a APK
       uses: actions/upload-artifact@v7
-      if: ${{  success() }}
+      if: github.event_name == 'workflow_dispatch'
       with:
         name: arm64-v8a
         path: ${{ github.workspace }}/android/app/build/outputs/apk/*/release/*arm64-v8a*.apk
 
     - name: Upload armeabi-v7a APK
       uses: actions/upload-artifact@v7
-      if: ${{  success() }}
+      if: github.event_name == 'workflow_dispatch'
       with:
         name: armeabi-v7a
         path: ${{ github.workspace }}/android/app/build/outputs/apk/*/release/*armeabi-v7a*.apk
 
     - name: Upload x86 APK
       uses: actions/upload-artifact@v7
-      if: ${{  success() }}
+      if: github.event_name == 'workflow_dispatch'
       with:
         name: x86-apk
         path: ${{ github.workspace }}/android/app/build/outputs/apk/*/release/*x86*.apk
 
     - name: Upload universal APK
       uses: actions/upload-artifact@v7
-      if: ${{ success() }}
+      if: github.event_name == 'workflow_dispatch'
       with:
         name: universal-apk
         path: ${{ github.workspace }}/android/app/build/outputs/apk/*/release/*universal*.apk
