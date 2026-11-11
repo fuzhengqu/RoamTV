@@ -7,7 +7,7 @@ means not implemented. Do not promote a row to Verified without the check.
 | Feature | TV destination | Status | Verification |
 |---|---|---|---|
 | Single-Activity TV shell, rail, overscan, theme | `ui/MainActivity`, `TvApp` | Verified (M0) | `assemblePlaystoreDebug`, lint, unit tests, API 37 TV-sized emulator launch, D-pad focus screenshot |
-| Typed back stack + Back behaviour | `ui/navigation/TvNavigator` | In progress (M0) | JVM navigation test still to add |
+| Typed back stack + Back behaviour | `ui/navigation/TvNavigator` | Verified (M0) | `TvNavigatorTest` JVM tests; emulator Back from Import returned Home |
 | Home server list, groups, selection | Home | Planned (M1) | — |
 | Connect / disconnect / restart, VPN consent | Home | Planned (M1) | — |
 | Latency / real-ping / test-all / cancel | Home | Planned (M1) | — |
