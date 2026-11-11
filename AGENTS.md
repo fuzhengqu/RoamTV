@@ -1,20 +1,20 @@
-# v2rayNG agent guide
+# RoamTV agent guide
 
 ## Scope and precedence
 
 This file applies to the entire repository. Read the applicable scoped guide before editing any
 listed path, including when the agent starts at the repository root:
 
-- Read `V2rayNG/app/src/main/java/com/v2ray/ang/service/AGENTS.md` for
-  `V2rayNG/app/src/main/java/com/v2ray/ang/service/`,
-  `V2rayNG/app/src/test/java/com/v2ray/ang/service/`, and these paths under
-  `V2rayNG/app/src/main/java/com/v2ray/ang/`: `core/CoreServiceManager.kt`,
+- Read `V2rayNG/app/src/main/java/tv/roam/client/service/AGENTS.md` for
+  `V2rayNG/app/src/main/java/tv/roam/client/service/`,
+  `V2rayNG/app/src/test/java/tv/roam/client/service/`, and these paths under
+  `V2rayNG/app/src/main/java/tv/roam/client/`: `core/CoreServiceManager.kt`,
   `core/LauncherManager.kt`, `root/`, `contracts/ServiceControl.kt`,
   `contracts/Tun2SocksControl.kt`, `handler/NotificationManager.kt`,
   `helper/MessageHelper.kt`, and `helper/NotificationHelper.kt`.
-- Read `V2rayNG/app/src/main/java/com/v2ray/ang/ui/AGENTS.md` for
-  `V2rayNG/app/src/main/java/com/v2ray/ang/ui/` and
-  `V2rayNG/app/src/test/java/com/v2ray/ang/ui/`.
+- Read `V2rayNG/app/src/main/java/tv/roam/client/ui/AGENTS.md` for
+  `V2rayNG/app/src/main/java/tv/roam/client/ui/` and
+  `V2rayNG/app/src/test/java/tv/roam/client/ui/`.
 
 Follow both guides in scoped paths. A scoped rule overrides a root rule only when they require
 incompatible actions; every other root rule remains active.
@@ -47,46 +47,16 @@ incompatible actions; every other root rule remains active.
   same branch; if that would change behavior outside scope, request approval first. Report any
   remaining violation that blocks required validation.
 
-## Agent-guide synchronization and PR boundary
+## Repository conventions
 
-- `AGENTS.md` files are the only rule source. `CLAUDE.md`, `GEMINI.md`, and
-  `.github/copilot-instructions.md` are routing shims and must only load or point to applicable
-  `AGENTS.md` files.
-- Feature, fix, and release branches use instruction files from fetched `upstream/master` as their
-  baseline. If `upstream` is absent, run
-  `git remote add upstream https://github.com/2dust/v2rayNG.git`; otherwise require
-  `git remote get-url upstream` to print exactly that URL. Successfully run
-  `git fetch upstream master` before comparison. An agent-instruction branch uses its HEAD and
-  working diff as the proposal.
-- At task start and after each upstream merge or rebase, synchronize canonical instructions into
-  the worktree without deleting local-only text. Compare them with:
-
-  ```sh
-  git diff upstream/master -- ':(glob)**/AGENTS.md' ':(glob)**/CLAUDE.md' ':(glob)**/GEMINI.md' .github/copilot-instructions.md
-  ```
-
-  After synchronization, every displayed difference must be inside a local-only block. If a branch
-  predates the files, keep copied versions untracked or unstaged; acquire tracked copies only by
-  merging or rebasing their upstream commit.
-- User-, machine-, worktree-, and temporary text is local-only. Put it in `AGENTS.md` between
-  visible lines `LOCAL INSTRUCTIONS - START` and `LOCAL INSTRUCTIONS - END`.
-  Unless the task targets agent instructions, treat every pre-existing instruction-file difference
-  as local-only.
-- Keep local-only text unstaged and uncommitted. Never use `git add .`, `git add -A`, or
-  `git commit -a` in that worktree. Stage task paths explicitly; never delete, restore, or overwrite
-  local instructions to clean the worktree.
-- Before each commit, push, or PR update outside agent-instruction scope, run both commands. Both
-  must print no paths; otherwise stop and remove the instruction change from the staged or branch
-  diff without altering its working copy.
-
-  ```sh
-  git diff --cached --name-only -- ':(glob)**/AGENTS.md' ':(glob)**/CLAUDE.md' ':(glob)**/GEMINI.md' .github/copilot-instructions.md
-  git diff --name-only upstream/master...HEAD -- ':(glob)**/AGENTS.md' ':(glob)**/CLAUDE.md' ':(glob)**/GEMINI.md' .github/copilot-instructions.md
-  ```
-
-- Commit instruction files only for a task explicitly limited to agent instructions. The branch
-  and PR may contain only `AGENTS.md` and necessary routing-shim changes; name agent instructions
-  in the PR title and state that exclusive scope in the body.
+- `AGENTS.md` is the single rule source. `CLAUDE.md`, `GEMINI.md` and
+  `.github/copilot-instructions.md` are routing shims that point to it.
+- Local-only notes belong between visible lines `LOCAL INSTRUCTIONS - START`
+  and `LOCAL INSTRUCTIONS - END`. Keep them unstaged and uncommitted.
+- Never use `git add .`, `git add -A`, or `git commit -a`. Stage task paths
+  explicitly and keep `git diff --check` clean before every commit.
+- This repository is an independent derivative; there is no `upstream`
+  remote and no instruction-file synchronization with any other project.
 
 ## Project boundaries
 

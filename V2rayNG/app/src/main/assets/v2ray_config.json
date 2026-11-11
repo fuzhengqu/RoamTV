@@ -42,7 +42,7 @@
       "tag": "proxy",
       "protocol": "vmess",
       "settings": {
-        "address": "v2ray.cool",
+        "address": "placeholder.invalid",
         "port": 10086
       },
       "streamSettings": {

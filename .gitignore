@@ -67,3 +67,17 @@ V2rayNG/app/google-services.json
 # Ignore OS-specific files
 Thumbs.db
 .DS_Store
+
+# ---- RoamTV: in-project toolchain & local verification artifacts ----
+# All build tools (JDK 17, Gradle cache, SDK platform, AVD, keystore) live inside
+# the project so no file outside this repository is ever written.
+.tooling/
+/libs/
+scripts/__pycache__/
+*.keystore
+*.pyc
+
+# Kotlin/Gradle incremental build state; never commit these.
+.kotlin/
+V2rayNG/.kotlin/
+**/.kotlin/

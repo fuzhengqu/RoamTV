@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">v2rayNG</string>
+    <string name="app_name" translatable="false">RoamTV</string>
     <string name="app_widget_name">開關</string>
     <string name="app_tile_name">開關</string>
     <string name="app_tile_first_use">首次使用此功能，請使用此應用程式新增伺服器</string>
@@ -14,7 +14,7 @@
     <string name="pull_down_to_refresh">請下拉重新整理！</string>
 
     <!-- Notifications -->
-    <string name="notification_channel_service">v2rayNG 服務</string>
+    <string name="notification_channel_service">RoamTV 服務</string>
     <string name="notification_channel_subscription_updates">訂閱更新</string>
     <string name="notification_channel_connection_checks">連線檢查</string>
     <string name="notification_action_stop_v2ray">停止</string>
@@ -137,7 +137,7 @@
     <string name="server_lab_pinned_ca256">憑證指紋 (SHA-256)</string>
     <string name="server_lab_browser_dialer">啟用 Browser Dialer</string>
     <string name="server_lab_browser_dialer_tip">僅支援 xhttp (packet-up) 和 ws 出站；與 TLS 相關的設定可能會被忽略或發生衝突</string>
-    <string name="toast_allow_insecure_deprecated">目前節點使用未加密連線，您的通訊可能會被威權政府掌控的網路中間設施直接查看\n為了安全，此類節點無法使用 26.2.6+ 版本的 Xray 核心連線\n如果是自建節點，請啟用 TLS 等安全加密，或固定憑證 pinnedCA256\n如果是服務供應商的節點，請聯絡供應商完成技術升級。若供應商拒絕配合，建議改用更重視使用者安全的供應商\n如需更多資訊，請造訪 https://github.com/2dust/v2rayN/discussions/9460</string>
+    <string name="toast_allow_insecure_deprecated">目前節點使用未加密連線，您的通訊可能會被威權政府掌控的網路中間設施直接查看\n為了安全，此類節點無法使用 26.2.6+ 版本的 Xray 核心連線\n如果是自建節點，請啟用 TLS 等安全加密，或固定憑證 pinnedCA256\n如果是服務供應商的節點，請聯絡供應商完成技術升級。若供應商拒絕配合，建議改用更重視使用者安全的供應商\n如需更多資訊，請造訪 https://github.com/fuzhengqu/RoamTV/discussions/9460</string>
     <string name="pinned_ca256_action_fetch">取得憑證指紋</string>
     <string name="toast_fetch_cert_sha256_success">已成功取得憑證指紋</string>
     <string name="toast_fetch_cert_sha256_failed">無法取得憑證指紋</string>

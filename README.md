@@ -1,90 +1,78 @@
-# v2rayNG
+# RoamTV
 
-A V2Ray client for Android, support [Xray core](https://github.com/XTLS/Xray-core) and [v2fly core](https://github.com/v2fly/v2ray-core)
+A remote-first network client built for Android TV. RoamTV is operated entirely
+with a TV remote: the interface is designed for D-pad navigation at a 10-foot
+viewing distance, with an overscan-safe layout and explicit focus states.
 
-[![API](https://img.shields.io/badge/API-24%2B-yellow.svg?style=flat)](https://developer.android.com/about/versions/lollipop)
-[![Kotlin Version](https://img.shields.io/badge/Kotlin-2.4.0-blue.svg)](https://kotlinlang.org)
-[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/2dust/v2rayNG)](https://github.com/2dust/v2rayNG/commits/master)
-[![CodeFactor](https://www.codefactor.io/repository/github/2dust/v2rayng/badge)](https://www.codefactor.io/repository/github/2dust/v2rayng)
-[![GitHub Releases](https://img.shields.io/github/downloads/2dust/v2rayNG/latest/total?logo=github)](https://github.com/2dust/v2rayNG/releases)
-[![Chat on Telegram](https://img.shields.io/badge/Chat%20on-Telegram-brightgreen.svg)](https://t.me/v2rayn)
+[![API](https://img.shields.io/badge/API-26%2B-yellow.svg?style=flat)](https://developer.android.com/about/versions/oreo)
+[![Kotlin Version](https://img.shields.io/badge/Kotlin-2.4.21-blue.svg)](https://kotlinlang.org)
+[![GitHub Releases](https://img.shields.io/github/downloads/fuzhengqu/RoamTV/latest/total?logo=github)](https://github.com/fuzhengqu/RoamTV/releases)
 
 ---
 
 ## Download / 下载
 
-Download the latest release here:
+Download the latest release here / 在这里下载最新版本：
 
-在这里下载最新版本：
-
-[https://github.com/2dust/v2rayNG/releases](https://github.com/2dust/v2rayNG/releases)
-
-> [!TIP]
-> v2rayNG is the mobile version. For the desktop version, please visit the v2rayN \
-> v2rayNG 是手机版，电脑版请访问 v2rayN
->
-> https://github.com/2dust/v2rayN
+<https://github.com/fuzhengqu/RoamTV/releases>
 
 ---
 
-### Geoip and Geosite
+## Features / 功能
 
-- geoip.dat and geosite.dat files are in `Android/data/com.v2ray.ang/files/assets` (path may differ on some Android device)
-- download feature will get enhanced version in this [repo](https://github.com/Loyalsoldier/v2ray-rules-dat) (note: it needs a working proxy)
-- latest official [domain list](https://github.com/Loyalsoldier/v2ray-rules-dat) and [ip list](https://github.com/Loyalsoldier/geoip) can be imported manually
-- possible to use a third-party dat file in the same folder, like [h2y](https://guide.v2fly.org/routing/sitedata.html#%E5%A4%96%E7%BD%AE%E7%9A%84%E5%9F%9F%E5%90%8D%E6%96%87%E4%BB%B6)
+- Connect / disconnect, server profiles and groups, subscriptions
+- Routing rules, DNS, per-app proxy, user assets
+- Connection testing, logs, configuration backup and restore
+- Settings, update check, open-source licenses
+- Config import without a camera: clipboard, a pairing-code LAN push from a
+  phone, document picker, and a step-by-step wizard
+- 连接/断开、节点与分组、订阅；路由、DNS、分应用代理、资源文件
+- 测速、日志、配置备份与恢复；设置、更新检查、开源许可
+- 无需摄像头的配置导入：剪贴板、手机扫码后经配对码局域网推送、
+  文件选择器、分步向导
 
-More in our [wiki](https://github.com/2dust/v2rayNG/wiki)
+## Geoip and Geosite / Geoip 与 Geosite
 
-### Geoip 与 Geosite
-
-- geoip.dat 和 geosite.dat 文件位于 `Android/data/com.v2ray.ang/files/assets`（部分设备路径可能不同）
-- 下载功能将获取该 [仓库](https://github.com/Loyalsoldier/v2ray-rules-dat) 中的增强版本（注意：此功能需要一个可用的代理）
-- 最新官方 [域名列表](https://github.com/Loyalsoldier/v2ray-rules-dat) 和 [IP 列表](https://github.com/Loyalsoldier/geoip) 可手动导入
-- 也可在同一文件夹中使用第三方 dat 文件，例如 [h2y](https://guide.v2fly.org/routing/sitedata.html#%E5%A4%96%E7%BD%AE%E7%9A%84%E5%9F%9F%E5%90%8D%E6%96%87%E4%BB%B6)
-
-更多内容请见我们的 [wiki](https://github.com/2dust/v2rayNG/wiki)
+- `geoip.dat` and `geosite.dat` are stored under
+  `Android/data/tv.roam.client/files/assets` (the path may differ on some devices).
+- Rule data can be imported manually; third-party rule files are supported.
+- `geoip.dat` 和 `geosite.dat` 位于
+  `Android/data/tv.roam.client/files/assets`（部分设备路径可能不同）。
+- 规则数据可手动导入，亦支持第三方规则文件。
 
 ---
 
 ## Development guide / 开发指南
 
-### Note
-
-- Android project under the V2rayNG folder can be compiled directly in Android Studio, or using the Gradle wrapper. But the v2ray core inside the aar is (probably) outdated.
-- The aar can be compiled from the Golang project [AndroidLibV2rayLite](https://github.com/2dust/AndroidLibV2rayLite) or [AndroidLibXrayLite](https://github.com/2dust/AndroidLibXrayLite). For a quick start, read the guides for [Go Mobile](https://github.com/golang/go/wiki/Mobile) and [Makefiles for Go Developers](https://tutorialedge.net/golang/makefiles-for-go-developers/).
-- v2rayNG can run on Android Emulators. For WSA, VPN permission needs to be granted via `appops set [package name] ACTIVATE_VPN allow`.
-
-### 提示
-
-- V2rayNG 文件夹下的 Android 项目可直接在 Android Studio 中编译，或使用 Gradle wrapper 编译。但 aar 内置的 v2ray core（可能）已过时。
-- aar 可由 Golang 项目 [AndroidLibV2rayLite](https://github.com/2dust/AndroidLibV2rayLite) 或 [AndroidLibXrayLite](https://github.com/2dust/AndroidLibXrayLite) 编译而成。快速入门可参考 [Go Mobile](https://github.com/golang/go/wiki/Mobile) 指南和 [Makefiles for Go Developers](https://tutorialedge.net/golang/makefiles-for-go-developers/)。
-- v2rayNG 可在 Android 模拟器上运行。对于 WSA，需要通过 `appops set [package name] ACTIVATE_VPN allow` 授予 VPN 权限。
-
----
-
-
-## GPG Verification / GPG 签名校验
-
-Release files are signed with GPG to verify authenticity and integrity, helping prevent mirror, ISP, or CDN hijacking.
-
-发布文件已使用 GPG 签名，可用于校验文件真实性与完整性，预防镜像站、运营商或 CDN 劫持。
-
-### Fingerprint / 公钥指纹
-
-```text
-7694 5E9F 3E9A 168F 8070 F195 805D 661C
-134D FAF6 8903 C199 463C 31E5 AE90 3AE0
-```
+- The Android project is in the `V2rayNG/` Gradle directory. Open it in Android
+  Studio or use the Gradle wrapper.
+- All build tools (JDK 17, Gradle cache, SDK platform, AVD) live inside this
+  repository under `.tooling/`; no system-level environment variable is changed.
+- Full toolchain versions, native build steps and release reproduction are in
+  [docs/COMPLIANCE.md](docs/COMPLIANCE.md).
+- Android 工程位于 `V2rayNG/` Gradle 目录，可用 Android Studio 或 Gradle wrapper 构建。
+- 全部构建工具（JDK 17、Gradle 缓存、SDK 平台、AVD）位于仓库内 `.tooling/`，
+  不修改任何系统级环境变量。
+- 工具链版本、原生库构建步骤与发布复现方法见
+  [docs/COMPLIANCE.md](docs/COMPLIANCE.md)。
 
 ---
 
-## Community / 社区
+## License / 许可证
 
-Telegram Group / Telegram 群组：
+RoamTV is free software licensed under the **GNU General Public License,
+version 3**. See [LICENSE](LICENSE), [NOTICE](NOTICE) and
+[docs/COMPLIANCE.md](docs/COMPLIANCE.md) for the modification notice, the
+upstream attribution, third-party license texts and the Corresponding Source
+offer.
 
-[https://t.me/v2rayN](https://t.me/v2rayN)
+RoamTV 是依据 **GNU 通用公共许可证第 3 版** 授权的自由软件。修改声明、
+上游来源标注、第三方许可文本与对应源码提供方式见
+[LICENSE](LICENSE)、[NOTICE](NOTICE) 与 [docs/COMPLIANCE.md](docs/COMPLIANCE.md)。
 
-Telegram Channel / Telegram 频道：
+There is no warranty. This project is an independent derivative; see `NOTICE`
+for its provenance. The upstream authors are not affiliated with and do not
+endorse these modifications.
 
-[https://t.me/github_2dust](https://t.me/github_2dust)
+本项目不提供担保，且为独立衍生作品；来源关系见 `NOTICE`。
+上游作者与本修改无关，亦未为本修改背书。

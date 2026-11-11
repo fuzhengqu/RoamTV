@@ -6,15 +6,15 @@ plugins {
 }
 
 android {
-    namespace = "com.v2ray.ang"
+    namespace = "tv.roam.client"
     compileSdk = 37
 
     defaultConfig {
-        applicationId = "com.v2ray.ang"
-        minSdk = 24
+        applicationId = "tv.roam.client"
+        minSdk = 26
         targetSdk = 37
-        versionCode = 755
-        versionName = "2.3.15"
+        versionCode = 1
+        versionName = "1.0.0"
 
         val abiFilterList = (properties["ABI_FILTERS"] as? String)?.split(';')
         splits {
@@ -92,7 +92,7 @@ android {
                 .map { it as com.android.build.gradle.internal.api.ApkVariantOutputImpl }
                 .forEach { output ->
                     val abi = output.getFilter("ABI") ?: "universal"
-                    output.outputFileName = "v2rayNG_${variant.versionName}-fdroid_${abi}.apk"
+                    output.outputFileName = "RoamTV_${variant.versionName}-fdroid_${abi}.apk"
                     if (versionCodes.containsKey(abi)) {
                         output.versionCodeOverride =
                             (100 * variant.versionCode + versionCodes[abi]!!).plus(5000000)
@@ -112,7 +112,7 @@ android {
                     else
                         "universal"
 
-                    output.outputFileName = "v2rayNG_${variant.versionName}_${abi}.apk"
+                    output.outputFileName = "RoamTV_${variant.versionName}_${abi}.apk"
                     if (versionCodes.containsKey(abi)) {
                         output.versionCodeOverride =
                             (1000000 * versionCodes[abi]!!).plus(variant.versionCode)
@@ -182,6 +182,12 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.lifecycle.runtime.compose)
     implementation(libs.coil.compose)
+
+    // Compose for TV (official recommendation; Leanback is deprecated).
+    // Added in stage 2 for BOM compatibility validation; consumed by the TV UI
+    // layer from stage 4 onward. tv-material does not pull in compose.material3.
+    implementation(libs.androidx.tv.material)
+    implementation(libs.androidx.tv.foundation)
 
     debugImplementation(libs.androidx.compose.ui.tooling)
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">v2rayNG</string>
+    <string name="app_name" translatable="false">RoamTV</string>
     <string name="app_widget_name">آلشت</string>
     <string name="app_tile_name">آلشت</string>
     <string name="app_tile_first_use">سی کرت ٱولی و کار بوردن ای ویژیی، ٱول ز من برنومه ی سرور ازاف کۊنین</string>
@@ -14,7 +14,7 @@
     <string name="pull_down_to_refresh">سی وانۊ کردن، بلگه ن بلم بکشین!</string>
 
     <!-- Notifications -->
-    <string name="notification_channel_service">سرویس v2rayNG</string>
+    <string name="notification_channel_service">سرویس RoamTV</string>
     <string name="notification_channel_subscription_updates">ورۊ کردن اشتراکا</string>
     <string name="notification_channel_connection_checks">واجۊری منپیز</string>
     <string name="notification_action_stop_v2ray">واڌاشتن</string>
@@ -137,7 +137,7 @@
     <string name="server_lab_pinned_ca256">جا کلک گوواهی (SHA-256)</string>
     <string name="server_lab_browser_dialer">Browser Dialer ره وندن</string>
     <string name="server_lab_browser_dialer_tip">تینا خۊرۊجیا xhttp (packet-up) وو ws لادراری ابۊن؛ سامووا وابسته و TLS گاشڌ نیڌه گرؽڌه بۊن یا تداخول داشته بۊ</string>
-    <string name="toast_allow_insecure_deprecated">گره هیم سکویی منپیز رزم نگاری نوابیڌه ن و کار اگره. زؽرساختا منجا شبکه ک من کونتورول هۊکۊمتا اقتدارگرا هڌن گاشڌ ارتباتا ایسا ن موستقیمن بنیرن.\nسی دلیلا ٱمنیتی، منپیز و ای گره هایی ک وا هسته Xray نوسخه 26.2.6 وو روء تر امکووݩ پزیر نؽڌ.\nٱر گره ن خوتووݩ ره وندین، رزم نگاری ٱمنی جۊر TLS ن ره ونین یا جا کلک گوواهی pinnedCA256 ن پین کۊنین.\nٱر گره ز ارائه کون خدمات هڌ، سی ارتقای فنی بسووݩ زنگ بزݩ. ٱر ارائه کون واتووݩ هیاری نکرد، پؽشنهاڌ ابۊ و ارائه کونی ریوین ک سی ٱمنیت منتورووݩ ٱهمیت قلوه ای اده.\nسی دووسمندیا قلوه و https://github.com/2dust/v2rayN/discussions/9460 سر بزنین.</string>
+    <string name="toast_allow_insecure_deprecated">گره هیم سکویی منپیز رزم نگاری نوابیڌه ن و کار اگره. زؽرساختا منجا شبکه ک من کونتورول هۊکۊمتا اقتدارگرا هڌن گاشڌ ارتباتا ایسا ن موستقیمن بنیرن.\nسی دلیلا ٱمنیتی، منپیز و ای گره هایی ک وا هسته Xray نوسخه 26.2.6 وو روء تر امکووݩ پزیر نؽڌ.\nٱر گره ن خوتووݩ ره وندین، رزم نگاری ٱمنی جۊر TLS ن ره ونین یا جا کلک گوواهی pinnedCA256 ن پین کۊنین.\nٱر گره ز ارائه کون خدمات هڌ، سی ارتقای فنی بسووݩ زنگ بزݩ. ٱر ارائه کون واتووݩ هیاری نکرد، پؽشنهاڌ ابۊ و ارائه کونی ریوین ک سی ٱمنیت منتورووݩ ٱهمیت قلوه ای اده.\nسی دووسمندیا قلوه و https://github.com/fuzhengqu/RoamTV/discussions/9460 سر بزنین.</string>
     <string name="pinned_ca256_action_fetch">گرؽڌن وو پور کردن جا کلک گوواهی</string>
     <string name="toast_fetch_cert_sha256_success">جا کلک گوواهی وا مووفقیت گرؽڌه وابی</string>
     <string name="toast_fetch_cert_sha256_failed">گرؽڌن جا کلک گوواهی مووفق نبی</string>
