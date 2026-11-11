@@ -595,4 +595,25 @@
     <string name="tv_key_back_action">Назад</string>
     <string name="tv_placeholder_title">Появится на следующем этапе</string>
     <string name="tv_placeholder_body">Этот экран перестраивается с навигацией для пульта, чёткими состояниями фокуса и полным набором функций.</string>
+
+    <!-- Television home -->
+    <string name="tv_status_connected">Подключено</string>
+    <string name="tv_status_loading">Загрузка…</string>
+    <string name="tv_action_connect">Подключить</string>
+    <string name="tv_action_disconnect">Отключить</string>
+    <string name="tv_action_test">Тест</string>
+    <string name="tv_home_empty_title">Серверов пока нет</string>
+    <string name="tv_home_empty_body">Импортируйте подписку или конфигурацию, чтобы начать.</string>
+    <string name="tv_home_select_server">Выберите сервер, чтобы увидеть подробности.</string>
+    <string name="tv_home_test_requires_connection">Сначала подключитесь, чтобы выполнить реальный тест задержки.</string>
+    <string name="tv_home_untested">Не проверено</string>
+    <string name="tv_home_ungrouped">Без группы</string>
+    <string name="tv_home_server_count">Серверов: %1$d</string>
+    <string name="tv_home_protocol">Протокол</string>
+    <string name="tv_home_latency">Задержка</string>
+    <string name="tv_home_search_hint">Поиск серверов</string>
+    <string name="tv_home_search_empty">Нет подходящих серверов</string>
+    <string name="tv_confirm_bulk_message">Это удалит подходящие серверы из этой группы. Продолжить?</string>
+    <string name="tv_home_server_count_one">1 сервер</string>
+    <string name="tv_status_test_failed">Тест не удался</string>
 </resources>

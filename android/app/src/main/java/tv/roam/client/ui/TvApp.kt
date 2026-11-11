@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import tv.roam.client.R
+import tv.roam.client.feature.main.MainViewModel
 import tv.roam.client.ui.components.TvDialog
 import tv.roam.client.ui.components.TvOverscan
 import tv.roam.client.ui.components.TvRailItem
@@ -40,7 +41,13 @@ import tv.roam.client.ui.screens.PlaceholderScreen
 import tv.roam.client.ui.theme.TvColors
 
 @Composable
-fun TvApp(navigator: TvNavigator = rememberTvNavigator()) {
+fun TvApp(
+    mainViewModel: MainViewModel,
+    onStartService: () -> Unit,
+    onStopService: () -> Unit,
+    onRestartService: () -> Unit,
+    navigator: TvNavigator = rememberTvNavigator(),
+) {
     val context = LocalContext.current
     val activity = remember(context) { context.findActivity() }
     var showMore by remember { mutableStateOf(false) }
@@ -55,8 +62,11 @@ fun TvApp(navigator: TvNavigator = rememberTvNavigator()) {
     val screen: @Composable () -> Unit = {
         when (val route = current) {
             TvRoute.Home -> HomeScreen(
+                mainViewModel = mainViewModel,
+                onStartService = onStartService,
+                onStopService = onStopService,
+                onRestartService = onRestartService,
                 onImport = { navigator.push(TvRoute.Import) },
-                onOpenSettings = { navigator.openRoot(TvRoute.Settings) },
             )
 
             else -> PlaceholderScreen(

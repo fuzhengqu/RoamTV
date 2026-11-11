@@ -8,12 +8,12 @@ means not implemented. Do not promote a row to Verified without the check.
 |---|---|---|---|
 | Single-Activity TV shell, rail, overscan, theme | `ui/MainActivity`, `TvApp` | Verified (M0) | `assemblePlaystoreDebug`, lint, unit tests, API 37 TV-sized emulator launch, D-pad focus screenshot |
 | Typed back stack + Back behaviour | `ui/navigation/TvNavigator` | Verified (M0) | `TvNavigatorTest` JVM tests; emulator Back from Import returned Home |
-| Home server list, groups, selection | Home | Planned (M1) | — |
-| Connect / disconnect / restart, VPN consent | Home | Planned (M1) | — |
-| Latency / real-ping / test-all / cancel | Home | Planned (M1) | — |
-| Search, delete, sort, group management | Home | Planned (M1) | — |
+| Home server list, groups, selection | Home | Verified (M1) | API 37 TV-sized AVD: server list, selected row, detail pane, D-pad focus; 720p fallback |
+| Connect / disconnect / restart, VPN consent | Home | Verified (M1, VPN mode) | Local SOCKS profile reached Connected, tun0 present, Disconnect visible; proxy-only/root modes not run |
+| Latency / real-ping / test-all / cancel | Home | In progress (M1) | Single real-ping exercised; environment could not reach the default test URL. Test-all/cancel not run |
+| Search, delete, sort, group management | Home | In progress (M1) | Search and More dialogs open with D-pad; delete/sort/group flows not yet exercised end-to-end |
 | Import from phone (pairing) | Import | Planned (M2) | — |
-| Import from clipboard / file / manual | Import | Planned (M2) | — |
+| Import from clipboard / file / manual | Import | In progress (M1) | `ACTION_SEND` and `roamtv://` text import seed the profile store; the Import screen is still a placeholder |
 | Share QR, export configuration | Home / Share | Planned (M2) | — |
 | Server editor: VMess, VLESS, SS, SOCKS, HTTP, Trojan, WireGuard, Hysteria2, custom | Server editor | Planned (M3) | — |
 | Policy groups and proxy chains | Group / chain editor | Planned (M3) | — |

@@ -589,4 +589,25 @@
     <string name="tv_key_back_action">Quay lại</string>
     <string name="tv_placeholder_title">Sẽ có trong cột mốc tiếp theo</string>
     <string name="tv_placeholder_body">Màn hình TV này đang được xây dựng lại với điều hướng ưu tiên điều khiển từ xa, trạng thái focus rõ ràng và đầy đủ tính năng.</string>
+
+    <!-- Television home -->
+    <string name="tv_status_connected">Đã kết nối</string>
+    <string name="tv_status_loading">Đang tải…</string>
+    <string name="tv_action_connect">Kết nối</string>
+    <string name="tv_action_disconnect">Ngắt kết nối</string>
+    <string name="tv_action_test">Kiểm tra</string>
+    <string name="tv_home_empty_title">Chưa có máy chủ</string>
+    <string name="tv_home_empty_body">Nhập đăng ký hoặc cấu hình để bắt đầu.</string>
+    <string name="tv_home_select_server">Chọn một máy chủ để xem chi tiết.</string>
+    <string name="tv_home_test_requires_connection">Hãy kết nối trước để chạy kiểm tra độ trễ thực.</string>
+    <string name="tv_home_untested">Chưa kiểm tra</string>
+    <string name="tv_home_ungrouped">Không nhóm</string>
+    <string name="tv_home_server_count">%1$d máy chủ</string>
+    <string name="tv_home_protocol">Giao thức</string>
+    <string name="tv_home_latency">Độ trễ</string>
+    <string name="tv_home_search_hint">Tìm máy chủ</string>
+    <string name="tv_home_search_empty">Không có máy chủ phù hợp</string>
+    <string name="tv_confirm_bulk_message">Thao tác này sẽ xóa các máy chủ phù hợp khỏi nhóm này. Tiếp tục?</string>
+    <string name="tv_home_server_count_one">1 máy chủ</string>
+    <string name="tv_status_test_failed">Kiểm tra thất bại</string>
 </resources>

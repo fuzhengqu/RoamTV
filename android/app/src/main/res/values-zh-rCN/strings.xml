@@ -589,4 +589,25 @@
     <string name="tv_key_back_action">返回上一级</string>
     <string name="tv_placeholder_title">下个里程碑即将推出</string>
     <string name="tv_placeholder_body">此电视页面正在使用遥控器优先的导航、清晰的焦点状态和完整功能集进行重构。</string>
+
+    <!-- Television home -->
+    <string name="tv_status_connected">已连接</string>
+    <string name="tv_status_loading">加载中…</string>
+    <string name="tv_action_connect">连接</string>
+    <string name="tv_action_disconnect">断开</string>
+    <string name="tv_action_test">测试</string>
+    <string name="tv_home_empty_title">还没有节点</string>
+    <string name="tv_home_empty_body">导入订阅或配置以开始使用。</string>
+    <string name="tv_home_select_server">选择一个节点以查看详情。</string>
+    <string name="tv_home_test_requires_connection">请先连接，再进行真实延迟测试。</string>
+    <string name="tv_home_untested">未测试</string>
+    <string name="tv_home_ungrouped">未分组</string>
+    <string name="tv_home_server_count">%1$d 个节点</string>
+    <string name="tv_home_protocol">协议</string>
+    <string name="tv_home_latency">延迟</string>
+    <string name="tv_home_search_hint">搜索节点</string>
+    <string name="tv_home_search_empty">没有匹配的节点</string>
+    <string name="tv_confirm_bulk_message">这将从当前分组移除匹配的节点。是否继续？</string>
+    <string name="tv_home_server_count_one">1 个节点</string>
+    <string name="tv_status_test_failed">测试失败</string>
 </resources>

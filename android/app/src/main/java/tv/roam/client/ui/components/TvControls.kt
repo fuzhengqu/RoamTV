@@ -26,6 +26,8 @@ import androidx.tv.material3.Button
 import androidx.tv.material3.ButtonDefaults
 import androidx.tv.material3.ClickableSurfaceDefaults
 import androidx.tv.material3.Icon
+import androidx.tv.material3.IconButton
+import androidx.tv.material3.IconButtonDefaults
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.OutlinedButton
 import androidx.tv.material3.OutlinedButtonDefaults
@@ -131,6 +133,34 @@ fun TvSecondaryButton(
         ),
     ) {
         Text(text = text, style = MaterialTheme.typography.titleSmall)
+    }
+}
+
+@Composable
+fun TvIconAction(
+    @DrawableRes iconRes: Int,
+    contentDescription: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    IconButton(
+        onClick = onClick,
+        modifier = modifier,
+        colors = IconButtonDefaults.colors(
+            containerColor = Color.Transparent,
+            contentColor = TvColors.Text,
+            focusedContainerColor = TvColors.Teal,
+            focusedContentColor = TvColors.Deep,
+            pressedContainerColor = TvColors.SurfaceFocused,
+            pressedContentColor = TvColors.Text,
+            disabledContainerColor = Color.Transparent,
+            disabledContentColor = TvColors.TextMuted,
+        ),
+    ) {
+        Icon(
+            painter = painterResource(iconRes),
+            contentDescription = contentDescription,
+        )
     }
 }
 

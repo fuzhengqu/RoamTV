@@ -599,4 +599,25 @@
     <string name="tv_key_back_action">رجوع</string>
     <string name="tv_placeholder_title">سيظهر في المرحلة التالية</string>
     <string name="tv_placeholder_body">تُعاد بناء شاشة التلفاز هذه مع تنقل مخصص لجهاز التحكم وحالات تركيز واضحة والمجموعة الكاملة من الميزات.</string>
+
+    <!-- Television home -->
+    <string name="tv_status_connected">متصل</string>
+    <string name="tv_status_loading">جارٍ التحميل…</string>
+    <string name="tv_action_connect">اتصال</string>
+    <string name="tv_action_disconnect">قطع الاتصال</string>
+    <string name="tv_action_test">اختبار</string>
+    <string name="tv_home_empty_title">لا توجد خوادم بعد</string>
+    <string name="tv_home_empty_body">استورد اشتراكًا أو إعدادًا للبدء.</string>
+    <string name="tv_home_select_server">اختر خادمًا لعرض التفاصيل.</string>
+    <string name="tv_home_test_requires_connection">اتصل أولاً لإجراء اختبار تأخير حقيقي.</string>
+    <string name="tv_home_untested">لم يتم الاختبار</string>
+    <string name="tv_home_ungrouped">بدون مجموعة</string>
+    <string name="tv_home_server_count">%1$d خوادم</string>
+    <string name="tv_home_protocol">البروتوكول</string>
+    <string name="tv_home_latency">التأخير</string>
+    <string name="tv_home_search_hint">البحث في الخوادم</string>
+    <string name="tv_home_search_empty">لا توجد خوادم مطابقة</string>
+    <string name="tv_confirm_bulk_message">سيؤدي هذا إلى إزالة الخوادم المطابقة من هذه المجموعة. هل تريد المتابعة؟</string>
+    <string name="tv_home_server_count_one">خادم واحد</string>
+    <string name="tv_status_test_failed">فشل الاختبار</string>
 </resources>

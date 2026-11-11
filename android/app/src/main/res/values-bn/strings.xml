@@ -591,4 +591,25 @@
     <string name="tv_key_back_action">ফিরুন</string>
     <string name="tv_placeholder_title">পরবর্তী মাইলফলকে</string>
     <string name="tv_placeholder_body">এই টিভি স্ক্রিনটি রিমোট-প্রথম নেভিগেশন, স্পষ্ট ফোকাস অবস্থা এবং সম্পূর্ণ বৈশিষ্ট্য সহ পুনর্নির্মাণ করা হচ্ছে।</string>
+
+    <!-- Television home -->
+    <string name="tv_status_connected">সংযুক্ত</string>
+    <string name="tv_status_loading">লোড হচ্ছে…</string>
+    <string name="tv_action_connect">সংযোগ</string>
+    <string name="tv_action_disconnect">সংযোগ বিচ্ছিন্ন</string>
+    <string name="tv_action_test">পরীক্ষা</string>
+    <string name="tv_home_empty_title">এখনও কোনো সার্ভার নেই</string>
+    <string name="tv_home_empty_body">শুরু করতে একটি সাবস্ক্রিপশন বা কনফিগারেশন আমদানি করুন।</string>
+    <string name="tv_home_select_server">বিস্তারিত দেখতে একটি সার্ভার বেছে নিন।</string>
+    <string name="tv_home_test_requires_connection">প্রকৃত বিলম্ব পরীক্ষার জন্য প্রথমে সংযোগ করুন।</string>
+    <string name="tv_home_untested">পরীক্ষা করা হয়নি</string>
+    <string name="tv_home_ungrouped">গ্রুপহীন</string>
+    <string name="tv_home_server_count">%1$d সার্ভার</string>
+    <string name="tv_home_protocol">প্রোটোকল</string>
+    <string name="tv_home_latency">বিলম্ব</string>
+    <string name="tv_home_search_hint">সার্ভার অনুসন্ধান</string>
+    <string name="tv_home_search_empty">কোনো মিল সার্ভার নেই</string>
+    <string name="tv_confirm_bulk_message">এটি এই গ্রুপ থেকে মিল সার্ভারগুলো মুছে ফেলবে। চালিয়ে যাবেন?</string>
+    <string name="tv_home_server_count_one">১টি সার্ভার</string>
+    <string name="tv_status_test_failed">পরীক্ষা ব্যর্থ</string>
 </resources>

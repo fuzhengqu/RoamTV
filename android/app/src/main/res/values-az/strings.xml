@@ -592,4 +592,25 @@
     <string name="tv_key_back_action">Geri</string>
     <string name="tv_placeholder_title">Növbəti mərhələdə</string>
     <string name="tv_placeholder_body">Bu TV ekranı pult üçün naviqasiya, aydın fokus vəziyyətləri və tam funksiyalar ilə yenidən qurulur.</string>
+
+    <!-- Television home -->
+    <string name="tv_status_connected">Bağlıdır</string>
+    <string name="tv_status_loading">Yüklənir…</string>
+    <string name="tv_action_connect">Qoşul</string>
+    <string name="tv_action_disconnect">Ayır</string>
+    <string name="tv_action_test">Test</string>
+    <string name="tv_home_empty_title">Hələ server yoxdur</string>
+    <string name="tv_home_empty_body">Başlamaq üçün abunə və ya konfiqurasiya idxal edin.</string>
+    <string name="tv_home_select_server">Təfərrüatları görmək üçün server seçin.</string>
+    <string name="tv_home_test_requires_connection">Real gecikmə testi üçün əvvəlcə qoşulun.</string>
+    <string name="tv_home_untested">Test edilməyib</string>
+    <string name="tv_home_ungrouped">Qrupsuz</string>
+    <string name="tv_home_server_count">%1$d server</string>
+    <string name="tv_home_protocol">Protokol</string>
+    <string name="tv_home_latency">Gecikmə</string>
+    <string name="tv_home_search_hint">Serverlərdə axtar</string>
+    <string name="tv_home_search_empty">Uyğun server yoxdur</string>
+    <string name="tv_confirm_bulk_message">Bu, uyğun serverləri bu qrupdan siləcək. Davam edilsin?</string>
+    <string name="tv_home_server_count_one">1 server</string>
+    <string name="tv_status_test_failed">Test uğursuz oldu</string>
 </resources>

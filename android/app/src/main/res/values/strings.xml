@@ -594,4 +594,25 @@
     <string name="tv_placeholder_title">Coming in the next milestone</string>
     <string name="tv_placeholder_body">This TV screen is being rebuilt with remote-first navigation, clear focus states and the same feature set as before.</string>
 
+    <!-- Television home -->
+    <string name="tv_status_connected">Connected</string>
+    <string name="tv_status_test_failed">Test failed</string>
+    <string name="tv_status_loading">Loading…</string>
+    <string name="tv_action_connect">Connect</string>
+    <string name="tv_action_disconnect">Disconnect</string>
+    <string name="tv_action_test">Test</string>
+    <string name="tv_home_empty_title">No servers yet</string>
+    <string name="tv_home_empty_body">Import a subscription or configuration to get started.</string>
+    <string name="tv_home_select_server">Select a server to see its details.</string>
+    <string name="tv_home_test_requires_connection">Connect first to run a real-ping test.</string>
+    <string name="tv_home_untested">Not tested</string>
+    <string name="tv_home_ungrouped">Ungrouped</string>
+    <string name="tv_home_server_count">%1$d servers</string>
+    <string name="tv_home_server_count_one">1 server</string>
+    <string name="tv_home_protocol">Protocol</string>
+    <string name="tv_home_latency">Latency</string>
+    <string name="tv_home_search_hint">Search servers</string>
+    <string name="tv_home_search_empty">No matching servers</string>
+    <string name="tv_confirm_bulk_message">This removes the matching servers from this group. Continue?</string>
+
 </resources>

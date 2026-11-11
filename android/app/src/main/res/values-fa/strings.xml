@@ -591,4 +591,25 @@
     <string name="tv_key_back_action">بازگشت</string>
     <string name="tv_placeholder_title">در مرحله بعدی</string>
     <string name="tv_placeholder_body">این صفحه تلویزیون با ناوبری مخصوص کنترل از راه دور، حالت‌های فوکوس واضح و مجموعه کامل امکانات بازسازی می‌شود.</string>
+
+    <!-- Television home -->
+    <string name="tv_status_connected">متصل</string>
+    <string name="tv_status_loading">در حال بارگذاری…</string>
+    <string name="tv_action_connect">اتصال</string>
+    <string name="tv_action_disconnect">قطع اتصال</string>
+    <string name="tv_action_test">آزمون</string>
+    <string name="tv_home_empty_title">هنوز سروری نیست</string>
+    <string name="tv_home_empty_body">برای شروع یک اشتراک یا پیکربندی وارد کنید.</string>
+    <string name="tv_home_select_server">برای دیدن جزئیات یک سرور انتخاب کنید.</string>
+    <string name="tv_home_test_requires_connection">برای اجرای آزمون تأخیر واقعی ابتدا متصل شوید.</string>
+    <string name="tv_home_untested">آزمایش نشده</string>
+    <string name="tv_home_ungrouped">بدون گروه</string>
+    <string name="tv_home_server_count">%1$d سرور</string>
+    <string name="tv_home_protocol">پروتکل</string>
+    <string name="tv_home_latency">تأخیر</string>
+    <string name="tv_home_search_hint">جستجوی سرورها</string>
+    <string name="tv_home_search_empty">سرور مطابقی نیست</string>
+    <string name="tv_confirm_bulk_message">این کار سرورهای مطابق را از این گروه حذف می‌کند. ادامه می‌دهید؟</string>
+    <string name="tv_home_server_count_one">1 سرور</string>
+    <string name="tv_status_test_failed">آزمون ناموفق</string>
 </resources>

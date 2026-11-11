@@ -1,13 +1,25 @@
 package tv.roam.client.ui
 
+import android.content.Intent
+import android.net.VpnService
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import tv.roam.client.AngApplication
+import tv.roam.client.R
+import tv.roam.client.core.LauncherManager
+import tv.roam.client.extension.toast
+import tv.roam.client.feature.main.MainAction
+import tv.roam.client.feature.main.MainRepository
+import tv.roam.client.feature.main.MainViewModel
+import tv.roam.client.handler.SettingsManager
 import tv.roam.client.ui.theme.RoamTvTheme
 
 /**
@@ -20,6 +32,16 @@ import tv.roam.client.ui.theme.RoamTvTheme
  */
 class MainActivity : ComponentActivity() {
 
+    private val mainViewModel: MainViewModel by viewModels {
+        MainViewModel.Factory(application, MainRepository(application as AngApplication))
+    }
+
+    private val vpnPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) startServiceNow()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -30,10 +52,89 @@ class MainActivity : ComponentActivity() {
             systemBarsBehavior =
                 WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
+
+        mainViewModel.onAction(MainAction.Initialize)
+        handleIntent(intent)
+
         setContent {
             RoamTvTheme {
-                TvApp()
+                TvApp(
+                    mainViewModel = mainViewModel,
+                    onStartService = ::requestServiceStart,
+                    onStopService = ::stopService,
+                    onRestartService = ::restartService,
+                )
             }
         }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        handleIntent(intent)
+    }
+
+    /**
+     * One Activity receives text shares and roamtv:// links. The import parser
+     * validates the payload; the intent is cleared so a configuration is not
+     * imported twice after a configuration change.
+     */
+    private fun handleIntent(intent: Intent?) {
+        if (intent == null) return
+        val text = when (intent.action) {
+            Intent.ACTION_SEND -> {
+                if (intent.type == "text/plain") intent.getStringExtra(Intent.EXTRA_TEXT) else null
+            }
+
+            Intent.ACTION_VIEW -> {
+                val data = intent.data
+                if (data?.scheme == "roamtv") {
+                    data.getQueryParameter("url") ?: data.getQueryParameter("config")
+                } else {
+                    null
+                }
+            }
+
+            else -> null
+        }
+        if (text.isNullOrBlank()) return
+        mainViewModel.onAction(MainAction.ImportBatchConfig(text))
+        intent.removeExtra(Intent.EXTRA_TEXT)
+        intent.data = null
+    }
+
+    /**
+     * Starts the configured service. VPN mode needs the system consent screen;
+     * proxy-only and root mode start directly, preserving the existing mode
+     * branches from the phone UI.
+     */
+    private fun requestServiceStart() {
+        val selectedGuid = mainViewModel.uiState.value.selectedGuid
+        if (selectedGuid.isNullOrEmpty()) {
+            toast(R.string.title_file_chooser)
+            return
+        }
+        if (!SettingsManager.isVpnMode()) {
+            startServiceNow()
+            return
+        }
+        val prepareIntent = VpnService.prepare(this)
+        if (prepareIntent == null) {
+            startServiceNow()
+        } else {
+            vpnPermissionLauncher.launch(prepareIntent)
+        }
+    }
+
+    private fun startServiceNow() {
+        LauncherManager.startService(this)
+    }
+
+    private fun stopService() {
+        LauncherManager.stopService(this)
+    }
+
+    private fun restartService() {
+        LauncherManager.restartServiceOrStart(this, ::requestServiceStart)
     }
 }
