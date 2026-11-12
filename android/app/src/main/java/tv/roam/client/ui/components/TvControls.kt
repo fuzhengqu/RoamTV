@@ -165,6 +165,63 @@ fun TvIconAction(
 }
 
 @Composable
+fun TvSettingsRow(
+    label: String,
+    value: String,
+    @DrawableRes iconRes: Int,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Surface(
+        onClick = onClick,
+        modifier = modifier
+            .fillMaxWidth()
+            .height(64.dp),
+        shape = ClickableSurfaceDefaults.shape(shape = RoundedCornerShape(14.dp)),
+        border = ClickableSurfaceDefaults.border(
+            focusedBorder = Border(
+                border = BorderStroke(3.dp, TvColors.Teal),
+                shape = RoundedCornerShape(14.dp),
+            )
+        ),
+        colors = ClickableSurfaceDefaults.colors(
+            containerColor = TvColors.Surface,
+            contentColor = TvColors.Text,
+            focusedContainerColor = TvColors.SurfaceFocused,
+            focusedContentColor = TvColors.Text,
+        ),
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(14.dp),
+        ) {
+            Icon(
+                painter = painterResource(iconRes),
+                contentDescription = null,
+                modifier = Modifier.size(24.dp),
+                tint = TvColors.Teal,
+            )
+            Text(
+                text = label,
+                style = MaterialTheme.typography.titleSmall,
+                color = TvColors.Text,
+                modifier = Modifier.weight(1f),
+            )
+            Text(
+                text = value,
+                style = MaterialTheme.typography.labelLarge,
+                color = TvColors.TextMuted,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
+    }
+}
+
+@Composable
 fun TvActionRow(
     modifier: Modifier = Modifier,
     content: @Composable RowScope.() -> Unit,

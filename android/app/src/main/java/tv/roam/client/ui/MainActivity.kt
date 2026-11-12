@@ -3,11 +3,11 @@ package tv.roam.client.ui
 import android.content.Intent
 import android.net.VpnService
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -19,6 +19,8 @@ import tv.roam.client.extension.toast
 import tv.roam.client.feature.main.MainAction
 import tv.roam.client.feature.main.MainRepository
 import tv.roam.client.feature.main.MainViewModel
+import tv.roam.client.feature.settings.SettingsViewModel
+import tv.roam.client.handler.AppLocaleManager
 import tv.roam.client.handler.SettingsManager
 import tv.roam.client.ui.theme.RoamTvTheme
 
@@ -30,11 +32,13 @@ import tv.roam.client.ui.theme.RoamTvTheme
  * remote-control back handling predictable, and lets notification/launcher/
  * deep-link intents resolve to the same place.
  */
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
 
     private val mainViewModel: MainViewModel by viewModels {
         MainViewModel.Factory(application, MainRepository(application as AngApplication))
     }
+
+    private val settingsViewModel: SettingsViewModel by viewModels()
 
     private val vpnPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -45,6 +49,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
+        // Complete the one-time AppCompat locale handoff after the activity
+        // context exists, matching the legacy locale migration contract.
+        AppLocaleManager.onActivityCreated(this)
         enableEdgeToEdge()
         WindowCompat.setDecorFitsSystemWindows(window, false)
         WindowInsetsControllerCompat(window, window.decorView).apply {
@@ -60,6 +67,7 @@ class MainActivity : ComponentActivity() {
             RoamTvTheme {
                 TvApp(
                     mainViewModel = mainViewModel,
+                    settingsViewModel = settingsViewModel,
                     onStartService = ::requestServiceStart,
                     onStopService = ::stopService,
                     onRestartService = ::restartService,

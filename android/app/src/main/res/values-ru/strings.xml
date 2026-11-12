@@ -616,4 +616,7 @@
     <string name="tv_confirm_bulk_message">Это удалит подходящие серверы из этой группы. Продолжить?</string>
     <string name="tv_home_server_count_one">1 сервер</string>
     <string name="tv_status_test_failed">Тест не удался</string>
+
+    <string name="language_follow_system">Как в системе</string>
+    <string name="tv_settings_language_summary">Используется для меню, диалогов и сообщений. Изменения применяются сразу.</string>
 </resources>

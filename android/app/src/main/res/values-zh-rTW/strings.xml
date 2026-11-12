@@ -610,4 +610,7 @@
     <string name="tv_confirm_bulk_message">這將從目前群組移除符合的節點。是否繼續？</string>
     <string name="tv_home_server_count_one">1 個節點</string>
     <string name="tv_status_test_failed">測試失敗</string>
+
+    <string name="language_follow_system">跟隨系統</string>
+    <string name="tv_settings_language_summary">用於選單、對話方塊和提示訊息。修改後立即生效。</string>
 </resources>

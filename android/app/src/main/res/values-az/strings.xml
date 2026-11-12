@@ -613,4 +613,7 @@
     <string name="tv_confirm_bulk_message">Bu, uyğun serverləri bu qrupdan siləcək. Davam edilsin?</string>
     <string name="tv_home_server_count_one">1 server</string>
     <string name="tv_status_test_failed">Test uğursuz oldu</string>
+
+    <string name="language_follow_system">Sistemlə eyni</string>
+    <string name="tv_settings_language_summary">Menyu, dialoqlar və mesajlar üçün istifadə olunur. Dəyişikliklər dərhal tətbiq olunur.</string>
 </resources>

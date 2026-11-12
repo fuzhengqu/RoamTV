@@ -614,5 +614,7 @@
     <string name="tv_home_search_hint">Search servers</string>
     <string name="tv_home_search_empty">No matching servers</string>
     <string name="tv_confirm_bulk_message">This removes the matching servers from this group. Continue?</string>
+    <string name="language_follow_system">Follow system</string>
+    <string name="tv_settings_language_summary">Used for menus, dialogs and messages. Changes apply immediately.</string>
 
 </resources>

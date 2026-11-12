@@ -612,4 +612,7 @@
     <string name="tv_confirm_bulk_message">این کار سرورهای مطابق را از این گروه حذف می‌کند. ادامه می‌دهید؟</string>
     <string name="tv_home_server_count_one">1 سرور</string>
     <string name="tv_status_test_failed">آزمون ناموفق</string>
+
+    <string name="language_follow_system">مطابق سیستم</string>
+    <string name="tv_settings_language_summary">برای منوها، گفتگوها و پیام‌ها استفاده می‌شود. تغییرات فوراً اعمال می‌شوند.</string>
 </resources>

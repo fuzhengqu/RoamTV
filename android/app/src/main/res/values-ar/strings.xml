@@ -620,4 +620,7 @@
     <string name="tv_confirm_bulk_message">سيؤدي هذا إلى إزالة الخوادم المطابقة من هذه المجموعة. هل تريد المتابعة؟</string>
     <string name="tv_home_server_count_one">خادم واحد</string>
     <string name="tv_status_test_failed">فشل الاختبار</string>
+
+    <string name="language_follow_system">حسب النظام</string>
+    <string name="tv_settings_language_summary">تُستخدم للقوائم ومربعات الحوار والرسائل. تُطبق التغييرات فورًا.</string>
 </resources>

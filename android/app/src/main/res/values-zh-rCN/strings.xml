@@ -610,4 +610,7 @@
     <string name="tv_confirm_bulk_message">这将从当前分组移除匹配的节点。是否继续？</string>
     <string name="tv_home_server_count_one">1 个节点</string>
     <string name="tv_status_test_failed">测试失败</string>
+
+    <string name="language_follow_system">跟随系统</string>
+    <string name="tv_settings_language_summary">用于菜单、对话框和提示信息。修改后立即生效。</string>
 </resources>

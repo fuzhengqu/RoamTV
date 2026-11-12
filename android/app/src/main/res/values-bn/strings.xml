@@ -612,4 +612,7 @@
     <string name="tv_confirm_bulk_message">এটি এই গ্রুপ থেকে মিল সার্ভারগুলো মুছে ফেলবে। চালিয়ে যাবেন?</string>
     <string name="tv_home_server_count_one">১টি সার্ভার</string>
     <string name="tv_status_test_failed">পরীক্ষা ব্যর্থ</string>
+
+    <string name="language_follow_system">সিস্টেম অনুযায়ী</string>
+    <string name="tv_settings_language_summary">মেনু, ডায়ালগ ও বার্তার জন্য ব্যবহৃত হয়। পরিবর্তন সাথে সাথে 적용됩니다.</string>
 </resources>

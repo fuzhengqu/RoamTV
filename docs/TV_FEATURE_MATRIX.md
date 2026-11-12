@@ -21,6 +21,7 @@ means not implemented. Do not promote a row to Verified without the check.
 | Routing rules and rule editor | Routing | Planned (M4) | — |
 | Per-app proxy and app picker | Per-app | Planned (M4) | — |
 | User assets (GeoIP/GeoSite/SRS/URLs) | Assets | Planned (M4) | — |
+| Language: follow system + 10 locales | Settings | Verified (M1) | API 37 AVD: English → 简体中文 → Follow system; Settings route and language-row focus restored after recreation |
 | Settings (VPN, core, Mux, Fragment, Observatory, advanced, mode) | Settings | Planned (M5) | — |
 | Local backup / restore and WebDAV | Backup | Planned (M5) | — |
 | Logcat, About / legal, update check | Logs / About / Update | Planned (M5) | — |

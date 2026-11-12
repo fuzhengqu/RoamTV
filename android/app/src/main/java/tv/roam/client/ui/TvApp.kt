@@ -25,6 +25,7 @@ import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import tv.roam.client.R
 import tv.roam.client.feature.main.MainViewModel
+import tv.roam.client.feature.settings.SettingsViewModel
 import tv.roam.client.ui.components.TvDialog
 import tv.roam.client.ui.components.TvOverscan
 import tv.roam.client.ui.components.TvRailItem
@@ -38,11 +39,13 @@ import tv.roam.client.ui.navigation.isTopLevel
 import tv.roam.client.ui.navigation.rememberTvNavigator
 import tv.roam.client.ui.screens.HomeScreen
 import tv.roam.client.ui.screens.PlaceholderScreen
+import tv.roam.client.ui.screens.SettingsScreen
 import tv.roam.client.ui.theme.TvColors
 
 @Composable
 fun TvApp(
     mainViewModel: MainViewModel,
+    settingsViewModel: SettingsViewModel,
     onStartService: () -> Unit,
     onStopService: () -> Unit,
     onRestartService: () -> Unit,
@@ -68,6 +71,8 @@ fun TvApp(
                 onRestartService = onRestartService,
                 onImport = { navigator.push(TvRoute.Import) },
             )
+
+            TvRoute.Settings -> SettingsScreen(viewModel = settingsViewModel)
 
             else -> PlaceholderScreen(
                 title = routeTitle(route),

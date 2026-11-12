@@ -610,4 +610,7 @@
     <string name="tv_confirm_bulk_message">Thao tác này sẽ xóa các máy chủ phù hợp khỏi nhóm này. Tiếp tục?</string>
     <string name="tv_home_server_count_one">1 máy chủ</string>
     <string name="tv_status_test_failed">Kiểm tra thất bại</string>
+
+    <string name="language_follow_system">Theo hệ thống</string>
+    <string name="tv_settings_language_summary">Dùng cho menu, hộp thoại và thông báo. Thay đổi có hiệu lực ngay.</string>
 </resources>
