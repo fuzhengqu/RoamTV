@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>RoamTV pairing</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; background: #0b0f14; color: #f2f5f7;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    display: flex; justify-content: center; padding: 24px;
+  }
+  main { width: min(560px, 100%); }
+  h1 { margin: 0 0 4px; font-size: 28px; }
+  .sub { color: #a9b4c0; margin: 0 0 20px; line-height: 1.45; }
+  .code {
+    display: flex; justify-content: space-between; align-items: center;
+    background: #131a22; border: 1px solid #2a3746; border-radius: 12px;
+    padding: 14px 16px; margin-bottom: 16px;
+  }
+  .code b { font-size: 26px; letter-spacing: 6px; color: #4fd1c5; }
+  textarea {
+    width: 100%; min-height: 180px; resize: vertical; padding: 14px;
+    border-radius: 12px; border: 1px solid #2a3746; background: #131a22;
+    color: #f2f5f7; font-size: 16px; line-height: 1.45;
+  }
+  button {
+    width: 100%; margin-top: 14px; padding: 16px; border: 0; border-radius: 12px;
+    background: #4fd1c5; color: #0b0f14; font-size: 18px; font-weight: 700;
+  }
+  button:disabled { opacity: .5; }
+  #status { min-height: 24px; margin-top: 14px; color: #a9b4c0; line-height: 1.4; }
+  .warn { margin-top: 18px; font-size: 13px; color: #a9b4c0; line-height: 1.45; }
+  .ok { color: #5be49b; }
+  .bad { color: #ff6b6b; }
+</style>
+</head>
+<body>
+<main>
+  <h1>RoamTV</h1>
+  <p class="sub">Paste a subscription URL or configuration from your phone, then send it to the TV.</p>
+  <div class="code"><span>Verification code</span><b id="code">------</b></div>
+  <textarea id="text" maxlength="60000" placeholder="vless://... or https://subscription.example/..."></textarea>
+  <button id="send">Send to TV</button>
+  <p id="status"></p>
+  <p class="warn">Only use this page on your home network. The payload is encrypted in this browser; the key is in the QR code and is never sent to the TV's HTTP server.</p>
+</main>
+<script src="/sjcl.js"></script>
+<script>
+(function () {
+  var statusEl = document.getElementById('status');
+  var codeEl = document.getElementById('code');
+  var textEl = document.getElementById('text');
+  var sendEl = document.getElementById('send');
+  var session = decodeURIComponent(location.pathname.split('/').filter(Boolean).pop() || '');
+  var code = new URLSearchParams(location.search).get('code') || '';
+  codeEl.textContent = code || '------';
+
+  function setStatus(message, good) {
+    statusEl.textContent = message;
+    statusEl.className = good ? 'ok' : 'bad';
+  }
+
+  function keyBits() {
+    var fragment = location.hash.slice(1);
+    if (!fragment) throw new Error('missing pairing key');
+    return sjcl.codec.base64url.toBits(fragment);
+  }
+
+  async function send() {
+    var text = textEl.value.trim();
+    if (!text) { setStatus('Enter a configuration or subscription URL first.', false); return; }
+    if (!session) { setStatus('Open this page by scanning the QR code on the TV.', false); return; }
+    sendEl.disabled = true;
+    setStatus('Encrypting and sending...', true);
+    try {
+      var iv = sjcl.random.randomWords(3, 0);
+      var cipher = new sjcl.cipher.aes(keyBits());
+      var encrypted = sjcl.mode.gcm.encrypt(
+        cipher,
+        sjcl.codec.utf8String.toBits(text),
+        iv,
+        [],
+        128
+      );
+      var payload = sjcl.codec.base64url.fromBits(iv) + '.' + sjcl.codec.base64url.fromBits(encrypted);
+      var response = await fetch('/api/upload', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/plain',
+          'X-Pairing-Session': session
+        },
+        body: payload
+      });
+      if (response.ok) {
+        setStatus('Sent. Check the TV to confirm the import.', true);
+        textEl.value = '';
+      } else {
+        setStatus('The TV rejected this request. Close and reopen the pairing screen, then try again.', false);
+      }
+    } catch (error) {
+      setStatus('Could not send: ' + (error && error.message ? error.message : 'unknown error'), false);
+    } finally {
+      sendEl.disabled = false;
+    }
+  }
+
+  sendEl.addEventListener('click', send);
+  textEl.addEventListener('keydown', function (event) {
+    if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') send();
+  });
+})();
+</script>
+</body>
+</html>

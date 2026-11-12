@@ -613,4 +613,24 @@
 
     <string name="language_follow_system">跟随系统</string>
     <string name="tv_settings_language_summary">用于菜单、对话框和提示信息。修改后立即生效。</string>
+
+    <!-- Television import and pairing -->
+    <string name="tv_share_qr_hint">用手机扫描此二维码即可导入节点。任何扫描该二维码的人都能使用该节点。</string>
+    <string name="tv_import_intro">从手机、本地文件或剪贴板导入。</string>
+    <string name="tv_import_from_phone">从手机导入</string>
+    <string name="tv_import_recommended">推荐</string>
+    <string name="tv_import_text_title">粘贴链接或配置</string>
+    <string name="tv_import_text_hint">粘贴订阅链接或配置内容。</string>
+    <string name="tv_import_empty">没有可导入的内容。</string>
+    <string name="tv_import_read_error">无法读取所选文件。</string>
+    <string name="tv_pairing_title">与手机配对</string>
+    <string name="tv_pairing_scan">用手机相机扫码导入。</string>
+    <string name="tv_pairing_code">验证码：%1$s</string>
+    <string name="tv_pairing_address">电视地址：%1$s</string>
+    <string name="tv_pairing_expires">%1$d 秒后过期</string>
+    <string name="tv_pairing_waiting">正在准备配对会话…</string>
+    <string name="tv_pairing_expired">配对会话已过期，请重新开始。</string>
+    <string name="tv_pairing_no_network">请先将电视连接到 Wi-Fi 或有线网络。</string>
+    <string name="tv_pairing_permission_denied">手机配对需要本地网络权限。</string>
+    <string name="tv_pairing_error">无法启动手机配对。</string>
 </resources>

@@ -19,6 +19,7 @@ import tv.roam.client.extension.toast
 import tv.roam.client.feature.main.MainAction
 import tv.roam.client.feature.main.MainRepository
 import tv.roam.client.feature.main.MainViewModel
+import tv.roam.client.feature.pairing.PairingViewModel
 import tv.roam.client.feature.settings.SettingsViewModel
 import tv.roam.client.handler.AppLocaleManager
 import tv.roam.client.handler.SettingsManager
@@ -39,6 +40,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val settingsViewModel: SettingsViewModel by viewModels()
+    private val pairingViewModel: PairingViewModel by viewModels()
 
     private val vpnPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -68,6 +70,7 @@ class MainActivity : AppCompatActivity() {
                 TvApp(
                     mainViewModel = mainViewModel,
                     settingsViewModel = settingsViewModel,
+                    pairingViewModel = pairingViewModel,
                     onStartService = ::requestServiceStart,
                     onStopService = ::stopService,
                     onRestartService = ::restartService,

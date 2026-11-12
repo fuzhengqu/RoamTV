@@ -12,9 +12,10 @@ means not implemented. Do not promote a row to Verified without the check.
 | Connect / disconnect / restart, VPN consent | Home | Verified (M1, VPN mode) | Local SOCKS profile reached Connected, tun0 present, Disconnect visible; proxy-only/root modes not run |
 | Latency / real-ping / test-all / cancel | Home | In progress (M1) | Single real-ping exercised; environment could not reach the default test URL. Test-all/cancel not run |
 | Search, delete, sort, group management | Home | In progress (M1) | Search and More dialogs open with D-pad; delete/sort/group flows not yet exercised end-to-end |
-| Import from phone (pairing) | Import | Planned (M2) | — |
-| Import from clipboard / file / manual | Import | In progress (M1) | `ACTION_SEND` and `roamtv://` text import seed the profile store; the Import screen is still a placeholder |
-| Share QR, export configuration | Home / Share | Planned (M2) | — |
+| Import from phone (pairing) | Import | In progress (M2) | QR, verification code, address, countdown, cancel and LAN server start verified on the API 37 AVD; real phone-browser round trip not run |
+| Import from clipboard / file / text | Import | In progress (M2) | Import hub and text dialog implemented; clipboard/file end-to-end not yet exercised |
+| Pairing crypto and HTTP protocol | Pairing | Verified (M2) | JVM tests: SJCL-to-Java AES-GCM vector, tamper rejection, page/JS GET, wrong-session 403, import callback |
+| Share QR | Home / More | Verified (M2, UI) | QR dialog opened from More with the selected server; scan from a phone not run |
 | Server editor: VMess, VLESS, SS, SOCKS, HTTP, Trojan, WireGuard, Hysteria2, custom | Server editor | Planned (M3) | — |
 | Policy groups and proxy chains | Group / chain editor | Planned (M3) | — |
 | Subscriptions and subscription editor | Subscriptions | Planned (M4) | — |

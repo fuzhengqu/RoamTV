@@ -11,8 +11,10 @@ RoamTV is derived from v2rayNG 2.3.15 (upstream `2dust/v2rayNG`, commit
 is in `LICENSE` at the repository root and must remain verbatim. The
 modification declaration and date are in `NOTICE`. Third-party copyright and
 license texts are in `android/app/src/main/assets/open_source_licenses.html`,
-`AndroidLibXrayLite/LICENSE` (LGPL-3.0) and `hev-socks5-tunnel/LICENSE`
-(MIT). None of these files may be removed from a source distribution.
+`AndroidLibXrayLite/LICENSE` (LGPL-3.0), `hev-socks5-tunnel/LICENSE` (MIT) and
+`android/app/src/main/assets/pairing/LICENSE-sjcl.txt` (BSD-2-Clause for the
+SJCL 1.0.9 pairing-page crypto). None of these files may be removed from a
+source distribution.
 
 ## 2. Toolchain (all inside this repository)
 

@@ -616,4 +616,24 @@
 
     <string name="language_follow_system">Sistemlə eyni</string>
     <string name="tv_settings_language_summary">Menyu, dialoqlar və mesajlar üçün istifadə olunur. Dəyişikliklər dərhal tətbiq olunur.</string>
+
+    <!-- Television import and pairing -->
+    <string name="tv_share_qr_hint">Bu kodu telefonla skan edərək serveri idxal edin. Kodu skan edən hər kəs serverdən istifadə edə bilər.</string>
+    <string name="tv_import_intro">Telefondan, yerli fayldan və ya clipboard-dan idxal edin.</string>
+    <string name="tv_import_from_phone">Telefondan</string>
+    <string name="tv_import_recommended">Tövsiyə olunur</string>
+    <string name="tv_import_text_title">Link və ya konfiqurasiya yapışdırın</string>
+    <string name="tv_import_text_hint">Abunə URL-i və ya konfiqurasiya mətnini yapışdırın.</string>
+    <string name="tv_import_empty">İdxal ediləcək heç nə yoxdur.</string>
+    <string name="tv_import_read_error">Seçilmiş faylı oxumaq mümkün olmadı.</string>
+    <string name="tv_pairing_title">Telefonla cütləşdirin</string>
+    <string name="tv_pairing_scan">Telefon kamerası ilə skan edin.</string>
+    <string name="tv_pairing_code">Kod: %1$s</string>
+    <string name="tv_pairing_address">TV ünvanı: %1$s</string>
+    <string name="tv_pairing_expires">%1$d saniyə sonra bitir</string>
+    <string name="tv_pairing_waiting">Cütləşmə sessiyası hazırlanır…</string>
+    <string name="tv_pairing_expired">Cütləşmə sessiyasının vaxtı bitdi. Yenidən başladın.</string>
+    <string name="tv_pairing_no_network">Əvvəlcə TV-ni Wi-Fi və ya Ethernet-ə qoşun.</string>
+    <string name="tv_pairing_permission_denied">Telefonla cütləşmə üçün yerli şəbəkə icazəsi tələb olunur.</string>
+    <string name="tv_pairing_error">Cütləşməni başlatmaq mümkün olmadı.</string>
 </resources>

@@ -613,4 +613,24 @@
 
     <string name="language_follow_system">Theo hệ thống</string>
     <string name="tv_settings_language_summary">Dùng cho menu, hộp thoại và thông báo. Thay đổi có hiệu lực ngay.</string>
+
+    <!-- Television import and pairing -->
+    <string name="tv_share_qr_hint">Quét mã này bằng điện thoại để nhập máy chủ. Bất kỳ ai quét mã đều có thể dùng máy chủ.</string>
+    <string name="tv_import_intro">Nhập từ điện thoại, tệp cục bộ hoặc clipboard.</string>
+    <string name="tv_import_from_phone">Từ điện thoại</string>
+    <string name="tv_import_recommended">Đề xuất</string>
+    <string name="tv_import_text_title">Dán liên kết hoặc cấu hình</string>
+    <string name="tv_import_text_hint">Dán URL đăng ký hoặc nội dung cấu hình.</string>
+    <string name="tv_import_empty">Không có nội dung để nhập.</string>
+    <string name="tv_import_read_error">Không thể đọc tệp đã chọn.</string>
+    <string name="tv_pairing_title">Ghép nối với điện thoại</string>
+    <string name="tv_pairing_scan">Quét mã bằng camera điện thoại để nhập.</string>
+    <string name="tv_pairing_code">Mã: %1$s</string>
+    <string name="tv_pairing_address">Địa chỉ TV: %1$s</string>
+    <string name="tv_pairing_expires">Hết hạn sau %1$d giây</string>
+    <string name="tv_pairing_waiting">Đang chuẩn bị phiên ghép nối…</string>
+    <string name="tv_pairing_expired">Phiên ghép nối đã hết hạn. Hãy bắt đầu lại.</string>
+    <string name="tv_pairing_no_network">Hãy kết nối TV với Wi-Fi hoặc Ethernet trước.</string>
+    <string name="tv_pairing_permission_denied">Cần quyền mạng cục bộ để ghép nối điện thoại.</string>
+    <string name="tv_pairing_error">Không thể bắt đầu ghép nối.</string>
 </resources>

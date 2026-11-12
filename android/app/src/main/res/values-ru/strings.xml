@@ -619,4 +619,24 @@
 
     <string name="language_follow_system">Как в системе</string>
     <string name="tv_settings_language_summary">Используется для меню, диалогов и сообщений. Изменения применяются сразу.</string>
+
+    <!-- Television import and pairing -->
+    <string name="tv_share_qr_hint">Отсканируйте этот код телефоном, чтобы импортировать сервер. Любой, кто отсканирует код, сможет использовать сервер.</string>
+    <string name="tv_import_intro">Импорт с телефона, из файла или буфера обмена.</string>
+    <string name="tv_import_from_phone">С телефона</string>
+    <string name="tv_import_recommended">Рекомендуется</string>
+    <string name="tv_import_text_title">Вставить ссылку или конфигурацию</string>
+    <string name="tv_import_text_hint">Вставьте ссылку на подписку или конфигурацию.</string>
+    <string name="tv_import_empty">Нечего импортировать.</string>
+    <string name="tv_import_read_error">Не удалось прочитать выбранный файл.</string>
+    <string name="tv_pairing_title">Сопряжение с телефоном</string>
+    <string name="tv_pairing_scan">Отсканируйте код камерой телефона.</string>
+    <string name="tv_pairing_code">Код: %1$s</string>
+    <string name="tv_pairing_address">Адрес ТВ: %1$s</string>
+    <string name="tv_pairing_expires">Истекает через %1$d с</string>
+    <string name="tv_pairing_waiting">Подготовка сеанса сопряжения…</string>
+    <string name="tv_pairing_expired">Сеанс сопряжения истёк. Начните заново.</string>
+    <string name="tv_pairing_no_network">Сначала подключите телевизор к Wi-Fi или Ethernet.</string>
+    <string name="tv_pairing_permission_denied">Для сопряжения нужно разрешение на локальную сеть.</string>
+    <string name="tv_pairing_error">Не удалось запустить сопряжение.</string>
 </resources>

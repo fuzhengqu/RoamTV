@@ -615,4 +615,24 @@
 
     <string name="language_follow_system">مطابق سیستم</string>
     <string name="tv_settings_language_summary">برای منوها، گفتگوها و پیام‌ها استفاده می‌شود. تغییرات فوراً اعمال می‌شوند.</string>
+
+    <!-- Television import and pairing -->
+    <string name="tv_share_qr_hint">این کد را با گوشی اسکن کنید تا سرور وارد شود. هر کسی که کد را اسکن کند می‌تواند از سرور استفاده کند.</string>
+    <string name="tv_import_intro">از گوشی، فایل محلی یا کلیپ‌بورد وارد کنید.</string>
+    <string name="tv_import_from_phone">از گوشی</string>
+    <string name="tv_import_recommended">پیشنهادی</string>
+    <string name="tv_import_text_title">چسباندن لینک یا پیکربندی</string>
+    <string name="tv_import_text_hint">لینک اشتراک یا متن پیکربندی را بچسبانید.</string>
+    <string name="tv_import_empty">چیزی برای ورود وجود ندارد.</string>
+    <string name="tv_import_read_error">فایل انتخاب‌شده خوانده نشد.</string>
+    <string name="tv_pairing_title">جفت‌سازی با گوشی</string>
+    <string name="tv_pairing_scan">با دوربین گوشی اسکن کنید.</string>
+    <string name="tv_pairing_code">کد: %1$s</string>
+    <string name="tv_pairing_address">نشانی تلویزیون: %1$s</string>
+    <string name="tv_pairing_expires">%1$d ثانیه تا انقضا</string>
+    <string name="tv_pairing_waiting">در حال آماده‌سازی جلسه جفت‌سازی…</string>
+    <string name="tv_pairing_expired">جلسه جفت‌سازی منقضی شد. دوباره شروع کنید.</string>
+    <string name="tv_pairing_no_network">ابتدا تلویزیون را به Wi-Fi یا Ethernet وصل کنید.</string>
+    <string name="tv_pairing_permission_denied">برای جفت‌سازی گوشی مجوز شبکه محلی لازم است.</string>
+    <string name="tv_pairing_error">جفت‌سازی شروع نشد.</string>
 </resources>

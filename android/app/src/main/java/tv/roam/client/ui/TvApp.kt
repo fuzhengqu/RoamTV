@@ -25,6 +25,7 @@ import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import tv.roam.client.R
 import tv.roam.client.feature.main.MainViewModel
+import tv.roam.client.feature.pairing.PairingViewModel
 import tv.roam.client.feature.settings.SettingsViewModel
 import tv.roam.client.ui.components.TvDialog
 import tv.roam.client.ui.components.TvOverscan
@@ -38,6 +39,7 @@ import tv.roam.client.ui.navigation.TvNavigator
 import tv.roam.client.ui.navigation.isTopLevel
 import tv.roam.client.ui.navigation.rememberTvNavigator
 import tv.roam.client.ui.screens.HomeScreen
+import tv.roam.client.ui.screens.ImportScreen
 import tv.roam.client.ui.screens.PlaceholderScreen
 import tv.roam.client.ui.screens.SettingsScreen
 import tv.roam.client.ui.theme.TvColors
@@ -46,6 +48,7 @@ import tv.roam.client.ui.theme.TvColors
 fun TvApp(
     mainViewModel: MainViewModel,
     settingsViewModel: SettingsViewModel,
+    pairingViewModel: PairingViewModel,
     onStartService: () -> Unit,
     onStopService: () -> Unit,
     onRestartService: () -> Unit,
@@ -73,6 +76,13 @@ fun TvApp(
             )
 
             TvRoute.Settings -> SettingsScreen(viewModel = settingsViewModel)
+
+            TvRoute.Import -> ImportScreen(
+                mainViewModel = mainViewModel,
+                pairingViewModel = pairingViewModel,
+                onBack = { navigator.pop() },
+                onImported = { navigator.openRoot(TvRoute.Home) },
+            )
 
             else -> PlaceholderScreen(
                 title = routeTitle(route),

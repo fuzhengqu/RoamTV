@@ -67,6 +67,7 @@ import tv.roam.client.ui.components.TvDialog
 import tv.roam.client.ui.components.TvIconAction
 import tv.roam.client.ui.components.TvKeyHintBar
 import tv.roam.client.ui.components.TvPrimaryButton
+import tv.roam.client.ui.components.TvQrDialog
 import tv.roam.client.ui.components.TvRailItem
 import tv.roam.client.ui.components.TvSecondaryButton
 import tv.roam.client.ui.components.TvStatusDot
@@ -110,6 +111,7 @@ fun HomeScreen(
     val selectedGuid = uiState.selectedGuid
     val isRunning = uiState.isRunning
     val isTesting = uiState.isTesting
+    val shareQRCodeBitmap = uiState.shareQRCodeBitmap
     val statusText = when (val status = uiState.status) {
         MainStatus.Disconnected -> stringResource(R.string.connection_not_connected)
         MainStatus.Connected -> stringResource(R.string.tv_status_connected)
@@ -344,6 +346,12 @@ fun HomeScreen(
                 showMore = false
                 selectedServer?.let { deleteTarget = it }
             },
+            onShareSelected = {
+                showMore = false
+                selectedServer?.let {
+                    mainViewModel.onAction(MainAction.ShareQRCode(it.guid))
+                }
+            },
             onDismiss = { showMore = false },
             onImport = {
                 showMore = false
@@ -376,6 +384,13 @@ fun HomeScreen(
             },
             onDismiss = { deleteTarget = null },
             danger = true,
+        )
+    }
+
+    shareQRCodeBitmap?.let { bitmap ->
+        TvQrDialog(
+            bitmap = bitmap,
+            onDismiss = { mainViewModel.onAction(MainAction.DismissQRCodeDialog) },
         )
     }
 
@@ -812,6 +827,7 @@ private fun MoreDialog(
     selectedServer: ServersCache?,
     onTestSelected: () -> Unit,
     onDeleteSelected: () -> Unit,
+    onShareSelected: () -> Unit,
     onDismiss: () -> Unit,
     onImport: () -> Unit,
     onAction: (MainAction) -> Unit,
@@ -856,6 +872,12 @@ private fun MoreDialog(
                             " · " + selectedServer.profile.remarks,
                         iconRes = R.drawable.ic_fab_check,
                         onClick = onTestSelected,
+                    )
+                    MenuRow(
+                        label = stringResource(R.string.share_method_qrcode) +
+                            " · " + selectedServer.profile.remarks,
+                        iconRes = R.drawable.ic_share_24dp,
+                        onClick = onShareSelected,
                     )
                     MenuRow(
                         label = stringResource(R.string.action_delete) +

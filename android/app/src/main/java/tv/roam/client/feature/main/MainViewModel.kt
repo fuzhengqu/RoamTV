@@ -294,7 +294,11 @@ class MainViewModel(
             MainAction.LocateHandled -> consumeLocateTarget()
             is MainAction.ShareQRCode -> {
                 val bitmap = dataSource.share2QRCode(action.guid)
-                _uiState.update { it.copy(shareQRCodeBitmap = bitmap) }
+                if (bitmap == null) {
+                    toastError(R.string.toast_failure)
+                } else {
+                    _uiState.update { it.copy(shareQRCodeBitmap = bitmap) }
+                }
             }
 
             MainAction.DismissQRCodeDialog -> {

@@ -616,5 +616,25 @@
     <string name="tv_confirm_bulk_message">This removes the matching servers from this group. Continue?</string>
     <string name="language_follow_system">Follow system</string>
     <string name="tv_settings_language_summary">Used for menus, dialogs and messages. Changes apply immediately.</string>
+    <string name="tv_share_qr_hint">Scan this code with your phone to import the server. Anyone who scans it can use the server.</string>
+
+    <!-- Television import and pairing -->
+    <string name="tv_import_intro">Import from your phone, a local file, or the clipboard.</string>
+    <string name="tv_import_from_phone">From phone</string>
+    <string name="tv_import_recommended">Recommended</string>
+    <string name="tv_import_text_title">Paste link or config</string>
+    <string name="tv_import_text_hint">Paste a subscription URL or configuration.</string>
+    <string name="tv_import_empty">Nothing to import.</string>
+    <string name="tv_import_read_error">Could not read the selected file.</string>
+    <string name="tv_pairing_title">Pair with your phone</string>
+    <string name="tv_pairing_scan">Scan with your phone camera to import.</string>
+    <string name="tv_pairing_code">Code: %1$s</string>
+    <string name="tv_pairing_address">TV address: %1$s</string>
+    <string name="tv_pairing_expires">Expires in %1$d s</string>
+    <string name="tv_pairing_waiting">Preparing the pairing session…</string>
+    <string name="tv_pairing_expired">The pairing session expired. Start again.</string>
+    <string name="tv_pairing_no_network">Connect the TV to Wi-Fi or Ethernet first.</string>
+    <string name="tv_pairing_permission_denied">Local network permission is required for phone pairing.</string>
+    <string name="tv_pairing_error">Could not start phone pairing.</string>
 
 </resources>

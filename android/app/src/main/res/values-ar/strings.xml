@@ -623,4 +623,24 @@
 
     <string name="language_follow_system">حسب النظام</string>
     <string name="tv_settings_language_summary">تُستخدم للقوائم ومربعات الحوار والرسائل. تُطبق التغييرات فورًا.</string>
+
+    <!-- Television import and pairing -->
+    <string name="tv_share_qr_hint">امسح هذا الرمز بهاتفك لاستيراد الخادم. أي شخص يمسح الرمز يمكنه استخدام الخادم.</string>
+    <string name="tv_import_intro">استورد من الهاتف أو ملف محلي أو الحافظة.</string>
+    <string name="tv_import_from_phone">من الهاتف</string>
+    <string name="tv_import_recommended">موصى به</string>
+    <string name="tv_import_text_title">لصق رابط أو إعداد</string>
+    <string name="tv_import_text_hint">الصق رابط اشتراك أو نص إعداد.</string>
+    <string name="tv_import_empty">لا يوجد شيء للاستيراد.</string>
+    <string name="tv_import_read_error">تعذر قراءة الملف المحدد.</string>
+    <string name="tv_pairing_title">الاقتران بالهاتف</string>
+    <string name="tv_pairing_scan">امسح الرمز بكاميرا الهاتف للاستيراد.</string>
+    <string name="tv_pairing_code">الرمز: %1$s</string>
+    <string name="tv_pairing_address">عنوان التلفاز: %1$s</string>
+    <string name="tv_pairing_expires">ينتهي خلال %1$d ثانية</string>
+    <string name="tv_pairing_waiting">جارٍ تجهيز جلسة الاقتران…</string>
+    <string name="tv_pairing_expired">انتهت جلسة الاقتران. ابدأ من جديد.</string>
+    <string name="tv_pairing_no_network">وصّل التلفاز بشبكة Wi-Fi أو Ethernet أولاً.</string>
+    <string name="tv_pairing_permission_denied">إذن الشبكة المحلية مطلوب للاقتران بالهاتف.</string>
+    <string name="tv_pairing_error">تعذر بدء الاقتران.</string>
 </resources>

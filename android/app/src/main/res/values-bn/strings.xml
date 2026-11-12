@@ -615,4 +615,24 @@
 
     <string name="language_follow_system">সিস্টেম অনুযায়ী</string>
     <string name="tv_settings_language_summary">মেনু, ডায়ালগ ও বার্তার জন্য ব্যবহৃত হয়। পরিবর্তন সাথে সাথে 적용됩니다.</string>
+
+    <!-- Television import and pairing -->
+    <string name="tv_share_qr_hint">সার্ভার আমদানি করতে ফোন দিয়ে এই কোডটি স্ক্যান করুন। যে কেউ কোডটি স্ক্যান করলে সার্ভার ব্যবহার করতে পারবে।</string>
+    <string name="tv_import_intro">ফোন, স্থানীয় ফাইল বা ক্লিপবোর্ড থেকে আমদানি করুন।</string>
+    <string name="tv_import_from_phone">ফোন থেকে</string>
+    <string name="tv_import_recommended">প্রস্তাবিত</string>
+    <string name="tv_import_text_title">লিঙ্ক বা কনফিগারেশন পেস্ট করুন</string>
+    <string name="tv_import_text_hint">সাবস্ক্রিপশন URL বা কনফিগারেশন পেস্ট করুন।</string>
+    <string name="tv_import_empty">আমদানি করার কিছু নেই।</string>
+    <string name="tv_import_read_error">নির্বাচিত ফাইল পড়া যায়নি।</string>
+    <string name="tv_pairing_title">ফোনের সাথে পেয়ার করুন</string>
+    <string name="tv_pairing_scan">ফোনের ক্যামেরা দিয়ে স্ক্যান করুন।</string>
+    <string name="tv_pairing_code">কোড: %1$s</string>
+    <string name="tv_pairing_address">টিভি ঠিকানা: %1$s</string>
+    <string name="tv_pairing_expires">%1$d সেকেন্ডে মেয়াদ শেষ</string>
+    <string name="tv_pairing_waiting">পেয়ারিং সেশন প্রস্তুত হচ্ছে…</string>
+    <string name="tv_pairing_expired">পেয়ারিং সেশনের মেয়াদ শেষ। আবার শুরু করুন।</string>
+    <string name="tv_pairing_no_network">প্রথমে টিভিকে Wi-Fi বা Ethernet-এ সংযুক্ত করুন।</string>
+    <string name="tv_pairing_permission_denied">ফোন পেয়ারিংয়ের জন্য স্থানীয় নেটওয়ার্ক অনুমতি প্রয়োজন।</string>
+    <string name="tv_pairing_error">পেয়ারিং শুরু করা যায়নি।</string>
 </resources>
