@@ -13,7 +13,7 @@ data class PairingSession(
 }
 
 object PairingSessionFactory {
-    const val DEFAULT_TTL_MILLIS = 120_000L
+    const val DEFAULT_TTL_MILLIS = 300_000L
     private const val ID_BYTES = 16
     private val random = SecureRandom()
 

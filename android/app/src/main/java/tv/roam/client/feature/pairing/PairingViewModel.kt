@@ -16,6 +16,7 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import tv.roam.client.R
+import tv.roam.client.BuildConfig
 import tv.roam.client.mvvm.BaseViewModel
 import java.net.Inet4Address
 
@@ -82,9 +83,20 @@ class PairingViewModel(application: Application) : BaseViewModel(application) {
             }
 
             val session = PairingSessionFactory.create()
+            // The Android emulator exposes the guest as 10.0.2.15, which the
+            // host cannot route directly. Bind all interfaces in debug builds
+            // so `adb forward` can drive the page from a desktop browser; release
+            // builds keep the resolved LAN bind. Remove this fallback when the
+            // pairing check runs on physical hardware.
+            val bindAddress =
+                if (BuildConfig.DEBUG && address.hostAddress == EMULATOR_NAT_ADDRESS) {
+                    java.net.InetAddress.getByName("0.0.0.0")
+                } else {
+                    address
+                }
             val httpServer = PairingHttpServer(
                 session = session,
-                bindAddress = address,
+                bindAddress = bindAddress,
                 pageHtml = pageHtml,
                 sjclJs = sjclJs,
                 onText = { text ->
@@ -180,5 +192,9 @@ class PairingViewModel(application: Application) : BaseViewModel(application) {
         countdownJob = null
         server?.close()
         server = null
+    }
+
+    private companion object {
+        const val EMULATOR_NAT_ADDRESS = "10.0.2.15"
     }
 }

@@ -26,6 +26,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.input.key.type
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -51,6 +56,7 @@ fun TvTextEditDialog(
 ) {
     var text by remember(initialValue) { mutableStateOf(initialValue) }
     val focus = remember { FocusRequester() }
+    val firstActionFocus = remember { FocusRequester() }
     LaunchedEffect(Unit) { focus.requestFocus() }
 
     TvDialog(onDismissRequest = onDismiss) {
@@ -82,6 +88,16 @@ fun TvTextEditDialog(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(if (multiline) 200.dp else 72.dp)
+                    .onPreviewKeyEvent { event ->
+                        if (event.type == KeyEventType.KeyDown &&
+                            event.key == Key.DirectionDown
+                        ) {
+                            firstActionFocus.requestFocus()
+                            true
+                        } else {
+                            false
+                        }
+                    }
                     .focusRequester(focus)
                     .background(TvColors.SurfaceVariant, RoundedCornerShape(12.dp))
                     .padding(14.dp),
@@ -99,12 +115,24 @@ fun TvTextEditDialog(
                 },
             )
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .onPreviewKeyEvent { event ->
+                        if (event.type == KeyEventType.KeyDown &&
+                            event.key == Key.DirectionUp
+                        ) {
+                            focus.requestFocus()
+                            true
+                        } else {
+                            false
+                        }
+                    },
                 horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.End),
             ) {
                 TvSecondaryButton(
                     text = stringResource(R.string.action_cancel),
                     onClick = onDismiss,
+                    modifier = Modifier.focusRequester(firstActionFocus),
                 )
                 if (onFromPhone != null) {
                     TvSecondaryButton(
