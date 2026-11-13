@@ -639,4 +639,27 @@
     <string name="tv_pairing_no_network">Сначала подключите телевизор к Wi-Fi или Ethernet.</string>
     <string name="tv_pairing_permission_denied">Для сопряжения нужно разрешение на локальную сеть.</string>
     <string name="tv_pairing_error">Не удалось запустить сопряжение.</string>
+
+    <!-- Television server editor -->
+    <string name="tv_editor_section_basic">Основное</string>
+    <string name="tv_editor_section_protocol">Протокол</string>
+    <string name="tv_editor_section_transport">Транспорт</string>
+    <string name="tv_editor_section_security">Безопасность</string>
+    <string name="tv_editor_section_advanced">Дополнительно</string>
+    <string name="tv_editor_error_required">Это поле обязательно.</string>
+    <string name="tv_editor_error_port">Введите корректный порт.</string>
+    <string name="tv_editor_error_json">Введите корректный JSON.</string>
+    <string name="tv_editor_delete_selected_forbidden">Нельзя удалить выбранный сервер, пока он используется.</string>
+    <string name="tv_editor_loading">Загрузка…</string>
+    <string name="tv_editor_on">Вкл.</string>
+    <string name="tv_editor_off">Выкл.</string>
+    <string name="tv_editor_not_set">Не задано</string>
+    <string name="tv_editor_none">Нет</string>
+    <string name="tv_editor_selected">Выбрано</string>
+    <string name="tv_editor_save">Сохранить</string>
+    <string name="tv_editor_from_phone">С телефона</string>
+    <string name="tv_editor_value_hint">Введите значение</string>
+    <string name="tv_editor_protocol_custom">Другое</string>
+    <string name="tv_editor_member_number">Участник %1$d</string>
+    <string name="tv_editor_remove_last">Удалить последний элемент</string>
 </resources>

@@ -24,8 +24,12 @@ import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import tv.roam.client.R
+import tv.roam.client.feature.main.MainAction
 import tv.roam.client.feature.main.MainViewModel
 import tv.roam.client.feature.pairing.PairingViewModel
+import tv.roam.client.feature.server.PolicyGroupEditorViewModel
+import tv.roam.client.feature.server.ProxyChainEditorViewModel
+import tv.roam.client.feature.server.ServerEditorViewModel
 import tv.roam.client.feature.settings.SettingsViewModel
 import tv.roam.client.ui.components.TvDialog
 import tv.roam.client.ui.components.TvOverscan
@@ -41,6 +45,9 @@ import tv.roam.client.ui.navigation.rememberTvNavigator
 import tv.roam.client.ui.screens.HomeScreen
 import tv.roam.client.ui.screens.ImportScreen
 import tv.roam.client.ui.screens.PlaceholderScreen
+import tv.roam.client.ui.screens.PolicyGroupEditorScreen
+import tv.roam.client.ui.screens.ProxyChainEditorScreen
+import tv.roam.client.ui.screens.ServerEditorScreen
 import tv.roam.client.ui.screens.SettingsScreen
 import tv.roam.client.ui.theme.TvColors
 
@@ -49,6 +56,9 @@ fun TvApp(
     mainViewModel: MainViewModel,
     settingsViewModel: SettingsViewModel,
     pairingViewModel: PairingViewModel,
+    serverEditorViewModel: ServerEditorViewModel,
+    policyGroupEditorViewModel: PolicyGroupEditorViewModel,
+    proxyChainEditorViewModel: ProxyChainEditorViewModel,
     onStartService: () -> Unit,
     onStopService: () -> Unit,
     onRestartService: () -> Unit,
@@ -73,6 +83,36 @@ fun TvApp(
                 onStopService = onStopService,
                 onRestartService = onRestartService,
                 onImport = { navigator.push(TvRoute.Import) },
+                onAddServer = { type ->
+                    navigator.push(
+                        TvRoute.ServerEditor(
+                            guid = "",
+                            configType = type,
+                            restartOnSave = false,
+                        )
+                    )
+                },
+                onEditServer = { guid, type, restart ->
+                    navigator.push(
+                        TvRoute.ServerEditor(
+                            guid = guid,
+                            configType = type,
+                            restartOnSave = restart,
+                        )
+                    )
+                },
+                onAddPolicyGroup = {
+                    navigator.push(TvRoute.PolicyGroupEditor())
+                },
+                onEditPolicyGroup = { guid ->
+                    navigator.push(TvRoute.PolicyGroupEditor(guid))
+                },
+                onAddProxyChain = {
+                    navigator.push(TvRoute.ProxyChainEditor())
+                },
+                onEditProxyChain = { guid ->
+                    navigator.push(TvRoute.ProxyChainEditor(guid))
+                },
             )
 
             TvRoute.Settings -> SettingsScreen(viewModel = settingsViewModel)
@@ -82,6 +122,50 @@ fun TvApp(
                 pairingViewModel = pairingViewModel,
                 onBack = { navigator.pop() },
                 onImported = { navigator.openRoot(TvRoute.Home) },
+            )
+
+            is TvRoute.ServerEditor -> ServerEditorScreen(
+                route = route,
+                viewModel = serverEditorViewModel,
+                pairingViewModel = pairingViewModel,
+                onBack = { navigator.pop() },
+                onSaved = { _, restart ->
+                    navigator.pop()
+                    mainViewModel.onAction(MainAction.RefreshGroups)
+                    if (restart) onRestartService()
+                },
+                onDeleted = {
+                    navigator.pop()
+                    mainViewModel.onAction(MainAction.RefreshGroups)
+                },
+            )
+
+            is TvRoute.PolicyGroupEditor -> PolicyGroupEditorScreen(
+                route = route,
+                viewModel = policyGroupEditorViewModel,
+                onBack = { navigator.pop() },
+                onSaved = {
+                    navigator.pop()
+                    mainViewModel.onAction(MainAction.RefreshGroups)
+                },
+                onDeleted = {
+                    navigator.pop()
+                    mainViewModel.onAction(MainAction.RefreshGroups)
+                },
+            )
+
+            is TvRoute.ProxyChainEditor -> ProxyChainEditorScreen(
+                route = route,
+                viewModel = proxyChainEditorViewModel,
+                onBack = { navigator.pop() },
+                onSaved = {
+                    navigator.pop()
+                    mainViewModel.onAction(MainAction.RefreshGroups)
+                },
+                onDeleted = {
+                    navigator.pop()
+                    mainViewModel.onAction(MainAction.RefreshGroups)
+                },
             )
 
             else -> PlaceholderScreen(
@@ -179,6 +263,12 @@ private fun routeTitle(route: TvRoute): String = when (route) {
     TvRoute.About -> stringResource(R.string.title_about)
     TvRoute.Update -> stringResource(R.string.update_check_for_update)
     TvRoute.Import -> stringResource(R.string.tv_action_import)
+    is TvRoute.ServerEditor -> stringResource(R.string.menu_item_edit_config)
+    is TvRoute.PolicyGroupEditor ->
+        stringResource(R.string.menu_item_import_config_policy_group)
+
+    is TvRoute.ProxyChainEditor ->
+        stringResource(R.string.menu_item_import_config_proxy_chain)
 }
 
 private fun Context.findActivity(): Activity? = when (this) {

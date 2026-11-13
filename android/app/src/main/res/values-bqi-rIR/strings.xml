@@ -635,4 +635,27 @@
     <string name="tv_pairing_no_network">ابتدا تلویزیون را به Wi-Fi یا Ethernet وصل کنید.</string>
     <string name="tv_pairing_permission_denied">برای جفت‌سازی گوشی مجوز شبکه محلی لازم است.</string>
     <string name="tv_pairing_error">جفت‌سازی شروع نشد.</string>
+
+    <!-- Television server editor -->
+    <string name="tv_editor_section_basic">پایه</string>
+    <string name="tv_editor_section_protocol">پروتکل</string>
+    <string name="tv_editor_section_transport">انتقال</string>
+    <string name="tv_editor_section_security">امنیت</string>
+    <string name="tv_editor_section_advanced">پیشرفته</string>
+    <string name="tv_editor_error_required">این فیلد الزامی است.</string>
+    <string name="tv_editor_error_port">یک پورت معتبر وارد کنید.</string>
+    <string name="tv_editor_error_json">JSON معتبر وارد کنید.</string>
+    <string name="tv_editor_delete_selected_forbidden">سرور انتخاب‌شده هنگام استفاده قابل حذف نیست.</string>
+    <string name="tv_editor_loading">در حال بارگذاری…</string>
+    <string name="tv_editor_on">روشن</string>
+    <string name="tv_editor_off">خاموش</string>
+    <string name="tv_editor_not_set">تنظیم نشده</string>
+    <string name="tv_editor_none">هیچ</string>
+    <string name="tv_editor_selected">انتخاب‌شده</string>
+    <string name="tv_editor_save">ذخیره</string>
+    <string name="tv_editor_from_phone">از گوشی</string>
+    <string name="tv_editor_value_hint">یک مقدار وارد کنید</string>
+    <string name="tv_editor_protocol_custom">سفارشی</string>
+    <string name="tv_editor_member_number">عضو %1$d</string>
+    <string name="tv_editor_remove_last">حذف آخرین عضو</string>
 </resources>

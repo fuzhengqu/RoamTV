@@ -79,8 +79,29 @@ class TvNavigatorTest {
     }
 
     @Test
-    fun `saved keys restore the stack`() {
-        val navigator = TvNavigator()
+    fun `server editor route restores its parameters`() {
+        val route = TvRoute.ServerEditor(
+            guid = "guid-1",
+            configType = 5,
+            restartOnSave = true,
+        )
+
+        val restored = TvNavigator.Saver.restore(listOf(route.key))
+
+        assertEquals(route, restored?.current)
+    }
+
+    @Test
+    fun `policy group and proxy chain routes restore their guids`() {
+        val group = TvRoute.PolicyGroupEditor("group-1")
+        val chain = TvRoute.ProxyChainEditor("chain-1")
+
+        assertEquals(group, TvNavigator.Saver.restore(listOf(group.key))?.current)
+        assertEquals(chain, TvNavigator.Saver.restore(listOf(chain.key))?.current)
+    }
+
+    @Test
+    fun `saved keys restore the stack`() {        val navigator = TvNavigator()
         navigator.push(TvRoute.Subscriptions)
         navigator.push(TvRoute.Settings)
 

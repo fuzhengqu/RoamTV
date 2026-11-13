@@ -637,4 +637,27 @@
     <string name="tv_pairing_permission_denied">Local network permission is required for phone pairing.</string>
     <string name="tv_pairing_error">Could not start phone pairing.</string>
 
+    <!-- Television server editor -->
+    <string name="tv_editor_section_basic">Basic</string>
+    <string name="tv_editor_section_protocol">Protocol</string>
+    <string name="tv_editor_section_transport">Transport</string>
+    <string name="tv_editor_section_security">Security</string>
+    <string name="tv_editor_section_advanced">Advanced</string>
+    <string name="tv_editor_error_required">This field is required.</string>
+    <string name="tv_editor_error_port">Enter a valid port.</string>
+    <string name="tv_editor_error_json">Enter valid JSON.</string>
+    <string name="tv_editor_delete_selected_forbidden">The selected server cannot be deleted while it is in use.</string>
+    <string name="tv_editor_loading">Loading…</string>
+    <string name="tv_editor_on">On</string>
+    <string name="tv_editor_off">Off</string>
+    <string name="tv_editor_not_set">Not set</string>
+    <string name="tv_editor_none">None</string>
+    <string name="tv_editor_selected">Selected</string>
+    <string name="tv_editor_save">Save</string>
+    <string name="tv_editor_from_phone">From phone</string>
+    <string name="tv_editor_value_hint">Enter a value</string>
+    <string name="tv_editor_protocol_custom">Custom</string>
+    <string name="tv_editor_member_number">Member %1$d</string>
+    <string name="tv_editor_remove_last">Remove last member</string>
+
 </resources>

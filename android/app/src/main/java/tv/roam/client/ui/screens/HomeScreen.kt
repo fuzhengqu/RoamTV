@@ -57,6 +57,7 @@ import androidx.tv.material3.Text
 import kotlinx.coroutines.flow.MutableStateFlow
 import tv.roam.client.R
 import tv.roam.client.dto.entities.ServersCache
+import tv.roam.client.enums.EConfigType
 import tv.roam.client.extension.toast
 import tv.roam.client.feature.main.MainAction
 import tv.roam.client.feature.main.MainStatus
@@ -92,6 +93,12 @@ fun HomeScreen(
     onStopService: () -> Unit,
     onRestartService: () -> Unit,
     onImport: () -> Unit,
+    onAddServer: (Int) -> Unit,
+    onEditServer: (String, Int, Boolean) -> Unit,
+    onAddPolicyGroup: () -> Unit,
+    onEditPolicyGroup: (String) -> Unit,
+    onAddProxyChain: () -> Unit,
+    onEditProxyChain: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val uiState by mainViewModel.uiState.collectAsStateWithLifecycle()
@@ -136,6 +143,7 @@ fun HomeScreen(
     var showSearch by remember { mutableStateOf(false) }
     var searchQuery by remember { mutableStateOf("") }
     var showMore by remember { mutableStateOf(false) }
+    var showTypePicker by remember { mutableStateOf(false) }
     var deleteTarget by remember { mutableStateOf<ServersCache?>(null) }
     var bulkDelete by remember { mutableStateOf<BulkDelete?>(null) }
 
@@ -352,6 +360,24 @@ fun HomeScreen(
                     mainViewModel.onAction(MainAction.ShareQRCode(it.guid))
                 }
             },
+            onAddServer = {
+                showMore = false
+                showTypePicker = true
+            },
+            onEditSelected = {
+                showMore = false
+                selectedServer?.let {
+                    when (it.profile.configType) {
+                        EConfigType.POLICYGROUP -> onEditPolicyGroup(it.guid)
+                        EConfigType.PROXYCHAIN -> onEditProxyChain(it.guid)
+                        else -> onEditServer(
+                            it.guid,
+                            it.profile.configType.value,
+                            isRunning && selectedGuid == it.guid,
+                        )
+                    }
+                }
+            },
             onDismiss = { showMore = false },
             onImport = {
                 showMore = false
@@ -369,6 +395,24 @@ fun HomeScreen(
                 showMore = false
                 bulkDelete = target
             },
+        )
+    }
+
+    if (showTypePicker) {
+        ServerTypeDialog(
+            onSelect = { type ->
+                showTypePicker = false
+                onAddServer(type.value)
+            },
+            onSelectPolicyGroup = {
+                showTypePicker = false
+                onAddPolicyGroup()
+            },
+            onSelectProxyChain = {
+                showTypePicker = false
+                onAddProxyChain()
+            },
+            onDismiss = { showTypePicker = false },
         )
     }
 
@@ -828,6 +872,8 @@ private fun MoreDialog(
     onTestSelected: () -> Unit,
     onDeleteSelected: () -> Unit,
     onShareSelected: () -> Unit,
+    onAddServer: () -> Unit,
+    onEditSelected: () -> Unit,
     onDismiss: () -> Unit,
     onImport: () -> Unit,
     onAction: (MainAction) -> Unit,
@@ -851,10 +897,15 @@ private fun MoreDialog(
                 verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
                 MenuRow(
+                    label = stringResource(R.string.menu_item_add_config),
+                    iconRes = R.drawable.ic_add_24dp,
+                    onClick = onAddServer,
+                    modifier = Modifier.focusRequester(firstFocus),
+                )
+                MenuRow(
                     label = stringResource(R.string.tv_action_import),
                     iconRes = R.drawable.ic_add_24dp,
                     onClick = onImport,
-                    modifier = Modifier.focusRequester(firstFocus),
                 )
                 MenuRow(
                     label = stringResource(R.string.title_ping_all_server),
@@ -867,6 +918,12 @@ private fun MoreDialog(
                     onClick = { onAction(MainAction.TestRealAllServers) },
                 )
                 if (selectedServer != null) {
+                    MenuRow(
+                        label = stringResource(R.string.menu_item_edit_config) +
+                            " · " + selectedServer.profile.remarks,
+                        iconRes = R.drawable.ic_edit_24dp,
+                        onClick = onEditSelected,
+                    )
                     MenuRow(
                         label = stringResource(R.string.tv_action_test) +
                             " · " + selectedServer.profile.remarks,
@@ -924,6 +981,72 @@ private fun MoreDialog(
                     label = stringResource(R.string.title_del_all_config),
                     iconRes = R.drawable.ic_delete_24dp,
                     onClick = { onBulkDelete(BulkDelete.All) },
+                )
+                MenuRow(
+                    label = stringResource(R.string.action_cancel),
+                    iconRes = R.drawable.ic_arrow_back_24dp,
+                    onClick = onDismiss,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun ServerTypeDialog(
+    onSelect: (EConfigType) -> Unit,
+    onSelectPolicyGroup: () -> Unit,
+    onSelectProxyChain: () -> Unit,
+    onDismiss: () -> Unit,
+) {
+    val firstFocus = remember { FocusRequester() }
+    LaunchedEffect(Unit) { firstFocus.requestFocus() }
+    val entries = listOf(
+        EConfigType.VMESS to R.string.menu_item_import_config_manually_vmess,
+        EConfigType.VLESS to R.string.menu_item_import_config_manually_vless,
+        EConfigType.SHADOWSOCKS to R.string.menu_item_import_config_manually_ss,
+        EConfigType.SOCKS to R.string.menu_item_import_config_manually_socks,
+        EConfigType.HTTP to R.string.menu_item_import_config_manually_http,
+        EConfigType.TROJAN to R.string.menu_item_import_config_manually_trojan,
+        EConfigType.WIREGUARD to R.string.menu_item_import_config_manually_wireguard,
+        EConfigType.HYSTERIA2 to R.string.menu_item_import_config_manually_hysteria2,
+        EConfigType.CUSTOM to R.string.tv_editor_protocol_custom,
+    )
+
+    TvDialog(onDismissRequest = onDismiss) {
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Text(
+                text = stringResource(R.string.menu_item_add_config),
+                style = MaterialTheme.typography.headlineSmall,
+                color = TvColors.Text,
+            )
+            Column(
+                modifier = Modifier
+                    .heightIn(max = 420.dp)
+                    .verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                entries.forEachIndexed { index, (type, labelRes) ->
+                    MenuRow(
+                        label = stringResource(labelRes),
+                        iconRes = R.drawable.ic_add_24dp,
+                        onClick = { onSelect(type) },
+                        modifier = if (index == 0) {
+                            Modifier.focusRequester(firstFocus)
+                        } else {
+                            Modifier
+                        },
+                    )
+                }
+                MenuRow(
+                    label = stringResource(R.string.menu_item_import_config_policy_group),
+                    iconRes = R.drawable.ic_add_24dp,
+                    onClick = onSelectPolicyGroup,
+                )
+                MenuRow(
+                    label = stringResource(R.string.menu_item_import_config_proxy_chain),
+                    iconRes = R.drawable.ic_add_24dp,
+                    onClick = onSelectProxyChain,
                 )
                 MenuRow(
                     label = stringResource(R.string.action_cancel),

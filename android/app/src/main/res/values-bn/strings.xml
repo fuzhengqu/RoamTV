@@ -635,4 +635,27 @@
     <string name="tv_pairing_no_network">প্রথমে টিভিকে Wi-Fi বা Ethernet-এ সংযুক্ত করুন।</string>
     <string name="tv_pairing_permission_denied">ফোন পেয়ারিংয়ের জন্য স্থানীয় নেটওয়ার্ক অনুমতি প্রয়োজন।</string>
     <string name="tv_pairing_error">পেয়ারিং শুরু করা যায়নি।</string>
+
+    <!-- Television server editor -->
+    <string name="tv_editor_section_basic">মৌলিক</string>
+    <string name="tv_editor_section_protocol">প্রোটোকল</string>
+    <string name="tv_editor_section_transport">পরিবহন</string>
+    <string name="tv_editor_section_security">নিরাপত্তা</string>
+    <string name="tv_editor_section_advanced">উন্নত</string>
+    <string name="tv_editor_error_required">এই ক্ষেত্রটি আবশ্যক।</string>
+    <string name="tv_editor_error_port">বৈধ পোর্ট লিখুন।</string>
+    <string name="tv_editor_error_json">বৈধ JSON লিখুন।</string>
+    <string name="tv_editor_delete_selected_forbidden">ব্যবহৃত সার্ভার মুছে ফেলা যায় না।</string>
+    <string name="tv_editor_loading">লোড হচ্ছে…</string>
+    <string name="tv_editor_on">চালু</string>
+    <string name="tv_editor_off">বন্ধ</string>
+    <string name="tv_editor_not_set">সেট করা হয়নি</string>
+    <string name="tv_editor_none">কোনোটিই নয়</string>
+    <string name="tv_editor_selected">নির্বাচিত</string>
+    <string name="tv_editor_save">সংরক্ষণ</string>
+    <string name="tv_editor_from_phone">ফোন থেকে</string>
+    <string name="tv_editor_value_hint">একটি মান লিখুন</string>
+    <string name="tv_editor_protocol_custom">কাস্টম</string>
+    <string name="tv_editor_member_number">সদস্য %1$d</string>
+    <string name="tv_editor_remove_last">শেষ সদস্য সরান</string>
 </resources>

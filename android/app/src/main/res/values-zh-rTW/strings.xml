@@ -633,4 +633,27 @@
     <string name="tv_pairing_no_network">請先將電視連接到 Wi-Fi 或有線網路。</string>
     <string name="tv_pairing_permission_denied">手機配對需要本機網路權限。</string>
     <string name="tv_pairing_error">無法啟動手機配對。</string>
+
+    <!-- Television server editor -->
+    <string name="tv_editor_section_basic">基本</string>
+    <string name="tv_editor_section_protocol">協定</string>
+    <string name="tv_editor_section_transport">傳輸</string>
+    <string name="tv_editor_section_security">安全</string>
+    <string name="tv_editor_section_advanced">進階</string>
+    <string name="tv_editor_error_required">此欄位為必填。</string>
+    <string name="tv_editor_error_port">請輸入有效連接埠。</string>
+    <string name="tv_editor_error_json">請輸入有效的 JSON。</string>
+    <string name="tv_editor_delete_selected_forbidden">使用中的節點無法刪除。</string>
+    <string name="tv_editor_loading">正在載入…</string>
+    <string name="tv_editor_on">開</string>
+    <string name="tv_editor_off">關</string>
+    <string name="tv_editor_not_set">未設定</string>
+    <string name="tv_editor_none">無</string>
+    <string name="tv_editor_selected">已選擇</string>
+    <string name="tv_editor_save">儲存</string>
+    <string name="tv_editor_from_phone">從手機匯入</string>
+    <string name="tv_editor_value_hint">輸入值</string>
+    <string name="tv_editor_protocol_custom">自訂</string>
+    <string name="tv_editor_member_number">成員 %1$d</string>
+    <string name="tv_editor_remove_last">移除最後一個成員</string>
 </resources>

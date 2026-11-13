@@ -16,8 +16,8 @@ means not implemented. Do not promote a row to Verified without the check.
 | Import from clipboard / file / text | Import | In progress (M2) | Import hub and text dialog implemented; clipboard/file end-to-end not yet exercised |
 | Pairing crypto and HTTP protocol | Pairing | Verified (M2) | JVM tests: SJCL-to-Java AES-GCM vector, tamper rejection, page/JS GET, wrong-session 403, import callback |
 | Share QR | Home / More | Verified (M2, UI) | QR dialog opened from More with the selected server; scan from a phone not run |
-| Server editor: VMess, VLESS, SS, SOCKS, HTTP, Trojan, WireGuard, Hysteria2, custom | Server editor | Planned (M3) | — |
-| Policy groups and proxy chains | Group / chain editor | Planned (M3) | — |
+| Server editor: VMess, VLESS, SS, SOCKS, HTTP, Trojan, WireGuard, Hysteria2, custom | Server editor | In progress (M3) | API 37 AVD: add VLESS, save, edit the selected SOCKS server, save and restart, list refresh; validation and field mapping covered by JVM tests. Other protocols not individually exercised |
+| Policy groups and proxy chains | Group / chain editor | In progress (M3) | API 37 AVD: add a policy group and a two-member proxy chain, save, list refresh; chain runtime connection not run |
 | Subscriptions and subscription editor | Subscriptions | Planned (M4) | — |
 | Routing rules and rule editor | Routing | Planned (M4) | — |
 | Per-app proxy and app picker | Per-app | Planned (M4) | — |

@@ -59,6 +59,27 @@ sealed interface TvRoute {
     data object Import : TvRoute {
         override val key: String = "import"
     }
+
+    /**
+     * Server editor route. The GUID, protocol type and restart flag are part of
+     * the key so process recreation reopens the same profile, not a list row.
+     */
+    data class ServerEditor(
+        val guid: String = "",
+        val configType: Int = 1,
+        val restartOnSave: Boolean = false,
+    ) : TvRoute {
+        override val key: String =
+            "server_editor|$guid|$configType|$restartOnSave"
+    }
+
+    data class PolicyGroupEditor(val guid: String = "") : TvRoute {
+        override val key: String = "policy_group|$guid"
+    }
+
+    data class ProxyChainEditor(val guid: String = "") : TvRoute {
+        override val key: String = "proxy_chain|$guid"
+    }
 }
 
 /** True for destinations that own the left rail; secondary flows use a back top bar. */
@@ -168,7 +189,25 @@ class TvNavigator(initial: List<TvRoute> = listOf(TvRoute.Home)) {
             TvRoute.Import,
         ).associateBy { it.key }
 
-        private fun fromKey(key: String): TvRoute = routeByKey[key] ?: TvRoute.Home
+        private fun fromKey(key: String): TvRoute {
+            if (key.startsWith("policy_group|")) {
+                return TvRoute.PolicyGroupEditor(key.substringAfter('|'))
+            }
+            if (key.startsWith("proxy_chain|")) {
+                return TvRoute.ProxyChainEditor(key.substringAfter('|'))
+            }
+            if (key.startsWith("server_editor|")) {
+                val parts = key.split('|')
+                if (parts.size == 4) {
+                    return TvRoute.ServerEditor(
+                        guid = parts[1],
+                        configType = parts[2].toIntOrNull() ?: 1,
+                        restartOnSave = parts[3].toBoolean(),
+                    )
+                }
+            }
+            return routeByKey[key] ?: TvRoute.Home
+        }
 
         val Saver: Saver<TvNavigator, List<String>> = Saver(
             save = { it.snapshot() },

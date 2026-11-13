@@ -105,6 +105,12 @@ fun TvPrimaryButton(
             disabledContainerColor = TvColors.SurfaceVariant,
             disabledContentColor = TvColors.TextMuted,
         ),
+        border = ButtonDefaults.border(
+            border = Border(BorderStroke(2.dp, Color.Transparent), inset = 0.dp, shape = RoundedCornerShape(50)),
+            focusedBorder = Border(BorderStroke(3.dp, TvColors.Text), inset = 0.dp, shape = RoundedCornerShape(50)),
+            pressedBorder = Border(BorderStroke(2.dp, Color.Transparent), inset = 0.dp, shape = RoundedCornerShape(50)),
+            disabledBorder = Border(BorderStroke(2.dp, Color.Transparent), inset = 0.dp, shape = RoundedCornerShape(50)),
+        ),
     ) {
         Text(text = text, style = MaterialTheme.typography.titleSmall)
     }
@@ -130,6 +136,12 @@ fun TvSecondaryButton(
             pressedContentColor = TvColors.Text,
             disabledContainerColor = Color.Transparent,
             disabledContentColor = TvColors.TextMuted,
+        ),
+        border = OutlinedButtonDefaults.border(
+            border = Border(BorderStroke(1.dp, TvColors.TextMuted), inset = 0.dp, shape = RoundedCornerShape(50)),
+            focusedBorder = Border(BorderStroke(3.dp, TvColors.Teal), inset = 0.dp, shape = RoundedCornerShape(50)),
+            pressedBorder = Border(BorderStroke(1.dp, TvColors.TealDim), inset = 0.dp, shape = RoundedCornerShape(50)),
+            disabledBorder = Border(BorderStroke(1.dp, TvColors.SurfaceVariant), inset = 0.dp, shape = RoundedCornerShape(50)),
         ),
     ) {
         Text(text = text, style = MaterialTheme.typography.titleSmall)

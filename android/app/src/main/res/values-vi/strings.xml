@@ -633,4 +633,27 @@
     <string name="tv_pairing_no_network">Hãy kết nối TV với Wi-Fi hoặc Ethernet trước.</string>
     <string name="tv_pairing_permission_denied">Cần quyền mạng cục bộ để ghép nối điện thoại.</string>
     <string name="tv_pairing_error">Không thể bắt đầu ghép nối.</string>
+
+    <!-- Television server editor -->
+    <string name="tv_editor_section_basic">Cơ bản</string>
+    <string name="tv_editor_section_protocol">Giao thức</string>
+    <string name="tv_editor_section_transport">Truyền tải</string>
+    <string name="tv_editor_section_security">Bảo mật</string>
+    <string name="tv_editor_section_advanced">Nâng cao</string>
+    <string name="tv_editor_error_required">Trường này là bắt buộc.</string>
+    <string name="tv_editor_error_port">Nhập cổng hợp lệ.</string>
+    <string name="tv_editor_error_json">Nhập JSON hợp lệ.</string>
+    <string name="tv_editor_delete_selected_forbidden">Không thể xóa máy chủ đang được sử dụng.</string>
+    <string name="tv_editor_loading">Đang tải…</string>
+    <string name="tv_editor_on">Bật</string>
+    <string name="tv_editor_off">Tắt</string>
+    <string name="tv_editor_not_set">Chưa đặt</string>
+    <string name="tv_editor_none">Không</string>
+    <string name="tv_editor_selected">Đã chọn</string>
+    <string name="tv_editor_save">Lưu</string>
+    <string name="tv_editor_from_phone">Từ điện thoại</string>
+    <string name="tv_editor_value_hint">Nhập giá trị</string>
+    <string name="tv_editor_protocol_custom">Tùy chỉnh</string>
+    <string name="tv_editor_member_number">Thành viên %1$d</string>
+    <string name="tv_editor_remove_last">Xóa thành viên cuối</string>
 </resources>
