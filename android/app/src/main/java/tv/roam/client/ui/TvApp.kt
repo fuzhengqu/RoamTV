@@ -27,6 +27,8 @@ import tv.roam.client.R
 import tv.roam.client.feature.main.MainAction
 import tv.roam.client.feature.main.MainViewModel
 import tv.roam.client.feature.pairing.PairingViewModel
+import tv.roam.client.feature.routing.RoutingEditorViewModel
+import tv.roam.client.feature.routing.RoutingListViewModel
 import tv.roam.client.feature.server.PolicyGroupEditorViewModel
 import tv.roam.client.feature.server.ProxyChainEditorViewModel
 import tv.roam.client.feature.server.ServerEditorViewModel
@@ -49,6 +51,8 @@ import tv.roam.client.ui.screens.ImportScreen
 import tv.roam.client.ui.screens.PlaceholderScreen
 import tv.roam.client.ui.screens.PolicyGroupEditorScreen
 import tv.roam.client.ui.screens.ProxyChainEditorScreen
+import tv.roam.client.ui.screens.RoutingEditorScreen
+import tv.roam.client.ui.screens.RoutingSettingsScreen
 import tv.roam.client.ui.screens.ServerEditorScreen
 import tv.roam.client.ui.screens.SettingsScreen
 import tv.roam.client.ui.screens.SubscriptionEditorScreen
@@ -65,6 +69,8 @@ fun TvApp(
     proxyChainEditorViewModel: ProxyChainEditorViewModel,
     subscriptionListViewModel: SubscriptionListViewModel,
     subscriptionEditorViewModel: SubscriptionEditorViewModel,
+    routingListViewModel: RoutingListViewModel,
+    routingEditorViewModel: RoutingEditorViewModel,
     onStartService: () -> Unit,
     onStopService: () -> Unit,
     onRestartService: () -> Unit,
@@ -125,6 +131,12 @@ fun TvApp(
                 viewModel = subscriptionListViewModel,
                 onAdd = { navigator.push(TvRoute.SubscriptionEditor()) },
                 onEdit = { guid -> navigator.push(TvRoute.SubscriptionEditor(guid)) },
+            )
+
+            TvRoute.Routing -> RoutingSettingsScreen(
+                viewModel = routingListViewModel,
+                onAddRule = { navigator.push(TvRoute.RoutingEditor()) },
+                onEditRule = { ruleId -> navigator.push(TvRoute.RoutingEditor(ruleId)) },
             )
 
             TvRoute.Settings -> SettingsScreen(viewModel = settingsViewModel)
@@ -193,6 +205,15 @@ fun TvApp(
                     navigator.pop()
                     mainViewModel.onAction(MainAction.RefreshGroups)
                 },
+            )
+
+            is TvRoute.RoutingEditor -> RoutingEditorScreen(
+                route = route,
+                viewModel = routingEditorViewModel,
+                pairingViewModel = pairingViewModel,
+                onBack = { navigator.pop() },
+                onSaved = { navigator.pop() },
+                onDeleted = { navigator.pop() },
             )
 
             else -> PlaceholderScreen(
@@ -298,6 +319,7 @@ private fun routeTitle(route: TvRoute): String = when (route) {
         stringResource(R.string.menu_item_import_config_proxy_chain)
 
     is TvRoute.SubscriptionEditor -> stringResource(R.string.title_sub_setting)
+    is TvRoute.RoutingEditor -> stringResource(R.string.routing_settings_rule_title)
 }
 
 private fun Context.findActivity(): Activity? = when (this) {

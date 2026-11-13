@@ -108,6 +108,13 @@ class TvNavigatorTest {
     }
 
     @Test
+    fun `routing editor route restores its rule id`() {
+        val route = TvRoute.RoutingEditor("rule-1")
+
+        assertEquals(route, TvNavigator.Saver.restore(listOf(route.key))?.current)
+    }
+
+    @Test
     fun `saved keys restore the stack`() {        val navigator = TvNavigator()
         navigator.push(TvRoute.Subscriptions)
         navigator.push(TvRoute.Settings)

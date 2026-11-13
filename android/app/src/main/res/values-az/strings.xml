@@ -660,4 +660,6 @@
     <string name="tv_editor_member_number">Üzv %1$d</string>
     <string name="tv_editor_remove_last">Son üzvü sil</string>
     <string name="tv_subscriptions_updating">Abunələr yenilənir…</string>
+    <string name="tv_routing_enabled">Aktiv</string>
+    <string name="tv_routing_empty">Hələ marşrut qaydası yoxdur. Qayda əlavə edin və ya preset idxal edin.</string>
 </resources>

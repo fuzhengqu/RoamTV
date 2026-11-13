@@ -657,4 +657,6 @@
     <string name="tv_editor_member_number">Thành viên %1$d</string>
     <string name="tv_editor_remove_last">Xóa thành viên cuối</string>
     <string name="tv_subscriptions_updating">Đang cập nhật đăng ký…</string>
+    <string name="tv_routing_enabled">Bật</string>
+    <string name="tv_routing_empty">Chưa có quy tắc định tuyến. Hãy thêm quy tắc hoặc nhập bộ quy tắc.</string>
 </resources>
