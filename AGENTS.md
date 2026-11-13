@@ -5,16 +5,16 @@
 This file applies to the entire repository. Read the applicable scoped guide before editing any
 listed path, including when the agent starts at the repository root:
 
-- Read `V2rayNG/app/src/main/java/tv/roam/client/service/AGENTS.md` for
-  `V2rayNG/app/src/main/java/tv/roam/client/service/`,
-  `V2rayNG/app/src/test/java/tv/roam/client/service/`, and these paths under
-  `V2rayNG/app/src/main/java/tv/roam/client/`: `core/CoreServiceManager.kt`,
+- Read `android/app/src/main/java/tv/roam/client/service/AGENTS.md` for
+  `android/app/src/main/java/tv/roam/client/service/`,
+  `android/app/src/test/java/tv/roam/client/service/`, and these paths under
+  `android/app/src/main/java/tv/roam/client/`: `core/CoreServiceManager.kt`,
   `core/LauncherManager.kt`, `root/`, `contracts/ServiceControl.kt`,
   `contracts/Tun2SocksControl.kt`, `handler/NotificationManager.kt`,
   `helper/MessageHelper.kt`, and `helper/NotificationHelper.kt`.
-- Read `V2rayNG/app/src/main/java/tv/roam/client/ui/AGENTS.md` for
-  `V2rayNG/app/src/main/java/tv/roam/client/ui/` and
-  `V2rayNG/app/src/test/java/tv/roam/client/ui/`.
+- Read `android/app/src/main/java/tv/roam/client/ui/AGENTS.md` for
+  `android/app/src/main/java/tv/roam/client/ui/` and
+  `android/app/src/test/java/tv/roam/client/ui/`.
 
 Follow both guides in scoped paths. A scoped rule overrides a root rule only when they require
 incompatible actions; every other root rule remains active.
@@ -28,7 +28,7 @@ incompatible actions; every other root rule remains active.
 - `Changed behavior` includes direct and downstream build-time or runtime effects through callers,
   consumers, storage, IPC, and resources.
 - `Supported` versions, ABIs, distributions, and locales are exactly those declared by
-  `V2rayNG/app/build.gradle.kts` and `.github/workflows/build.yml` inputs.
+  `android/app/build.gradle.kts` and `.github/workflows/build.yml` inputs.
 - A behavior is `verified` only when its named check passed on branch HEAD. Otherwise list the
   exact unrun check and blocker, and do not call the behavior verified.
 
@@ -60,19 +60,22 @@ incompatible actions; every other root rule remains active.
 
 ## Project boundaries
 
-- The Android project is under `V2rayNG/` and uses Kotlin, Gradle Kotlin DSL, Compose, Material 3,
-  coroutines, and AndroidX lifecycle. Read dependency versions from
-  `V2rayNG/gradle/libs.versions.toml`, SDK levels from `V2rayNG/app/build.gradle.kts`, and CI tools
+- The Android project is under `android/` and uses Kotlin, Gradle Kotlin DSL, Compose for TV
+  (`androidx.tv:tv-material` and `androidx.tv:tv-foundation`), coroutines, and AndroidX lifecycle.
+  Read dependency versions from
+  `android/gradle/libs.versions.toml`, SDK levels from `android/app/build.gradle.kts`, and CI tools
   from `.github/workflows/build.yml`; never copy those numbers into a guide.
 - `AngApplication` initializes MMKV, app locales, WorkManager, defaults, and theme state. Persist
   application data through `MmkvManager` or `SettingsManager`; do not create `SharedPreferences`
   or another path for data they own.
 - `core/` owns native configuration and lifecycle, `handler/` data and application operations,
-  `service/` Android services, and `ui/` Compose activities, components, and ViewModels. Put new
-  code in its owner unless a scoped guide names a narrower owner.
+  `service/` Android services, `feature/` per-feature ViewModels, UI state, actions, and
+  repositories, `mvvm/` shared ViewModel primitives, and `ui/` Compose for TV screens,
+  components, navigation, and theme. Put new code in its owner unless a scoped guide names a
+  narrower owner.
 - Shared lifecycle and configuration code must retain VPN, proxy-only, and root-mode branches.
   Change one mode only when task scope names it; gate the change and preserve the other modes.
-- `AndroidLibXrayLite` is native-core source. `V2rayNG/app/libs/libv2ray.aar` and the HEV libraries
+- `AndroidLibXrayLite` is native-core source. `android/app/libs/libv2ray.aar` and the HEV libraries
   are generated inputs; do not modify or commit them unless task scope upgrades a native dependency.
   Such a PR must identify the source revision and verify every app-declared ABI.
 
@@ -81,9 +84,9 @@ incompatible actions; every other root rule remains active.
 Before building a clean checkout, initialize submodules recursively and reproduce the HEV and AAR
 steps in `.github/workflows/build.yml`. The AAR revision must match the `AndroidLibXrayLite` gitlink
 from `git ls-tree HEAD AndroidLibXrayLite`. Take build-tool versions from that workflow and
-`V2rayNG/gradle/libs.versions.toml`.
+`android/gradle/libs.versions.toml`.
 
-Run Gradle from `V2rayNG/`, using `gradlew.bat` in Windows PowerShell or `./gradlew` on POSIX. Use
+Run Gradle from `android/`, using `gradlew.bat` in Windows PowerShell or `./gradlew` on POSIX. Use
 the Play Store debug variant unless task scope names another distribution.
 
 Apply every matching validation rule:
@@ -98,7 +101,7 @@ Apply every matching validation rule:
 - Android service lifecycle, framework callback, native interaction, permission, accessibility,
   focus, or state restoration: also run an emulator or physical-device check.
 
-Add or update JUnit tests under `V2rayNG/app/src/test/java/` for changed deterministic logic. Report
+Add or update JUnit tests under `android/app/src/test/java/` for changed deterministic logic. Report
 an unavailable required check under the exact label `Not run`, with its command or scenario and
 reason. A compile or assembled APK does not verify runtime behavior.
 

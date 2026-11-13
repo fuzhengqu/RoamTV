@@ -23,7 +23,7 @@ some devices).</li>
 
 <h3>Development</h3>
 
-<p>The Android project is in the <code>V2rayNG/</code> Gradle directory. All
+<p>The Android project is in the <code>android/</code> Gradle directory. All
 build tools live inside the repository under <code>.tooling/</code>; no
 system-level environment variable is changed. Full toolchain versions, native
 build steps and release reproduction are documented in

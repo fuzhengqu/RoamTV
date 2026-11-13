@@ -3,7 +3,7 @@ RoamTV - Notice of Modification and Attribution
 
 Modification notice (GNU GPL version 3, section 5(a))
 ------------------------------------------------------
-This program is a modified version. It was modified on 2026-11-10 and on
+This program is a modified version. It was modified on 2026-11-12 and on
 subsequent dates recorded in the repository history. The modifications were
 made for the RoamTV project and include, among other things, a television
 user interface, remote-control navigation, in-project build tooling, and
@@ -37,12 +37,14 @@ by the same means as the binaries.
 Third-party components
 ----------------------
 The third-party libraries and their respective copyright and license texts
-are listed in V2rayNG/app/src/main/assets/open_source_licenses.html and are
+are listed in android/app/src/main/assets/open_source_licenses.html and are
 also displayed from the application's Legal screen. In particular:
 
   - AndroidLibXrayLite: GNU Lesser General Public License, version 3
     (see AndroidLibXrayLite/LICENSE)
   - hev-socks5-tunnel: MIT License (see hev-socks5-tunnel/LICENSE)
+  - SJCL 1.0.9: BSD-2-Clause (see
+    android/app/src/main/assets/pairing/LICENSE-sjcl.txt)
 
 All original copyright notices, license notices, and warranty disclaimers
 have been retained. No warranty is provided; see sections 15 and 16 of the

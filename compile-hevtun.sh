@@ -57,8 +57,9 @@ cp -r "$__dir/hev-socks5-tunnel" jni/hev-socks5-tunnel
 # target when core.symlinks=false (the default without developer mode). The C
 # compiler then sees e.g. "../src/lib/object/hev-object-atomic.h" as source and
 # fails. Restore each recorded 120000 entry as a real copy of its target inside
-# the temporary tree only. On POSIX CI runners these are already real links and
-# are simply overwritten with identical content, so the step is idempotent.
+# the temporary tree only. On POSIX CI runners these are already real symlinks;
+# copying their target over the link would fail with "are the same file", so
+# leave real symlinks untouched.
 restore_symlinks() {
     local copy_root="$TMPDIR/jni/hev-socks5-tunnel"
     local entry sub gitdir base rel target resolved
@@ -73,6 +74,9 @@ restore_symlinks() {
         base="$copy_root/$sub"
         while IFS= read -r rel; do
             [[ -n "$rel" ]] || continue
+            # POSIX checkouts already contain a real symlink. Do not replace it
+            # with a copy; that would either be a no-op or an error.
+            [[ -L "$base/$rel" ]] && continue
             target=$(git -C "$gitdir" cat-file -p ":$rel")
             resolved="$(dirname "$base/$rel")/$target"
             if [[ -f "$resolved" ]]; then

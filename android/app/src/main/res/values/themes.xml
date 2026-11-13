@@ -1,0 +1,40 @@
+<resources>
+    <color name="window_background_light">#FFFFFFFF</color>
+    <color name="window_background_dark">#FF1C1B1F</color>
+    <color name="tv_window_background">#FF0B0F14</color>
+
+    <!-- Single television theme. The app is intentionally dark-only. -->
+    <style name="Theme.RoamTV" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/tv_window_background</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionModeOverlay">true</item>
+    </style>
+
+    <style name="Theme.RoamTV.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/tv_window_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/Theme.RoamTV</item>
+    </style>
+
+    <style name="AppThemeBaseCommon" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowBackground">@color/window_background_light</item>
+    </style>
+
+    <!-- API 27+ adds navigation bar icon appearance in the versioned base theme. -->
+    <style name="AppThemeBase" parent="AppThemeBaseCommon" />
+
+    <style name="AppThemeDayNight" parent="AppThemeBase" />
+
+    <style name="AppThemeDayNight.NoActionBar" parent="AppThemeBase" />
+
+    <style name="AppThemeDayNight.NoActionBar.Translucent" parent="AppThemeBase">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+</resources>

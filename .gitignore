@@ -3,7 +3,7 @@
 *.jks
 
 # Ignore output JSON file
-V2rayNG/app/release/output.json
+android/app/release/output.json
 
 # Ignore IDE and build system directories
 .idea/
@@ -17,12 +17,12 @@ V2rayNG/app/release/output.json
 # Ignore build directories and captures
 /build
 /captures
-V2rayNG/app/build
-V2rayNG/build
-V2rayNG/local.properties
+android/app/build
+android/build
+android/local.properties
 
 # Ignore prebuilt native libraries (built from submodules by compile-hevtun.sh / AndroidLibXrayLite)
-V2rayNG/app/libs
+android/app/libs
 
 # Ignore APK and AAR files
 *.apk
@@ -35,7 +35,7 @@ signing.properties
 *.so
 
 # Ignore Google services JSON
-V2rayNG/app/google-services.json
+android/app/google-services.json
 
 # Additional common Android/Java ignores
 *.log
@@ -72,6 +72,11 @@ Thumbs.db
 # All build tools (JDK 17, Gradle cache, SDK platform, AVD, keystore) live inside
 # the project so no file outside this repository is ever written.
 .tooling/
+
+# Local-only archive of the pre-TV phone UI. It is kept for reference while the
+# TV layer is being rebuilt and is never compiled or shipped. The same files
+# remain available in the repository history.
+android/app/src/legacyPhone/
 /libs/
 scripts/__pycache__/
 *.keystore
@@ -79,5 +84,5 @@ scripts/__pycache__/
 
 # Kotlin/Gradle incremental build state; never commit these.
 .kotlin/
-V2rayNG/.kotlin/
+android/.kotlin/
 **/.kotlin/

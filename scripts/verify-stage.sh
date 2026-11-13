@@ -10,7 +10,7 @@ R_POSIX="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 VERIFY_DIR="$R_POSIX/.tooling/verify"
 mkdir -p "$VERIFY_DIR"
 
-cd "$R_POSIX/V2rayNG" || exit 1
+cd "$R_POSIX/android" || exit 1
 
 echo "=== P-V stage $STAGE: Gradle ==="
 ./gradlew :app:assemblePlaystoreDebug \
@@ -21,7 +21,7 @@ echo "=== P-V stage $STAGE: Gradle ==="
 GRADLE_EXIT=${PIPESTATUS[0]}
 echo "GRADLE_EXIT=$GRADLE_EXIT"
 
-APK=$(find "$R_POSIX/V2rayNG/app/build/outputs/apk/playstore/debug" -name "*.apk" 2>/dev/null | head -1)
+APK=$(find "$R_POSIX/android/app/build/outputs/apk/playstore/debug" -name "*.apk" 2>/dev/null | head -1)
 AAPT2="$R_POSIX/.tooling/android-sdk/build-tools/37.0.0/aapt2.exe"
 [[ -f "$AAPT2" ]] || AAPT2="D:/Android-SDK/build-tools/37.0.0/aapt2.exe"
 
