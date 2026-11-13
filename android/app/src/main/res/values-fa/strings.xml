@@ -658,4 +658,5 @@
     <string name="tv_editor_protocol_custom">سفارشی</string>
     <string name="tv_editor_member_number">عضو %1$d</string>
     <string name="tv_editor_remove_last">حذف آخرین عضو</string>
+    <string name="tv_subscriptions_updating">در حال به‌روزرسانی اشتراک‌ها…</string>
 </resources>

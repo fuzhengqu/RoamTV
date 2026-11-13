@@ -80,6 +80,10 @@ sealed interface TvRoute {
     data class ProxyChainEditor(val guid: String = "") : TvRoute {
         override val key: String = "proxy_chain|$guid"
     }
+
+    data class SubscriptionEditor(val guid: String = "") : TvRoute {
+        override val key: String = "subscription_editor|$guid"
+    }
 }
 
 /** True for destinations that own the left rail; secondary flows use a back top bar. */
@@ -195,6 +199,9 @@ class TvNavigator(initial: List<TvRoute> = listOf(TvRoute.Home)) {
             }
             if (key.startsWith("proxy_chain|")) {
                 return TvRoute.ProxyChainEditor(key.substringAfter('|'))
+            }
+            if (key.startsWith("subscription_editor|")) {
+                return TvRoute.SubscriptionEditor(key.substringAfter('|'))
             }
             if (key.startsWith("server_editor|")) {
                 val parts = key.split('|')

@@ -658,4 +658,5 @@
     <string name="tv_editor_protocol_custom">কাস্টম</string>
     <string name="tv_editor_member_number">সদস্য %1$d</string>
     <string name="tv_editor_remove_last">শেষ সদস্য সরান</string>
+    <string name="tv_subscriptions_updating">সাবস্ক্রিপশন আপডেট হচ্ছে…</string>
 </resources>

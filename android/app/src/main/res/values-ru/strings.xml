@@ -662,4 +662,5 @@
     <string name="tv_editor_protocol_custom">Другое</string>
     <string name="tv_editor_member_number">Участник %1$d</string>
     <string name="tv_editor_remove_last">Удалить последний элемент</string>
+    <string name="tv_subscriptions_updating">Обновление подписок…</string>
 </resources>

@@ -30,6 +30,8 @@ import tv.roam.client.feature.pairing.PairingViewModel
 import tv.roam.client.feature.server.PolicyGroupEditorViewModel
 import tv.roam.client.feature.server.ProxyChainEditorViewModel
 import tv.roam.client.feature.server.ServerEditorViewModel
+import tv.roam.client.feature.subscription.SubscriptionEditorViewModel
+import tv.roam.client.feature.subscription.SubscriptionListViewModel
 import tv.roam.client.feature.settings.SettingsViewModel
 import tv.roam.client.ui.components.TvDialog
 import tv.roam.client.ui.components.TvOverscan
@@ -49,6 +51,8 @@ import tv.roam.client.ui.screens.PolicyGroupEditorScreen
 import tv.roam.client.ui.screens.ProxyChainEditorScreen
 import tv.roam.client.ui.screens.ServerEditorScreen
 import tv.roam.client.ui.screens.SettingsScreen
+import tv.roam.client.ui.screens.SubscriptionEditorScreen
+import tv.roam.client.ui.screens.SubscriptionsScreen
 import tv.roam.client.ui.theme.TvColors
 
 @Composable
@@ -59,6 +63,8 @@ fun TvApp(
     serverEditorViewModel: ServerEditorViewModel,
     policyGroupEditorViewModel: PolicyGroupEditorViewModel,
     proxyChainEditorViewModel: ProxyChainEditorViewModel,
+    subscriptionListViewModel: SubscriptionListViewModel,
+    subscriptionEditorViewModel: SubscriptionEditorViewModel,
     onStartService: () -> Unit,
     onStopService: () -> Unit,
     onRestartService: () -> Unit,
@@ -115,6 +121,12 @@ fun TvApp(
                 },
             )
 
+            TvRoute.Subscriptions -> SubscriptionsScreen(
+                viewModel = subscriptionListViewModel,
+                onAdd = { navigator.push(TvRoute.SubscriptionEditor()) },
+                onEdit = { guid -> navigator.push(TvRoute.SubscriptionEditor(guid)) },
+            )
+
             TvRoute.Settings -> SettingsScreen(viewModel = settingsViewModel)
 
             TvRoute.Import -> ImportScreen(
@@ -157,6 +169,21 @@ fun TvApp(
             is TvRoute.ProxyChainEditor -> ProxyChainEditorScreen(
                 route = route,
                 viewModel = proxyChainEditorViewModel,
+                onBack = { navigator.pop() },
+                onSaved = {
+                    navigator.pop()
+                    mainViewModel.onAction(MainAction.RefreshGroups)
+                },
+                onDeleted = {
+                    navigator.pop()
+                    mainViewModel.onAction(MainAction.RefreshGroups)
+                },
+            )
+
+            is TvRoute.SubscriptionEditor -> SubscriptionEditorScreen(
+                route = route,
+                viewModel = subscriptionEditorViewModel,
+                pairingViewModel = pairingViewModel,
                 onBack = { navigator.pop() },
                 onSaved = {
                     navigator.pop()
@@ -269,6 +296,8 @@ private fun routeTitle(route: TvRoute): String = when (route) {
 
     is TvRoute.ProxyChainEditor ->
         stringResource(R.string.menu_item_import_config_proxy_chain)
+
+    is TvRoute.SubscriptionEditor -> stringResource(R.string.title_sub_setting)
 }
 
 private fun Context.findActivity(): Activity? = when (this) {

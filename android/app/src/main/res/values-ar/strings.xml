@@ -666,4 +666,5 @@
     <string name="tv_editor_protocol_custom">مخصص</string>
     <string name="tv_editor_member_number">العضو %1$d</string>
     <string name="tv_editor_remove_last">إزالة العضو الأخير</string>
+    <string name="tv_subscriptions_updating">جارٍ تحديث الاشتراكات…</string>
 </resources>

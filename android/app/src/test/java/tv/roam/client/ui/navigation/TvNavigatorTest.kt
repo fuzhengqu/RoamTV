@@ -101,6 +101,13 @@ class TvNavigatorTest {
     }
 
     @Test
+    fun `subscription editor route restores its guid`() {
+        val route = TvRoute.SubscriptionEditor("sub-1")
+
+        assertEquals(route, TvNavigator.Saver.restore(listOf(route.key))?.current)
+    }
+
+    @Test
     fun `saved keys restore the stack`() {        val navigator = TvNavigator()
         navigator.push(TvRoute.Subscriptions)
         navigator.push(TvRoute.Settings)

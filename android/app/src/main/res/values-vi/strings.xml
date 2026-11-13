@@ -656,4 +656,5 @@
     <string name="tv_editor_protocol_custom">Tùy chỉnh</string>
     <string name="tv_editor_member_number">Thành viên %1$d</string>
     <string name="tv_editor_remove_last">Xóa thành viên cuối</string>
+    <string name="tv_subscriptions_updating">Đang cập nhật đăng ký…</string>
 </resources>
