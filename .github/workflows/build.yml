@@ -6,6 +6,10 @@ on:
       release_tag:
         required: false
         type: string
+      prerelease:
+        required: false
+        type: boolean
+        default: true
   push:
     branches:
       - master
@@ -173,4 +177,4 @@ jobs:
           file: release-files/*
           tag: ${{ inputs.release_tag }}
           file_glob: true
-          prerelease: true
+          prerelease: ${{ inputs.prerelease }}
