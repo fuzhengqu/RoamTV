@@ -662,5 +662,6 @@
     <string name="tv_subscriptions_updating">Updating subscriptions…</string>
     <string name="tv_routing_enabled">Enabled</string>
     <string name="tv_routing_empty">No routing rules yet. Add a rule or import a preset.</string>
+    <string name="tv_per_app_empty">No matching apps.</string>
 
 </resources>

@@ -669,4 +669,5 @@
     <string name="tv_subscriptions_updating">جارٍ تحديث الاشتراكات…</string>
     <string name="tv_routing_enabled">مفعّل</string>
     <string name="tv_routing_empty">لا توجد قواعد توجيه بعد. أضف قاعدة أو استورد إعدادًا مسبقًا.</string>
+    <string name="tv_per_app_empty">لا توجد تطبيقات مطابقة.</string>
 </resources>

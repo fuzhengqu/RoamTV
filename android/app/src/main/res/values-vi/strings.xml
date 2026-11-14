@@ -659,4 +659,5 @@
     <string name="tv_subscriptions_updating">Đang cập nhật đăng ký…</string>
     <string name="tv_routing_enabled">Bật</string>
     <string name="tv_routing_empty">Chưa có quy tắc định tuyến. Hãy thêm quy tắc hoặc nhập bộ quy tắc.</string>
+    <string name="tv_per_app_empty">Không có ứng dụng phù hợp.</string>
 </resources>

@@ -20,7 +20,7 @@ means not implemented. Do not promote a row to Verified without the check.
 | Policy groups and proxy chains | Group / chain editor | In progress (M3) | API 37 AVD: add a policy group and a two-member proxy chain, save, list refresh; chain runtime connection not run |
 | Subscriptions and subscription editor | Subscriptions | In progress (M4) | API 37 AVD: list, empty state, add/update actions and the editor form render with D-pad focus; save/delete/update and URL validation not exercised end-to-end |
 | Routing rules and rule editor | Routing | In progress (M4b) | API 37 AVD: list, domain-strategy change, add rule, save and list refresh verified; rule deletion, preset/clipboard import/export not run |
-| Per-app proxy and app picker | Per-app | Planned (M4) | — |
+| Per-app proxy and app picker | Per-app | In progress (M4c) | API 37 AVD: app list, per-app/bypass switches, app toggle and bulk-action dialog verified; search, auto-select, import/export not run |
 | User assets (GeoIP/GeoSite/SRS/URLs) | Assets | Planned (M4) | — |
 | Language: follow system + 10 locales | Settings | Verified (M1) | API 37 AVD: English → 简体中文 → Follow system; Settings route and language-row focus restored after recreation |
 | Settings (VPN, core, Mux, Fragment, Observatory, advanced, mode) | Settings | Planned (M5) | — |

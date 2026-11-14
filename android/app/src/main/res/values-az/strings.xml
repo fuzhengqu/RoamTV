@@ -662,4 +662,5 @@
     <string name="tv_subscriptions_updating">Abunələr yenilənir…</string>
     <string name="tv_routing_enabled">Aktiv</string>
     <string name="tv_routing_empty">Hələ marşrut qaydası yoxdur. Qayda əlavə edin və ya preset idxal edin.</string>
+    <string name="tv_per_app_empty">Uyğun tətbiq yoxdur.</string>
 </resources>

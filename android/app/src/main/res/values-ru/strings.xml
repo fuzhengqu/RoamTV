@@ -665,4 +665,5 @@
     <string name="tv_subscriptions_updating">Обновление подписок…</string>
     <string name="tv_routing_enabled">Включено</string>
     <string name="tv_routing_empty">Правил маршрутизации пока нет. Добавьте правило или импортируйте набор.</string>
+    <string name="tv_per_app_empty">Нет подходящих приложений.</string>
 </resources>

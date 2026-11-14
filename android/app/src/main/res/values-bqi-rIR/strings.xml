@@ -661,4 +661,5 @@
     <string name="tv_subscriptions_updating">در حال به‌روزرسانی اشتراک‌ها…</string>
     <string name="tv_routing_enabled">فعال</string>
     <string name="tv_routing_empty">هنوز قاعده مسیریابی وجود ندارد. یک قاعده اضافه کنید یا یک پیش‌تنظیم وارد کنید.</string>
+    <string name="tv_per_app_empty">برنامه‌ای مطابقت ندارد.</string>
 </resources>

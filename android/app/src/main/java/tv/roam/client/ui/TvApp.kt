@@ -27,6 +27,7 @@ import tv.roam.client.R
 import tv.roam.client.feature.main.MainAction
 import tv.roam.client.feature.main.MainViewModel
 import tv.roam.client.feature.pairing.PairingViewModel
+import tv.roam.client.feature.perappproxy.PerAppProxyViewModel
 import tv.roam.client.feature.routing.RoutingEditorViewModel
 import tv.roam.client.feature.routing.RoutingListViewModel
 import tv.roam.client.feature.server.PolicyGroupEditorViewModel
@@ -49,6 +50,7 @@ import tv.roam.client.ui.navigation.rememberTvNavigator
 import tv.roam.client.ui.screens.HomeScreen
 import tv.roam.client.ui.screens.ImportScreen
 import tv.roam.client.ui.screens.PlaceholderScreen
+import tv.roam.client.ui.screens.PerAppProxyScreen
 import tv.roam.client.ui.screens.PolicyGroupEditorScreen
 import tv.roam.client.ui.screens.ProxyChainEditorScreen
 import tv.roam.client.ui.screens.RoutingEditorScreen
@@ -71,6 +73,7 @@ fun TvApp(
     subscriptionEditorViewModel: SubscriptionEditorViewModel,
     routingListViewModel: RoutingListViewModel,
     routingEditorViewModel: RoutingEditorViewModel,
+    perAppProxyViewModel: PerAppProxyViewModel,
     onStartService: () -> Unit,
     onStopService: () -> Unit,
     onRestartService: () -> Unit,
@@ -138,6 +141,8 @@ fun TvApp(
                 onAddRule = { navigator.push(TvRoute.RoutingEditor()) },
                 onEditRule = { ruleId -> navigator.push(TvRoute.RoutingEditor(ruleId)) },
             )
+
+            TvRoute.PerApp -> PerAppProxyScreen(viewModel = perAppProxyViewModel)
 
             TvRoute.Settings -> SettingsScreen(viewModel = settingsViewModel)
 

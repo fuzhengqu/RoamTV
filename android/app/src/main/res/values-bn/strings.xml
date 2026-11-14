@@ -661,4 +661,5 @@
     <string name="tv_subscriptions_updating">সাবস্ক্রিপশন আপডেট হচ্ছে…</string>
     <string name="tv_routing_enabled">সক্রিয়</string>
     <string name="tv_routing_empty">এখনও কোনো রাউটিং নিয়ম নেই। একটি নিয়ম যোগ করুন বা প্রিসেট আমদানি করুন।</string>
+    <string name="tv_per_app_empty">কোনো মিলে যাওয়া অ্যাপ নেই।</string>
 </resources>

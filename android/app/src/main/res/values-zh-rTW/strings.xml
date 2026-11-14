@@ -659,4 +659,5 @@
     <string name="tv_subscriptions_updating">正在更新訂閱…</string>
     <string name="tv_routing_enabled">啟用</string>
     <string name="tv_routing_empty">還沒有路由規則。新增一條規則或匯入預設。</string>
+    <string name="tv_per_app_empty">沒有符合的應用程式。</string>
 </resources>
