@@ -26,9 +26,10 @@ means not implemented. Do not promote a row to Verified without the check.
 | Settings | Settings | In progress (M5) | API 37 AVD: full group list, speed switch, bypass-LAN dropdown, VPN MTU text edit, observatory invalid-duration toast, VPN/proxy-only dependency dimming, language switch and System VPN settings intent verified; service restart on leaving Settings, root-mode toggles and live core effects not run |
 | Local backup / restore and WebDAV | Backup | In progress (M5) | API 37 AVD: local backup written to Downloads through SAF, restore of that zip succeeded, WebDAV editor renders and disables Save without a URL; WebDAV upload/download, share target and activity recreation not run |
 | Logcat, About / legal, update check | Logs / About / Update | In progress (M5) | API 37 AVD: log list, search dialog, license text, translators, version info and no-update check verified; log copy/clear, new-version dialog and browser download not run |
-| 720p / 1080p / 4K, RTL, 1.3x font, TalkBack | All | Planned (M6) | — |
-| Android 8 (API 26) compatibility | All | Planned (M6) | — |
-| Keyboard / remote-only traversal on every screen | All | Planned (M6) | — |
+| 720p / 1080p / 4K, RTL, 1.3x font, TalkBack | All | In progress (M6) | 1080p and 1.3x Home/Settings checked on Android 17; 720p, 4K, RTL, TalkBack and full traversal not run |
+| Android 8 (API 26) compatibility | All | In progress (M6) | minSdk 26 lint/compile checks pass; API 26 runtime device not available |
+| GPL legal notices and source archive | About / Releases | Verified (M6) | About → Legal notices includes GPLv3, NOTICE and SJCL; every release carries `RoamTV-<tag>-source.zip` with submodule sources and native binaries |
+| Keyboard / remote-only traversal on every screen | All | In progress (M6) | Every implemented screen has D-pad paths; full screen-by-screen sweep and keyboard/TalkBack traversal not run |
 
 ## Platform capability notes
 
