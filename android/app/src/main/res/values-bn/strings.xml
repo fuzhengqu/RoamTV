@@ -292,6 +292,8 @@
     <string name="title_source_code">সোর্স কোড</string>
     <string name="title_oss_license">ওপেন সোর্স লাইসেন্স</string>
     <string name="title_translators">অনুবাদকগণ</string>
+    <string name="tv_about_version">সংস্করণ</string>
+    <string name="tv_about_app_id">অ্যাপ্লিকেশন আইডি</string>
     <string name="title_tg_channel">টেলিগ্রাম চ্যানেল</string>
 
     <string name="title_pref_promotion">প্রচার</string>
@@ -620,7 +622,10 @@
 
     <string name="language_follow_system">সিস্টেম অনুযায়ী</string>
     <string name="tv_settings_language_summary">মেনু, ডায়ালগ ও বার্তার জন্য ব্যবহৃত হয়। পরিবর্তন সাথে সাথে 적용됩니다.</string>
+    <string name="tv_settings_restart_hint">পরিবর্তনগুলি সাথে সাথে সংরক্ষিত হয়। সংযুক্ত থাকলে, সেটিংস থেকে বেরোনোর সময় সংযোগটি পুনরায় চালু হবে।</string>
 
+    <string name="tv_logcat_empty">কোনো লগ এন্ট্রি নেই।</string>
+    <string name="tv_logcat_clear_message">সিস্টেম লগ বাফার মুছবেন? অন্য অ্যাপের লগও মুছে যাবে।</string>
     <!-- Television import and pairing -->
     <string name="tv_share_qr_hint">সার্ভার আমদানি করতে ফোন দিয়ে এই কোডটি স্ক্যান করুন। যে কেউ কোডটি স্ক্যান করলে সার্ভার ব্যবহার করতে পারবে।</string>
     <string name="tv_import_intro">ফোন, স্থানীয় ফাইল বা ক্লিপবোর্ড থেকে আমদানি করুন।</string>

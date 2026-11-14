@@ -36,6 +36,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.tv.material3.MaterialTheme
@@ -52,6 +54,7 @@ fun TvTextEditDialog(
     onDismiss: () -> Unit,
     multiline: Boolean = false,
     numberOnly: Boolean = false,
+    password: Boolean = false,
     onFromPhone: (() -> Unit)? = null,
 ) {
     var text by remember(initialValue) { mutableStateOf(initialValue) }
@@ -80,8 +83,17 @@ fun TvTextEditDialog(
                     fontWeight = FontWeight.Normal,
                 ),
                 cursorBrush = SolidColor(TvColors.Teal),
+                visualTransformation = if (password) {
+                    PasswordVisualTransformation()
+                } else {
+                    VisualTransformation.None
+                },
                 keyboardOptions = KeyboardOptions(
-                    keyboardType = if (numberOnly) KeyboardType.Number else KeyboardType.Text,
+                    keyboardType = when {
+                        password -> KeyboardType.Password
+                        numberOnly -> KeyboardType.Number
+                        else -> KeyboardType.Text
+                    },
                     imeAction = if (multiline) ImeAction.Default else ImeAction.Done,
                 ),
                 keyboardActions = KeyboardActions(onDone = { onSave(text) }),

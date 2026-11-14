@@ -23,9 +23,9 @@ means not implemented. Do not promote a row to Verified without the check.
 | Per-app proxy and app picker | Per-app | In progress (M4c) | API 37 AVD: app list, per-app/bypass switches, app toggle and bulk-action dialog verified; search, auto-select, import/export not run |
 | User assets (GeoIP/GeoSite/SRS/URLs) | Assets | In progress (M4d) | API 37 AVD: list with built-in sizes/dates, geo source change and persistence, URL add/edit/delete, validation, SAF local-file import and delete, download-all with updated metadata verified; pairing handoff for a URL not run |
 | Language: follow system + 10 locales | Settings | Verified (M1) | API 37 AVD: English → 简体中文 → Follow system; Settings route and language-row focus restored after recreation |
-| Settings (VPN, core, Mux, Fragment, Observatory, advanced, mode) | Settings | Planned (M5) | — |
-| Local backup / restore and WebDAV | Backup | Planned (M5) | — |
-| Logcat, About / legal, update check | Logs / About / Update | Planned (M5) | — |
+| Settings | Settings | In progress (M5) | API 37 AVD: full group list, speed switch, bypass-LAN dropdown, VPN MTU text edit, observatory invalid-duration toast, VPN/proxy-only dependency dimming, language switch and System VPN settings intent verified; service restart on leaving Settings, root-mode toggles and live core effects not run |
+| Local backup / restore and WebDAV | Backup | In progress (M5) | API 37 AVD: local backup written to Downloads through SAF, restore of that zip succeeded, WebDAV editor renders and disables Save without a URL; WebDAV upload/download, share target and activity recreation not run |
+| Logcat, About / legal, update check | Logs / About / Update | In progress (M5) | API 37 AVD: log list, search dialog, license text, translators, version info and no-update check verified; log copy/clear, new-version dialog and browser download not run |
 | 720p / 1080p / 4K, RTL, 1.3x font, TalkBack | All | Planned (M6) | — |
 | Android 8 (API 26) compatibility | All | Planned (M6) | — |
 | Keyboard / remote-only traversal on every screen | All | Planned (M6) | — |

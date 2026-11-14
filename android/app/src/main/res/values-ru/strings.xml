@@ -292,6 +292,8 @@
     <string name="title_source_code">Исходный код</string>
     <string name="title_oss_license">Лицензии открытого исходного кода</string>
     <string name="title_translators">Переводчики</string>
+    <string name="tv_about_version">Версия</string>
+    <string name="tv_about_app_id">ID приложения</string>
     <string name="title_tg_channel">Telegram-канал</string>
 
     <string name="title_pref_promotion">Предложения</string>
@@ -624,7 +626,10 @@
 
     <string name="language_follow_system">Как в системе</string>
     <string name="tv_settings_language_summary">Используется для меню, диалогов и сообщений. Изменения применяются сразу.</string>
+    <string name="tv_settings_restart_hint">Изменения сохраняются сразу. Если соединение активно, оно перезапустится при выходе из настроек.</string>
 
+    <string name="tv_logcat_empty">Нет записей журнала.</string>
+    <string name="tv_logcat_clear_message">Очистить системный буфер журнала? Журналы других приложений также будут очищены.</string>
     <!-- Television import and pairing -->
     <string name="tv_share_qr_hint">Отсканируйте этот код телефоном, чтобы импортировать сервер. Любой, кто отсканирует код, сможет использовать сервер.</string>
     <string name="tv_import_intro">Импорт с телефона, из файла или буфера обмена.</string>

@@ -292,6 +292,8 @@
     <string name="title_source_code">کد منبع</string>
     <string name="title_oss_license">مجوز های منبع باز</string>
     <string name="title_translators">مترجمان</string>
+    <string name="tv_about_version">نسخه</string>
+    <string name="tv_about_app_id">شناسه برنامه</string>
     <string name="title_tg_channel">کانال تلگرام</string>
 
     <string name="title_pref_promotion">تبلیغات</string>
@@ -620,7 +622,10 @@
 
     <string name="language_follow_system">مطابق سیستم</string>
     <string name="tv_settings_language_summary">برای منوها، گفتگوها و پیام‌ها استفاده می‌شود. تغییرات فوراً اعمال می‌شوند.</string>
+    <string name="tv_settings_restart_hint">تغییرات فوراً ذخیره می‌شوند. اگر متصل هستید، با خروج از تنظیمات اتصال دوباره راه‌اندازی می‌شود.</string>
 
+    <string name="tv_logcat_empty">هیچ ورودی گزارشی وجود ندارد.</string>
+    <string name="tv_logcat_clear_message">بافر گزارش سیستم پاک شود؟ گزارش‌های برنامه‌های دیگر نیز پاک می‌شوند.</string>
     <!-- Television import and pairing -->
     <string name="tv_share_qr_hint">این کد را با گوشی اسکن کنید تا سرور وارد شود. هر کسی که کد را اسکن کند می‌تواند از سرور استفاده کند.</string>
     <string name="tv_import_intro">از گوشی، فایل محلی یا کلیپ‌بورد وارد کنید.</string>

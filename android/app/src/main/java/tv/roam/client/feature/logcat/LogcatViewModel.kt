@@ -14,6 +14,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.IOException
 
 class LogcatViewModel(application: Application) : BaseViewModel(application) {
@@ -30,15 +32,17 @@ class LogcatViewModel(application: Application) : BaseViewModel(application) {
     fun loadLogcat() {
         launchLoading {
             try {
-                val lst = LinkedHashSet<String>()
-                lst.add("logcat")
-                lst.add("-d")
-                lst.add("-v")
-                lst.add("time")
-                lst.add("-s")
-                lst.add("GoLog,${AppConfig.ANG_PACKAGE},AndroidRuntime,System.err")
-                val process = Runtime.getRuntime().exec(lst.toTypedArray())
-                val allText = process.inputStream.bufferedReader().use { it.readLines() }.reversed()
+                val allText = withContext(Dispatchers.IO) {
+                    val lst = LinkedHashSet<String>()
+                    lst.add("logcat")
+                    lst.add("-d")
+                    lst.add("-v")
+                    lst.add("time")
+                    lst.add("-s")
+                    lst.add("GoLog,${AppConfig.ANG_PACKAGE},AndroidRuntime,System.err")
+                    val process = Runtime.getRuntime().exec(lst.toTypedArray())
+                    process.inputStream.bufferedReader().use { it.readLines() }.reversed()
+                }
 
                 logsetsAll.clear()
                 logsetsAll.addAll(allText)
@@ -56,17 +60,23 @@ class LogcatViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun clearLogcat() {
-        try {
-            val lst = LinkedHashSet<String>()
-            lst.add("logcat")
-            lst.add("-c")
-            val process = Runtime.getRuntime().exec(lst.toTypedArray())
-            process.waitFor()
-
-            logsetsAll.clear()
-            _filteredLogs.value = emptyList()
-        } catch (e: IOException) {
-            LogUtil.e(AppConfig.TAG, "Failed to clear logcat", e)
+        viewModelScope.launch {
+            val cleared = withContext(Dispatchers.IO) {
+                try {
+                    val lst = LinkedHashSet<String>()
+                    lst.add("logcat")
+                    lst.add("-c")
+                    Runtime.getRuntime().exec(lst.toTypedArray()).waitFor()
+                    true
+                } catch (e: IOException) {
+                    LogUtil.e(AppConfig.TAG, "Failed to clear logcat", e)
+                    false
+                }
+            }
+            if (cleared) {
+                logsetsAll.clear()
+                _filteredLogs.value = emptyList()
+            }
         }
     }
 

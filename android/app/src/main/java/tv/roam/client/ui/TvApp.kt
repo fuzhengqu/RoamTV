@@ -25,6 +25,10 @@ import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import tv.roam.client.R
 import tv.roam.client.feature.main.MainAction
+import tv.roam.client.feature.about.AboutViewModel
+import tv.roam.client.feature.backup.BackupViewModel
+import tv.roam.client.feature.checkupdate.CheckUpdateViewModel
+import tv.roam.client.feature.logcat.LogcatViewModel
 import tv.roam.client.feature.main.MainViewModel
 import tv.roam.client.feature.pairing.PairingViewModel
 import tv.roam.client.feature.perappproxy.PerAppProxyViewModel
@@ -38,6 +42,7 @@ import tv.roam.client.feature.subscription.SubscriptionListViewModel
 import tv.roam.client.feature.settings.SettingsViewModel
 import tv.roam.client.feature.userasset.UserAssetEditorViewModel
 import tv.roam.client.feature.userasset.UserAssetViewModel
+import tv.roam.client.handler.SettingsChangeManager
 import tv.roam.client.ui.components.TvDialog
 import tv.roam.client.ui.components.TvOverscan
 import tv.roam.client.ui.components.TvRailItem
@@ -49,8 +54,11 @@ import tv.roam.client.ui.navigation.TvSecondaryDestination
 import tv.roam.client.ui.navigation.TvNavigator
 import tv.roam.client.ui.navigation.isTopLevel
 import tv.roam.client.ui.navigation.rememberTvNavigator
+import tv.roam.client.ui.screens.AboutScreen
+import tv.roam.client.ui.screens.BackupScreen
 import tv.roam.client.ui.screens.HomeScreen
 import tv.roam.client.ui.screens.ImportScreen
+import tv.roam.client.ui.screens.LogcatScreen
 import tv.roam.client.ui.screens.PlaceholderScreen
 import tv.roam.client.ui.screens.PerAppProxyScreen
 import tv.roam.client.ui.screens.PolicyGroupEditorScreen
@@ -61,6 +69,7 @@ import tv.roam.client.ui.screens.ServerEditorScreen
 import tv.roam.client.ui.screens.SettingsScreen
 import tv.roam.client.ui.screens.SubscriptionEditorScreen
 import tv.roam.client.ui.screens.SubscriptionsScreen
+import tv.roam.client.ui.screens.UpdateScreen
 import tv.roam.client.ui.screens.UserAssetEditorScreen
 import tv.roam.client.ui.screens.UserAssetScreen
 import tv.roam.client.ui.theme.TvColors
@@ -80,6 +89,10 @@ fun TvApp(
     perAppProxyViewModel: PerAppProxyViewModel,
     userAssetViewModel: UserAssetViewModel,
     userAssetEditorViewModel: UserAssetEditorViewModel,
+    backupViewModel: BackupViewModel,
+    logcatViewModel: LogcatViewModel,
+    aboutViewModel: AboutViewModel,
+    checkUpdateViewModel: CheckUpdateViewModel,
     onStartService: () -> Unit,
     onStopService: () -> Unit,
     onRestartService: () -> Unit,
@@ -96,6 +109,19 @@ fun TvApp(
     }
 
     val current = navigator.current
+
+    // Settings writes only persist values; apply pending service/group work
+    // once the user leaves the Settings screen so a burst of changes causes at
+    // most one restart.
+    LaunchedEffect(current) {
+        if (current == TvRoute.Settings) return@LaunchedEffect
+        val refreshGroups = SettingsChangeManager.consumeSetupGroupTab()
+        val restart = SettingsChangeManager.consumeRestartService()
+        mainViewModel.refreshUiSettings()
+        if (refreshGroups) mainViewModel.onAction(MainAction.RefreshGroups)
+        if (restart && mainViewModel.uiState.value.isRunning) onRestartService()
+    }
+
     val screen: @Composable () -> Unit = {
         when (val route = current) {
             TvRoute.Home -> HomeScreen(
@@ -156,13 +182,36 @@ fun TvApp(
                 onEditAsset = { guid -> navigator.push(TvRoute.AssetEditor(guid)) },
             )
 
-            TvRoute.Settings -> SettingsScreen(viewModel = settingsViewModel)
+            TvRoute.Settings -> SettingsScreen(
+                viewModel = settingsViewModel,
+                pairingViewModel = pairingViewModel,
+            )
 
             TvRoute.Import -> ImportScreen(
                 mainViewModel = mainViewModel,
                 pairingViewModel = pairingViewModel,
                 onBack = { navigator.pop() },
                 onImported = { navigator.openRoot(TvRoute.Home) },
+            )
+
+            TvRoute.Backup -> BackupScreen(
+                viewModel = backupViewModel,
+                onBack = { navigator.pop() },
+            )
+
+            TvRoute.Logs -> LogcatScreen(
+                viewModel = logcatViewModel,
+                onBack = { navigator.pop() },
+            )
+
+            TvRoute.About -> AboutScreen(
+                viewModel = aboutViewModel,
+                onBack = { navigator.pop() },
+            )
+
+            TvRoute.Update -> UpdateScreen(
+                viewModel = checkUpdateViewModel,
+                onBack = { navigator.pop() },
             )
 
             is TvRoute.ServerEditor -> ServerEditorScreen(

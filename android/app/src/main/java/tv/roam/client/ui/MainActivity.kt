@@ -16,6 +16,10 @@ import tv.roam.client.AngApplication
 import tv.roam.client.R
 import tv.roam.client.core.LauncherManager
 import tv.roam.client.extension.toast
+import tv.roam.client.feature.about.AboutViewModel
+import tv.roam.client.feature.backup.BackupViewModel
+import tv.roam.client.feature.checkupdate.CheckUpdateViewModel
+import tv.roam.client.feature.logcat.LogcatViewModel
 import tv.roam.client.feature.main.MainAction
 import tv.roam.client.feature.main.MainRepository
 import tv.roam.client.feature.main.MainViewModel
@@ -61,6 +65,10 @@ class MainActivity : AppCompatActivity() {
     private val perAppProxyViewModel: PerAppProxyViewModel by viewModels()
     private val userAssetViewModel: UserAssetViewModel by viewModels()
     private val userAssetEditorViewModel: UserAssetEditorViewModel by viewModels()
+    private val backupViewModel: BackupViewModel by viewModels()
+    private val logcatViewModel: LogcatViewModel by viewModels()
+    private val aboutViewModel: AboutViewModel by viewModels()
+    private val checkUpdateViewModel: CheckUpdateViewModel by viewModels()
 
     private val vpnPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -101,6 +109,10 @@ class MainActivity : AppCompatActivity() {
                     perAppProxyViewModel = perAppProxyViewModel,
                     userAssetViewModel = userAssetViewModel,
                     userAssetEditorViewModel = userAssetEditorViewModel,
+                    backupViewModel = backupViewModel,
+                    logcatViewModel = logcatViewModel,
+                    aboutViewModel = aboutViewModel,
+                    checkUpdateViewModel = checkUpdateViewModel,
                     onStartService = ::requestServiceStart,
                     onStopService = ::stopService,
                     onRestartService = ::restartService,

@@ -292,6 +292,8 @@
     <string name="title_source_code">源代码</string>
     <string name="title_oss_license">开源许可证</string>
     <string name="title_translators">翻译贡献者</string>
+    <string name="tv_about_version">版本</string>
+    <string name="tv_about_app_id">应用 ID</string>
     <string name="title_tg_channel">Telegram 频道</string>
 
     <string name="title_pref_promotion">推广</string>
@@ -618,7 +620,10 @@
 
     <string name="language_follow_system">跟随系统</string>
     <string name="tv_settings_language_summary">用于菜单、对话框和提示信息。修改后立即生效。</string>
+    <string name="tv_settings_restart_hint">设置会立即保存。如果当前已连接，离开设置页面后会重启连接。</string>
 
+    <string name="tv_logcat_empty">没有日志条目。</string>
+    <string name="tv_logcat_clear_message">清空系统日志缓冲区？其他应用的日志也会被清空。</string>
     <!-- Television import and pairing -->
     <string name="tv_share_qr_hint">用手机扫描此二维码即可导入节点。任何扫描该二维码的人都能使用该节点。</string>
     <string name="tv_import_intro">从手机、本地文件或剪贴板导入。</string>

@@ -292,6 +292,8 @@
     <string name="title_source_code">الكود المصدري</string>
     <string name="title_oss_license">تراخيص المصادر المفتوحة</string>
     <string name="title_translators">المترجمون</string>
+    <string name="tv_about_version">الإصدار</string>
+    <string name="tv_about_app_id">معرّف التطبيق</string>
     <string name="title_tg_channel">قناة Telegram</string>
 
     <string name="title_pref_promotion">ترويج</string>
@@ -628,7 +630,10 @@
 
     <string name="language_follow_system">حسب النظام</string>
     <string name="tv_settings_language_summary">تُستخدم للقوائم ومربعات الحوار والرسائل. تُطبق التغييرات فورًا.</string>
+    <string name="tv_settings_restart_hint">يتم حفظ التغييرات فورًا. إذا كان الاتصال نشطًا، فسيُعاد تشغيله عند مغادرة الإعدادات.</string>
 
+    <string name="tv_logcat_empty">لا توجد إدخالات في السجل.</string>
+    <string name="tv_logcat_clear_message">مسح مخزن سجل النظام؟ سيتم مسح سجلات التطبيقات الأخرى أيضًا.</string>
     <!-- Television import and pairing -->
     <string name="tv_share_qr_hint">امسح هذا الرمز بهاتفك لاستيراد الخادم. أي شخص يمسح الرمز يمكنه استخدام الخادم.</string>
     <string name="tv_import_intro">استورد من الهاتف أو ملف محلي أو الحافظة.</string>

@@ -292,6 +292,8 @@
     <string name="title_source_code">Source code</string>
     <string name="title_oss_license">Open-source licenses</string>
     <string name="title_translators">Translators</string>
+    <string name="tv_about_version">Version</string>
+    <string name="tv_about_app_id">Application ID</string>
     <string name="title_tg_channel">Telegram channel</string>
 
     <string name="title_pref_promotion">Promotion</string>
@@ -621,6 +623,10 @@
     <string name="tv_confirm_bulk_message">This removes the matching servers from this group. Continue?</string>
     <string name="language_follow_system">Follow system</string>
     <string name="tv_settings_language_summary">Used for menus, dialogs and messages. Changes apply immediately.</string>
+    <string name="tv_settings_restart_hint">Changes save immediately. If connected, the connection restarts when you leave Settings.</string>
+    <string name="tv_password_masked" translatable="false">••••••</string>
+    <string name="tv_logcat_empty">No log entries.</string>
+    <string name="tv_logcat_clear_message">Clear the system log buffer? Logs from other apps are cleared too.</string>
     <string name="tv_share_qr_hint">Scan this code with your phone to import the server. Anyone who scans it can use the server.</string>
 
     <!-- Television import and pairing -->

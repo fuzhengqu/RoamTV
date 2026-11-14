@@ -292,6 +292,8 @@
     <string name="title_source_code">Mənbə kodu</string>
     <string name="title_oss_license">Açıq mənbə lisenziyaları</string>
     <string name="title_translators">Tərcüməçilər</string>
+    <string name="tv_about_version">Versiya</string>
+    <string name="tv_about_app_id">Tətbiq ID</string>
     <string name="title_tg_channel">Telegram kanalı</string>
 
     <string name="title_pref_promotion">Təşviqat</string>
@@ -621,7 +623,10 @@
 
     <string name="language_follow_system">Sistemlə eyni</string>
     <string name="tv_settings_language_summary">Menyu, dialoqlar və mesajlar üçün istifadə olunur. Dəyişikliklər dərhal tətbiq olunur.</string>
+    <string name="tv_settings_restart_hint">Dəyişikliklər dərhal yadda saxlanılır. Əgər qoşulmusunuzsa, Parametrlərdən çıxdıqda bağlantı yenidən başladılacaq.</string>
 
+    <string name="tv_logcat_empty">Jurnal qeydi yoxdur.</string>
+    <string name="tv_logcat_clear_message">Sistem jurnal buferi təmizlənsin? Digər tətbiqlərin jurnalları da silinəcək.</string>
     <!-- Television import and pairing -->
     <string name="tv_share_qr_hint">Bu kodu telefonla skan edərək serveri idxal edin. Kodu skan edən hər kəs serverdən istifadə edə bilər.</string>
     <string name="tv_import_intro">Telefondan, yerli fayldan və ya clipboard-dan idxal edin.</string>
