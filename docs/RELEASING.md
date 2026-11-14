@@ -35,7 +35,7 @@ Rules:
   fixed per-ABI offset in `android/app/build.gradle.kts`; the offset is
   deterministic and still increments with the declared code.
 
-The current source version is `0.04` (`versionCode = 4`). The first public
+The current source version is `0.10` (`versionCode = 10`). The first public
 version was `0.01` (`versionCode = 1`). Development debug APKs use the same
 version code but a different signing key; testers must uninstall a debug build
 before installing a release APK.
