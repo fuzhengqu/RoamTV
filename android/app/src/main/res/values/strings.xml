@@ -348,6 +348,11 @@
     <string name="title_ping_all_server">Test TCP delays (TCPing)</string>
     <string name="title_real_ping_all_server">Test real delays</string>
     <string name="title_user_asset_setting">Asset files</string>
+    <string name="tv_asset_add_file">Add local file</string>
+    <string name="tv_asset_builtin">Built-in</string>
+    <string name="tv_asset_edit_title">Edit asset URL</string>
+    <string name="tv_asset_local_file">Local file</string>
+    <string name="tv_asset_local_file_hint">Imported into the asset folder</string>
     <string name="title_sort_by_test_results">Sort by test results</string>
     <string name="title_filter_config">Filter configs</string>
     <string name="filter_config_all">All</string>

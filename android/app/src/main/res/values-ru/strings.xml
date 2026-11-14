@@ -348,6 +348,11 @@
     <string name="title_ping_all_server">Проверить TCP-задержку</string>
     <string name="title_real_ping_all_server">Проверить реальную задержку</string>
     <string name="title_user_asset_setting">Файлы ресурсов</string>
+    <string name="tv_asset_add_file">Добавить локальный файл</string>
+    <string name="tv_asset_builtin">Встроенный</string>
+    <string name="tv_asset_edit_title">Изменить URL ресурса</string>
+    <string name="tv_asset_local_file">Локальный файл</string>
+    <string name="tv_asset_local_file_hint">Импортирован в папку ресурсов</string>
     <string name="title_sort_by_test_results">Сортировать по результатам теста</string>
     <string name="title_filter_config">Фильтр профилей</string>
     <string name="filter_config_all">Все</string>

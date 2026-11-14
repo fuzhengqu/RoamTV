@@ -348,6 +348,11 @@
     <string name="title_ping_all_server">TCP gecikmələrini sınaqdan keçir (TCPing)</string>
     <string name="title_real_ping_all_server">Real gecikmələri sınaqdan keçir</string>
     <string name="title_user_asset_setting">Resurs faylları</string>
+    <string name="tv_asset_add_file">Yerli fayl əlavə et</string>
+    <string name="tv_asset_builtin">Daxili</string>
+    <string name="tv_asset_edit_title">Resurs URL-ni redaktə et</string>
+    <string name="tv_asset_local_file">Yerli fayl</string>
+    <string name="tv_asset_local_file_hint">Resurs qovluğuna idxal edildi</string>
     <string name="title_sort_by_test_results">Sınaq nəticələrinə görə çeşidlə</string>
     <string name="title_filter_config">Konfiqurasiyaları filtrdən keçir</string>
     <string name="filter_config_all">Hamısı</string>

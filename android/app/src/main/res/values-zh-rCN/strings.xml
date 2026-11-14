@@ -348,6 +348,11 @@
     <string name="title_ping_all_server">测试 TCP 延迟（TCPing）</string>
     <string name="title_real_ping_all_server">测试真连接延迟</string>
     <string name="title_user_asset_setting">资源文件</string>
+    <string name="tv_asset_add_file">添加本地文件</string>
+    <string name="tv_asset_builtin">内置</string>
+    <string name="tv_asset_edit_title">编辑资源 URL</string>
+    <string name="tv_asset_local_file">本地文件</string>
+    <string name="tv_asset_local_file_hint">已导入到资源目录</string>
     <string name="title_sort_by_test_results">按测试结果排序</string>
     <string name="title_filter_config">过滤配置</string>
     <string name="filter_config_all">所有</string>

@@ -36,6 +36,8 @@ import tv.roam.client.feature.server.ServerEditorViewModel
 import tv.roam.client.feature.subscription.SubscriptionEditorViewModel
 import tv.roam.client.feature.subscription.SubscriptionListViewModel
 import tv.roam.client.feature.settings.SettingsViewModel
+import tv.roam.client.feature.userasset.UserAssetEditorViewModel
+import tv.roam.client.feature.userasset.UserAssetViewModel
 import tv.roam.client.ui.components.TvDialog
 import tv.roam.client.ui.components.TvOverscan
 import tv.roam.client.ui.components.TvRailItem
@@ -59,6 +61,8 @@ import tv.roam.client.ui.screens.ServerEditorScreen
 import tv.roam.client.ui.screens.SettingsScreen
 import tv.roam.client.ui.screens.SubscriptionEditorScreen
 import tv.roam.client.ui.screens.SubscriptionsScreen
+import tv.roam.client.ui.screens.UserAssetEditorScreen
+import tv.roam.client.ui.screens.UserAssetScreen
 import tv.roam.client.ui.theme.TvColors
 
 @Composable
@@ -74,6 +78,8 @@ fun TvApp(
     routingListViewModel: RoutingListViewModel,
     routingEditorViewModel: RoutingEditorViewModel,
     perAppProxyViewModel: PerAppProxyViewModel,
+    userAssetViewModel: UserAssetViewModel,
+    userAssetEditorViewModel: UserAssetEditorViewModel,
     onStartService: () -> Unit,
     onStopService: () -> Unit,
     onRestartService: () -> Unit,
@@ -143,6 +149,12 @@ fun TvApp(
             )
 
             TvRoute.PerApp -> PerAppProxyScreen(viewModel = perAppProxyViewModel)
+
+            TvRoute.Assets -> UserAssetScreen(
+                viewModel = userAssetViewModel,
+                onAddUrl = { navigator.push(TvRoute.AssetEditor()) },
+                onEditAsset = { guid -> navigator.push(TvRoute.AssetEditor(guid)) },
+            )
 
             TvRoute.Settings -> SettingsScreen(viewModel = settingsViewModel)
 
@@ -215,6 +227,15 @@ fun TvApp(
             is TvRoute.RoutingEditor -> RoutingEditorScreen(
                 route = route,
                 viewModel = routingEditorViewModel,
+                pairingViewModel = pairingViewModel,
+                onBack = { navigator.pop() },
+                onSaved = { navigator.pop() },
+                onDeleted = { navigator.pop() },
+            )
+
+            is TvRoute.AssetEditor -> UserAssetEditorScreen(
+                route = route,
+                viewModel = userAssetEditorViewModel,
                 pairingViewModel = pairingViewModel,
                 onBack = { navigator.pop() },
                 onSaved = { navigator.pop() },
@@ -325,6 +346,7 @@ private fun routeTitle(route: TvRoute): String = when (route) {
 
     is TvRoute.SubscriptionEditor -> stringResource(R.string.title_sub_setting)
     is TvRoute.RoutingEditor -> stringResource(R.string.routing_settings_rule_title)
+    is TvRoute.AssetEditor -> stringResource(R.string.title_user_asset_add_url)
 }
 
 private fun Context.findActivity(): Activity? = when (this) {

@@ -1,15 +1,23 @@
 package tv.roam.client.feature.userasset
+
 import android.app.Application
+import android.net.Uri
+import android.provider.OpenableColumns
+import androidx.annotation.StringRes
 import androidx.lifecycle.viewModelScope
 import tv.roam.client.AppConfig
+import tv.roam.client.R
 import tv.roam.client.dto.UrlContentRequest
 import tv.roam.client.dto.entities.AssetUrlCache
 import tv.roam.client.dto.entities.AssetUrlItem
 import tv.roam.client.extension.concatUrl
 import tv.roam.client.handler.MmkvManager
+import tv.roam.client.handler.SettingsManager
 import tv.roam.client.mvvm.BaseViewModel
 import tv.roam.client.util.HttpUtil
 import tv.roam.client.util.LogUtil
+import tv.roam.client.util.Utils
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.ensureActive
@@ -17,14 +25,32 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.currentCoroutineContext
 import java.io.File
 
 internal data class AssetFileMetadata(val length: Long, val lastModified: Long)
 
 internal data class UserAssetUiState(
     val assets: List<AssetUrlCache> = emptyList(),
-    val fileMetadata: Map<String, AssetFileMetadata> = emptyMap()
+    val fileMetadata: Map<String, AssetFileMetadata> = emptyMap(),
+    val geoFilesSource: String = "",
+    val isLoading: Boolean = true,
+    val isDownloading: Boolean = false,
+    @StringRes val messageRes: Int? = null,
+    val downloadResult: UserAssetViewModel.GeoDownloadResult? = null,
 )
+
+/**
+ * Resolves a user-visible asset name to a single safe file name inside the
+ * asset directory. The picker may report a decorated or nested display name.
+ */
+internal fun sanitizeAssetFileName(raw: String?): String? {
+    val name = raw
+        ?.substringAfterLast('/')
+        ?.substringAfterLast('\\')
+        ?.trim()
+    return name?.takeIf { it.isNotEmpty() && it != "." && it != ".." }
+}
 
 class UserAssetViewModel(application: Application) : BaseViewModel(application) {
     private val builtInGeoFiles = listOf(AppConfig.GEOSITE_DAT, AppConfig.GEOIP_DAT, AppConfig.GEOIP_ONLY_CN_PRIVATE_DAT)
@@ -33,19 +59,150 @@ class UserAssetViewModel(application: Application) : BaseViewModel(application) 
     internal val uiState: StateFlow<UserAssetUiState> = _uiState.asStateFlow()
     private var reloadJob: Job? = null
 
-    fun reload(geoFilesSource: String, extDir: File): Job {
+    /**
+     * Loads the asset list and the persisted geo-file source for the TV screen.
+     */
+    fun load() {
         reloadJob?.cancel()
-        return viewModelScope.launch(Dispatchers.IO) {
-            val snapshot = buildAssetList(MmkvManager.decodeAssetUrls(), geoFilesSource)
-            val files = extDir.listFiles().orEmpty().associateBy { it.name }
-            val metadata = snapshot.mapNotNull { asset ->
-                files[asset.assetUrl.remarks]?.let { file ->
-                    asset.guid to AssetFileMetadata(file.length(), file.lastModified())
+        _uiState.value = _uiState.value.copy(isLoading = true)
+        reloadJob = viewModelScope.launch(Dispatchers.IO) {
+            refresh(currentGeoFilesSource(), assetDir())
+        }
+    }
+
+    fun selectGeoSource(source: String) {
+        reloadJob?.cancel()
+        _uiState.value = _uiState.value.copy(geoFilesSource = source, isLoading = true)
+        reloadJob = viewModelScope.launch(Dispatchers.IO) {
+            MmkvManager.encodeSettings(AppConfig.PREF_GEO_FILES_SOURCES, source)
+            refresh(source, assetDir())
+        }
+    }
+
+    fun downloadAll() {
+        if (_uiState.value.isDownloading) return
+        _uiState.value = _uiState.value.copy(isDownloading = true)
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val source = currentGeoFilesSource()
+                val dir = assetDir()
+                val snapshot = buildAssetList(MmkvManager.decodeAssetUrls(), source)
+                _uiState.value = _uiState.value.copy(
+                    assets = snapshot,
+                    geoFilesSource = source,
+                )
+                val result = downloadGeoFiles(
+                    extDir = dir,
+                    httpPort = SettingsManager.getHttpPort(),
+                    proxyUsername = SettingsManager.getSocksUsername(),
+                    proxyPassword = SettingsManager.getSocksPassword(),
+                )
+                _uiState.value = _uiState.value.copy(
+                    isDownloading = false,
+                    downloadResult = result,
+                )
+                refresh(source, dir)
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                LogUtil.e(AppConfig.TAG, "Failed to download asset files", e)
+                _uiState.value = _uiState.value.copy(
+                    isDownloading = false,
+                    messageRes = R.string.toast_failure,
+                )
+            }
+        }
+    }
+
+    /**
+     * Copies a document picked by the system file chooser into the asset
+     * directory and records it as a local-file asset. The record is removed
+     * again when the copy fails, so the list never points at a partial file.
+     */
+    fun importFile(uri: Uri) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val dir = assetDir()
+            val name = sanitizeAssetFileName(queryDisplayName(uri))
+                ?: sanitizeAssetFileName(uri.lastPathSegment)
+            if (name == null) {
+                _uiState.value = _uiState.value.copy(messageRes = R.string.toast_asset_copy_failed)
+                return@launch
+            }
+            if (MmkvManager.decodeAssetUrls().any { it.assetUrl.remarks == name }) {
+                _uiState.value = _uiState.value.copy(messageRes = R.string.msg_remark_is_duplicate)
+                return@launch
+            }
+
+            val assetId = Utils.getUuid()
+            MmkvManager.encodeAsset(assetId, AssetUrlItem(name, FILE_ASSET_URL))
+            val copied = runCatching {
+                val input = app.contentResolver.openInputStream(uri)
+                    ?: return@runCatching false
+                input.use { source ->
+                    File(dir, name).outputStream().use { target ->
+                        source.copyTo(target)
+                    }
                 }
-            }.toMap()
-            ensureActive()
-            _uiState.value = UserAssetUiState(snapshot, metadata)
-        }.also { reloadJob = it }
+                true
+            }.getOrElse { e ->
+                LogUtil.e(AppConfig.TAG, "Failed to copy asset file: $name", e)
+                false
+            }
+
+            if (!copied) {
+                MmkvManager.removeAssetUrl(assetId)
+                File(dir, name).delete()
+            }
+            _uiState.value = _uiState.value.copy(
+                messageRes = if (copied) R.string.toast_success else R.string.toast_asset_copy_failed,
+            )
+            refresh(_uiState.value.geoFilesSource.ifEmpty { currentGeoFilesSource() }, dir)
+        }
+    }
+
+    fun consumeMessage() {
+        _uiState.value = _uiState.value.copy(messageRes = null)
+    }
+
+    fun consumeDownloadResult() {
+        _uiState.value = _uiState.value.copy(downloadResult = null)
+    }
+
+    private suspend fun refresh(geoFilesSource: String, extDir: File) {
+        val snapshot = buildAssetList(MmkvManager.decodeAssetUrls(), geoFilesSource)
+        val files = extDir.listFiles().orEmpty().associateBy { it.name }
+        val metadata = snapshot.mapNotNull { asset ->
+            files[asset.assetUrl.remarks]?.let { file ->
+                asset.guid to AssetFileMetadata(file.length(), file.lastModified())
+            }
+        }.toMap()
+        currentCoroutineContext().ensureActive()
+        _uiState.value = _uiState.value.copy(
+            assets = snapshot,
+            fileMetadata = metadata,
+            geoFilesSource = geoFilesSource,
+            isLoading = false,
+        )
+    }
+
+    private fun currentGeoFilesSource(): String =
+        MmkvManager.decodeSettingsString(AppConfig.PREF_GEO_FILES_SOURCES)
+            ?: AppConfig.GEO_FILES_SOURCES.first()
+
+    private fun assetDir(): File = File(Utils.userAssetPath(app))
+
+    private fun queryDisplayName(uri: Uri): String? = try {
+        app.contentResolver.query(uri, null, null, null, null)?.use { cursor ->
+            if (cursor.moveToFirst()) {
+                val index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                if (index >= 0) cursor.getString(index) else null
+            } else {
+                null
+            }
+        }
+    } catch (e: Exception) {
+        LogUtil.e(AppConfig.TAG, "Failed to read picked asset name", e)
+        null
     }
 
     internal fun buildAssetList(
@@ -58,7 +215,7 @@ class UserAssetViewModel(application: Application) : BaseViewModel(application) 
             .map {
                 AssetUrlCache(
                     // Built-in rows have no persisted GUID; keep their UI identity across reloads.
-                    "builtin:$it",
+                    "$BUILTIN_GUID_PREFIX$it",
                     AssetUrlItem(
                         it,
                         String.format(AppConfig.GITHUB_DOWNLOAD_URL, geoFilesSource).concatUrl(it),
@@ -139,4 +296,9 @@ class UserAssetViewModel(application: Application) : BaseViewModel(application) 
         val failureCount: Int,
         val failedAssets: List<String>
     )
+
+    companion object {
+        internal const val BUILTIN_GUID_PREFIX = "builtin:"
+        internal const val FILE_ASSET_URL = "file"
+    }
 }

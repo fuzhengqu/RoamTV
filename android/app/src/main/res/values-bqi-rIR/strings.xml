@@ -348,6 +348,11 @@
     <string name="title_ping_all_server">آزمایش تئخیر TCP (TCPing)</string>
     <string name="title_real_ping_all_server">آزمایش تئخیر واقعی</string>
     <string name="title_user_asset_setting">فایلا بونچک جوقرافیایی</string>
+    <string name="tv_asset_add_file">افزودن فایل محلی</string>
+    <string name="tv_asset_builtin">داخلی</string>
+    <string name="tv_asset_edit_title">ویرایش URL منبع</string>
+    <string name="tv_asset_local_file">فایل محلی</string>
+    <string name="tv_asset_local_file_hint">به پوشه منابع وارد شد</string>
     <string name="title_sort_by_test_results">ترتیب و ری نتیجه یل پینگ</string>
     <string name="title_filter_config">فیلتر کردن کانفیگا</string>
     <string name="filter_config_all">پوی</string>

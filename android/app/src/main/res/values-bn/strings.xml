@@ -348,6 +348,11 @@
     <string name="title_ping_all_server">TCP বিলম্ব পরীক্ষা করুন (TCPing)</string>
     <string name="title_real_ping_all_server">প্রকৃত বিলম্ব পরীক্ষা করুন</string>
     <string name="title_user_asset_setting">অ্যাসেট ফাইল</string>
+    <string name="tv_asset_add_file">স্থানীয় ফাইল যোগ করুন</string>
+    <string name="tv_asset_builtin">অন্তর্নির্মিত</string>
+    <string name="tv_asset_edit_title">অ্যাসেট URL সম্পাদনা করুন</string>
+    <string name="tv_asset_local_file">স্থানীয় ফাইল</string>
+    <string name="tv_asset_local_file_hint">অ্যাসেট ফোল্ডারে আমদানি করা হয়েছে</string>
     <string name="title_sort_by_test_results">টেস্ট ফলাফল দ্বারা সাজানো</string>
     <string name="title_filter_config">কনফিগারেশন ফাইল ফিল্টার করুন</string>
     <string name="filter_config_all">সব</string>

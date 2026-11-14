@@ -29,6 +29,8 @@ import tv.roam.client.feature.server.ServerEditorViewModel
 import tv.roam.client.feature.subscription.SubscriptionEditorViewModel
 import tv.roam.client.feature.subscription.SubscriptionListViewModel
 import tv.roam.client.feature.settings.SettingsViewModel
+import tv.roam.client.feature.userasset.UserAssetEditorViewModel
+import tv.roam.client.feature.userasset.UserAssetViewModel
 import tv.roam.client.handler.AppLocaleManager
 import tv.roam.client.handler.SettingsManager
 import tv.roam.client.ui.theme.RoamTvTheme
@@ -57,6 +59,8 @@ class MainActivity : AppCompatActivity() {
     private val routingListViewModel: RoutingListViewModel by viewModels()
     private val routingEditorViewModel: RoutingEditorViewModel by viewModels()
     private val perAppProxyViewModel: PerAppProxyViewModel by viewModels()
+    private val userAssetViewModel: UserAssetViewModel by viewModels()
+    private val userAssetEditorViewModel: UserAssetEditorViewModel by viewModels()
 
     private val vpnPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -95,6 +99,8 @@ class MainActivity : AppCompatActivity() {
                     routingListViewModel = routingListViewModel,
                     routingEditorViewModel = routingEditorViewModel,
                     perAppProxyViewModel = perAppProxyViewModel,
+                    userAssetViewModel = userAssetViewModel,
+                    userAssetEditorViewModel = userAssetEditorViewModel,
                     onStartService = ::requestServiceStart,
                     onStopService = ::stopService,
                     onRestartService = ::restartService,

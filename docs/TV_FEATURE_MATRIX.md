@@ -21,7 +21,7 @@ means not implemented. Do not promote a row to Verified without the check.
 | Subscriptions and subscription editor | Subscriptions | In progress (M4) | API 37 AVD: list, empty state, add/update actions and the editor form render with D-pad focus; save/delete/update and URL validation not exercised end-to-end |
 | Routing rules and rule editor | Routing | In progress (M4b) | API 37 AVD: list, domain-strategy change, add rule, save and list refresh verified; rule deletion, preset/clipboard import/export not run |
 | Per-app proxy and app picker | Per-app | In progress (M4c) | API 37 AVD: app list, per-app/bypass switches, app toggle and bulk-action dialog verified; search, auto-select, import/export not run |
-| User assets (GeoIP/GeoSite/SRS/URLs) | Assets | Planned (M4) | — |
+| User assets (GeoIP/GeoSite/SRS/URLs) | Assets | In progress (M4d) | API 37 AVD: list with built-in sizes/dates, geo source change and persistence, URL add/edit/delete, validation, SAF local-file import and delete, download-all with updated metadata verified; pairing handoff for a URL not run |
 | Language: follow system + 10 locales | Settings | Verified (M1) | API 37 AVD: English → 简体中文 → Follow system; Settings route and language-row focus restored after recreation |
 | Settings (VPN, core, Mux, Fragment, Observatory, advanced, mode) | Settings | Planned (M5) | — |
 | Local backup / restore and WebDAV | Backup | Planned (M5) | — |

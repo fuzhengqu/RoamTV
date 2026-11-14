@@ -348,6 +348,11 @@
     <string name="title_ping_all_server">Kiểm tra độ trễ TCP (TCPing)</string>
     <string name="title_real_ping_all_server">Kiểm tra độ trễ thực</string>
     <string name="title_user_asset_setting">Tệp tài nguyên</string>
+    <string name="tv_asset_add_file">Thêm tệp cục bộ</string>
+    <string name="tv_asset_builtin">Tích hợp</string>
+    <string name="tv_asset_edit_title">Sửa URL tài nguyên</string>
+    <string name="tv_asset_local_file">Tệp cục bộ</string>
+    <string name="tv_asset_local_file_hint">Đã nhập vào thư mục tài nguyên</string>
     <string name="title_sort_by_test_results">Sắp xếp theo kết quả kiểm tra</string>
     <string name="title_filter_config">Lọc cấu hình</string>
     <string name="filter_config_all">Tất cả</string>

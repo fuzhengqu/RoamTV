@@ -88,6 +88,10 @@ sealed interface TvRoute {
     data class RoutingEditor(val ruleId: String = "") : TvRoute {
         override val key: String = "routing_editor|$ruleId"
     }
+
+    data class AssetEditor(val guid: String = "") : TvRoute {
+        override val key: String = "asset_editor|$guid"
+    }
 }
 
 /** True for destinations that own the left rail; secondary flows use a back top bar. */
@@ -209,6 +213,9 @@ class TvNavigator(initial: List<TvRoute> = listOf(TvRoute.Home)) {
             }
             if (key.startsWith("routing_editor|")) {
                 return TvRoute.RoutingEditor(key.substringAfter('|'))
+            }
+            if (key.startsWith("asset_editor|")) {
+                return TvRoute.AssetEditor(key.substringAfter('|'))
             }
             if (key.startsWith("server_editor|")) {
                 val parts = key.split('|')
