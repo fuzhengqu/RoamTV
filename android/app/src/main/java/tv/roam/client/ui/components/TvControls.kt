@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -47,7 +48,7 @@ fun TvRailItem(
         onClick = onClick,
         modifier = modifier
             .fillMaxWidth()
-            .height(52.dp),
+            .heightIn(min = 52.dp),
         shape = ClickableSurfaceDefaults.shape(shape = RoundedCornerShape(12.dp)),
         border = ClickableSurfaceDefaults.border(
             focusedBorder = Border(
@@ -65,7 +66,7 @@ fun TvRailItem(
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 14.dp),
+                .padding(horizontal = 14.dp, vertical = 6.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
@@ -77,7 +78,7 @@ fun TvRailItem(
             Text(
                 text = label,
                 style = MaterialTheme.typography.titleSmall,
-                maxLines = 1,
+                maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
             )
         }
@@ -188,7 +189,7 @@ fun TvSettingsRow(
         onClick = onClick,
         modifier = modifier
             .fillMaxWidth()
-            .height(64.dp),
+            .heightIn(min = 64.dp),
         shape = ClickableSurfaceDefaults.shape(shape = RoundedCornerShape(14.dp)),
         border = ClickableSurfaceDefaults.border(
             focusedBorder = Border(
@@ -206,7 +207,7 @@ fun TvSettingsRow(
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = 16.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(14.dp),
         ) {
@@ -220,6 +221,8 @@ fun TvSettingsRow(
                 text = label,
                 style = MaterialTheme.typography.titleSmall,
                 color = TvColors.Text,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.weight(1f),
             )
             Text(

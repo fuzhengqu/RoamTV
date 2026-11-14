@@ -15,9 +15,10 @@ phone, document picker and a step-by-step wizard</li>
 <h3>Geoip and Geosite</h3>
 
 <ul>
-<li><code>geoip.dat</code> and <code>geosite.dat</code> are stored under
-<code>Android/data/tv.roam.client/files/assets</code> (the path may differ on
-some devices).</li>
+<li><code>geoip.dat</code> and <code>geosite.dat</code> live in the app-private
+<code>app_assets</code> directory. The Asset files screen shows the current
+files, their size and date, and can replace them from a URL, a local file or
+Download all.</li>
 <li>Rule data can be imported manually; third-party rule files are supported.</li>
 </ul>
 

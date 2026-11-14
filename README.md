@@ -41,11 +41,12 @@ Download the latest release here / 在这里下载最新版本：
 
 ## Geoip and Geosite / Geoip 与 Geosite
 
-- `geoip.dat` and `geosite.dat` are stored under
-  `Android/data/tv.roam.client/files/assets` (the path may differ on some devices).
+- `geoip.dat` and `geosite.dat` live in the app-private `app_assets`
+  directory. The Asset files screen shows the current files, their size and
+  date, and can replace them from a URL, a local file or Download all.
 - Rule data can be imported manually; third-party rule files are supported.
-- `geoip.dat` 和 `geosite.dat` 位于
-  `Android/data/tv.roam.client/files/assets`（部分设备路径可能不同）。
+- `geoip.dat` 和 `geosite.dat` 位于应用私有 `app_assets` 目录。资源文件页面
+  会显示当前文件、大小和日期，并支持通过 URL、本地文件或“下载全部”更新。
 - 规则数据可手动导入，亦支持第三方规则文件。
 
 ---

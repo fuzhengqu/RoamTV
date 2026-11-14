@@ -32,6 +32,13 @@ class AboutViewModelTest {
     }
 
     @Test
+    fun `plain legal text keeps non-blank lines in order`() {
+        val text = "First\n\nSecond   \n   \nThird\n"
+
+        assertEquals(listOf("First", "Second", "Third"), plainTextLines(text))
+    }
+
+    @Test
     fun `translator credits keep language headings and contributors`() {
         val credits = listOf(
             TranslatorsCredit(

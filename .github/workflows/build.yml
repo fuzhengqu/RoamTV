@@ -112,6 +112,20 @@ jobs:
         ./gradlew licenseFdroidReleaseReport
         ./gradlew assembleRelease -Pandroid.injected.signing.store.file=${{ steps.android_keystore.outputs.filePath }} -Pandroid.injected.signing.store.password=${{ secrets.APP_KEYSTORE_PASSWORD }} -Pandroid.injected.signing.key.alias=${{ secrets.APP_KEYSTORE_ALIAS }} -Pandroid.injected.signing.key.password=${{ secrets.APP_KEY_PASSWORD }}
     
+    - name: Create source archive
+      if: github.event_name == 'workflow_dispatch' && inputs.release_tag != ''
+      run: |
+        cd "$GITHUB_WORKSPACE"
+        TAG="${{ inputs.release_tag }}"
+        zip -r "RoamTV-${TAG}-source.zip" .           -x '.git/*' '.tooling/*' 'android/.gradle/*' 'android/build/*' 'android/app/build/*' '*/build/*' 'opencode.json' 'RoamTV-*-source.zip'
+
+    - name: Upload source archive
+      if: github.event_name == 'workflow_dispatch' && inputs.release_tag != ''
+      uses: actions/upload-artifact@v7
+      with:
+        name: source-archive
+        path: ${{ github.workspace }}/RoamTV-*-source.zip
+
     - name: Upload debug APK
       uses: actions/upload-artifact@v7
       if: github.event_name != 'workflow_dispatch'
@@ -170,6 +184,10 @@ jobs:
           done
 
           gpg --armor --export "$KEY" > release-files/RoamTV-public-key.asc
+
+      - name: Add source archive
+        run: |
+          find release -type f -name 'RoamTV-*-source.zip' -exec cp {} release-files/ \;
 
       - name: Upload APKs, signatures and public key to release
         uses: svenstaro/upload-release-action@v2

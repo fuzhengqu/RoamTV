@@ -46,6 +46,7 @@ fun AboutScreen(
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val firstFocus = remember { FocusRequester() }
     var showLicenses by remember { mutableStateOf(false) }
+    var showLegal by remember { mutableStateOf(false) }
     var showTranslators by remember { mutableStateOf(false) }
     val libVersion = remember { CoreNativeManager.getLibVersion() }
 
@@ -73,6 +74,12 @@ fun AboutScreen(
                     iconRes = R.drawable.license_24px,
                     onClick = { showLicenses = true },
                     modifier = Modifier.focusRequester(firstFocus),
+                )
+                TvSettingsRow(
+                    label = stringResource(R.string.title_legal_notices),
+                    value = "",
+                    iconRes = R.drawable.ic_description_24dp,
+                    onClick = { showLegal = true },
                 )
                 TvSettingsRow(
                     label = stringResource(R.string.title_translators),
@@ -121,6 +128,18 @@ fun AboutScreen(
                 state.licenseLines
             },
             onDismiss = { showLicenses = false },
+        )
+    }
+
+    if (showLegal) {
+        TextDialog(
+            title = stringResource(R.string.title_legal_notices),
+            lines = if (state.isLoading) {
+                listOf(stringResource(R.string.tv_editor_loading))
+            } else {
+                state.legalNoticeLines
+            },
+            onDismiss = { showLegal = false },
         )
     }
 

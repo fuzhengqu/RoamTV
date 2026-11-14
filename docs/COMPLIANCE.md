@@ -86,6 +86,10 @@ For each published tag, produce and attach:
 git archive --format=zip --prefix=RoamTV-<tag>/ -o RoamTV-<tag>-source.zip <tag>
 ```
 
+The release workflow also creates `RoamTV-<tag>-source.zip` from the tagged
+workspace, including the submodule work trees and vendored binaries, and
+attaches it to the GitHub release.
+
 The archive must contain `LICENSE`, `NOTICE`, this document, all Gradle
 scripts and version catalogs, `compile-hevtun.sh`, the submodule sources,
 and the vendored binaries needed to build. No API keys, tokens, keystores,

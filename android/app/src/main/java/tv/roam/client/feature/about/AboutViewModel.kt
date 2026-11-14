@@ -14,9 +14,15 @@ import tv.roam.client.util.Utils
 
 internal data class AboutUiState(
     val licenseLines: List<String> = emptyList(),
+    val legalNoticeLines: List<String> = emptyList(),
     val translatorLines: List<String> = emptyList(),
     val isLoading: Boolean = true,
 )
+
+internal fun plainTextLines(text: String): List<String> = text.lineSequence()
+    .map { it.trimEnd() }
+    .filter { it.isNotBlank() }
+    .toList()
 
 internal fun htmlToPlainLines(html: String): List<String> {
     val body = html
@@ -83,8 +89,14 @@ class AboutViewModel(application: Application) : BaseViewModel(application) {
         viewModelScope.launch(Dispatchers.IO) {
             val licenses = Utils.readTextFromAssets(app, "open_source_licenses.html")
             val translators = Utils.readTextFromAssets(app, "translators.json")
+            val notice = Utils.readTextFromAssets(app, "legal/NOTICE.txt")
+            val gpl = Utils.readTextFromAssets(app, "legal/LICENSE.txt")
+            val sjcl = Utils.readTextFromAssets(app, "pairing/LICENSE-sjcl.txt")
             _uiState.value = AboutUiState(
                 licenseLines = htmlToPlainLines(licenses),
+                legalNoticeLines = plainTextLines(notice) +
+                    plainTextLines(gpl) +
+                    plainTextLines(sjcl),
                 translatorLines = translatorLines(TranslatorsParser.parse(translators)),
                 isLoading = false,
             )

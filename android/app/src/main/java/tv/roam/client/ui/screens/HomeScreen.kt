@@ -620,7 +620,7 @@ private fun ServerRow(
         onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
-            .height(72.dp)
+            .heightIn(min = 72.dp)
             .focusRequester(focusRequester)
             .onFocusChanged { if (it.isFocused) onFocused() },
         shape = ClickableSurfaceDefaults.shape(shape = RoundedCornerShape(14.dp)),
