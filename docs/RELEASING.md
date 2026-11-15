@@ -59,7 +59,9 @@ Only create a git tag for:
 - ordinary performance or internal refactors.
 
 Tag-only versions have no GitHub Release and no signed APK assets. Testers can
-use CI debug artifacts or build locally.
+use CI debug artifacts or build locally. A patch release may be published when
+the user explicitly asks for binary distribution of a fix; v1.01 was published
+this way.
 
 ## Planned cadence
 
