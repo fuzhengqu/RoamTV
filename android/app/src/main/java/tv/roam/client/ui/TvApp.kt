@@ -304,11 +304,12 @@ fun TvApp(
 
     if (current.isTopLevel) {
         TvRailLayout(
-            rail = {
+            rail = { maxHeight ->
                 TvNavRail(
                     current = current,
                     onSelect = { route -> navigator.openRoot(route) },
                     onMore = { showMore = true },
+                    maxHeight = maxHeight,
                 )
             },
             content = screen,

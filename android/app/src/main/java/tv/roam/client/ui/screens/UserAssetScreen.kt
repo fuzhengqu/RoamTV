@@ -273,7 +273,7 @@ private fun AssetRow(
     val shape = RoundedCornerShape(14.dp)
     val rowModifier = modifier
         .fillMaxWidth()
-        .heightIn(min = 72.dp)
+        .height(72.dp)
     if (onClick == null) {
         Surface(
             modifier = rowModifier,

@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.tv.material3.Icon
 import androidx.tv.material3.MaterialTheme
@@ -31,6 +32,7 @@ fun TvNavRail(
     current: TvRoute,
     onSelect: (TvRoute) -> Unit,
     onMore: () -> Unit,
+    maxHeight: Dp,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -62,11 +64,13 @@ fun TvNavRail(
         Spacer(Modifier.height(12.dp))
 
         // A television box can report a shorter content area than a 1080p
-        // panel. Scrolling the primary items keeps Settings reachable instead
-        // of letting the rail overflow below the overscan safe area.
+        // panel. Give the primary items the exact remaining height so the
+        // weighted column cannot collapse to zero, then scroll when 1.3x text
+        // or a short panel makes them taller than the viewport.
+        val primaryHeight = (maxHeight - 152.dp).coerceAtLeast(52.dp)
         Column(
             modifier = Modifier
-                .weight(1f)
+                .height(primaryHeight)
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(4.dp),
         ) {

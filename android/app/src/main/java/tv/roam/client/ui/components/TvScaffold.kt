@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.tv.material3.Icon
 import androidx.tv.material3.IconButton
@@ -164,19 +165,22 @@ fun TvKeyHintBar(
  */
 @Composable
 fun TvRailLayout(
-    rail: @Composable () -> Unit,
+    rail: @Composable (Dp) -> Unit,
     content: @Composable () -> Unit,
 ) {
     TvOverscan {
-        Row(Modifier.fillMaxSize()) {
-            rail()
-            Spacer(Modifier.width(24.dp))
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-            ) {
-                content()
+        BoxWithConstraints(Modifier.fillMaxSize()) {
+            val availableHeight = maxHeight
+            Row(Modifier.fillMaxSize()) {
+                rail(availableHeight)
+                Spacer(Modifier.width(24.dp))
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxHeight()
+                ) {
+                    content()
+                }
             }
         }
     }

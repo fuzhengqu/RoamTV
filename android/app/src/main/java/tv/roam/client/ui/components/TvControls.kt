@@ -48,7 +48,7 @@ fun TvRailItem(
         onClick = onClick,
         modifier = modifier
             .fillMaxWidth()
-            .heightIn(min = 52.dp),
+            .height(52.dp),
         shape = ClickableSurfaceDefaults.shape(shape = RoundedCornerShape(12.dp)),
         border = ClickableSurfaceDefaults.border(
             focusedBorder = Border(
@@ -66,7 +66,7 @@ fun TvRailItem(
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 14.dp, vertical = 6.dp),
+                .padding(horizontal = 14.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
@@ -78,7 +78,7 @@ fun TvRailItem(
             Text(
                 text = label,
                 style = MaterialTheme.typography.titleSmall,
-                maxLines = 2,
+                maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
         }
@@ -189,7 +189,7 @@ fun TvSettingsRow(
         onClick = onClick,
         modifier = modifier
             .fillMaxWidth()
-            .heightIn(min = 64.dp),
+            .height(64.dp),
         shape = ClickableSurfaceDefaults.shape(shape = RoundedCornerShape(14.dp)),
         border = ClickableSurfaceDefaults.border(
             focusedBorder = Border(
@@ -221,7 +221,7 @@ fun TvSettingsRow(
                 text = label,
                 style = MaterialTheme.typography.titleSmall,
                 color = TvColors.Text,
-                maxLines = 2,
+                maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.weight(1f),
             )

@@ -236,7 +236,7 @@ private fun AppRow(
         onClick = onClick,
         modifier = modifier
             .fillMaxWidth()
-            .heightIn(min = 72.dp),
+            .height(72.dp),
         shape = ClickableSurfaceDefaults.shape(shape = RoundedCornerShape(14.dp)),
         border = ClickableSurfaceDefaults.border(
             focusedBorder = Border(
