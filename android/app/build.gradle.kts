@@ -13,8 +13,8 @@ android {
         applicationId = "tv.roam.client"
         minSdk = 26
         targetSdk = 37
-        versionCode = 100
-        versionName = "1.00"
+        versionCode = 101
+        versionName = "1.01"
 
         val abiFilterList = (properties["ABI_FILTERS"] as? String)?.split(';')
         splits {
