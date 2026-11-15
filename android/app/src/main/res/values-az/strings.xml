@@ -440,6 +440,9 @@
     <string name="update_new_version_found">Yeni versiya tapıldı: %s</string>
     <string name="update_now">İndi yenilə</string>
     <string name="update_check_pre_release">Sınaq versiyalarını yoxla</string>
+    <string name="update_check_pre_release_summary">Söndürülüb: yalnız sabit buraxılışlar. Aktiv: ilkin buraxılışlar da daxil, ən yüksək versiya seçilir.</string>
+    <string name="update_prerelease_badge">İlkin buraxılış</string>
+    <string name="update_no_compatible_apk">Bu cihaz üçün uyğun APK tapılmadı.</string>
     <string name="update_checking_for_update">Yenilənmələr yoxlanılır…</string>
 
     <string name="title_policy_group_type">Siyasət qrupu növü</string>

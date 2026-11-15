@@ -12,7 +12,9 @@ data class GitHubRelease(
     @SerializedName("prerelease")
     val prerelease: Boolean = false,
     @SerializedName("published_at")
-    val publishedAt: String = ""
+    val publishedAt: String = "",
+    @SerializedName("draft")
+    val draft: Boolean = false,
 ) {
     data class Asset(
         @SerializedName("name")

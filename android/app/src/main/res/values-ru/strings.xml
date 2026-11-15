@@ -444,6 +444,9 @@
     <string name="update_new_version_found">Найдена новая версия: %s</string>
     <string name="update_now">Обновить</string>
     <string name="update_check_pre_release">Проверять предварительные версии</string>
+    <string name="update_check_pre_release_summary">Выкл.: только стабильные версии. Вкл.: включая предварительные, выбирается старшая версия.</string>
+    <string name="update_prerelease_badge">Предварительная версия</string>
+    <string name="update_no_compatible_apk">Не найден совместимый APK для этого устройства.</string>
     <string name="update_checking_for_update">Проверка обновления…</string>
 
     <string name="title_policy_group_type">Тип политики группы</string>

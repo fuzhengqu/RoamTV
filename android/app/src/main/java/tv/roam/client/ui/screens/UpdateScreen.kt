@@ -88,6 +88,12 @@ fun UpdateScreen(
                 },
                 modifier = Modifier.focusRequester(firstFocus),
             )
+            Text(
+                text = stringResource(R.string.update_check_pre_release_summary),
+                style = MaterialTheme.typography.bodySmall,
+                color = TvColors.TextMuted,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+            )
             TvSettingsRow(
                 label = stringResource(R.string.update_check_for_update),
                 value = "",
@@ -121,8 +127,15 @@ fun UpdateScreen(
 
     val result = state.result
     if (result != null) {
-        val actionFocus = remember(result) { FocusRequester() }
-        LaunchedEffect(result) { actionFocus.requestFocus() }
+        val primaryFocus = remember(result) { FocusRequester() }
+        val secondaryFocus = remember(result) { FocusRequester() }
+        LaunchedEffect(result) {
+            if (result.downloadUrl != null) {
+                primaryFocus.requestFocus()
+            } else {
+                secondaryFocus.requestFocus()
+            }
+        }
         TvDialog(
             onDismissRequest = {
                 viewModel.onAction(UpdateAction.ConsumeResult)
@@ -137,6 +150,20 @@ fun UpdateScreen(
                     style = MaterialTheme.typography.headlineSmall,
                     color = TvColors.Text,
                 )
+                if (result.isPreRelease) {
+                    Text(
+                        text = stringResource(R.string.update_prerelease_badge),
+                        style = MaterialTheme.typography.labelLarge,
+                        color = TvColors.Amber,
+                    )
+                }
+                if (result.downloadUrl == null) {
+                    Text(
+                        text = stringResource(R.string.update_no_compatible_apk),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = TvColors.Error,
+                    )
+                }
                 TvScrollableText(
                     lines = result.releaseNotes.orEmpty().lines()
                         .filter { it.isNotBlank() }
@@ -152,6 +179,7 @@ fun UpdateScreen(
                         onClick = {
                             viewModel.onAction(UpdateAction.ConsumeResult)
                         },
+                        modifier = Modifier.focusRequester(secondaryFocus),
                     )
                     TvPrimaryButton(
                         text = stringResource(R.string.update_now),
@@ -159,7 +187,8 @@ fun UpdateScreen(
                             result.downloadUrl?.let { Utils.openUri(context, it) }
                             viewModel.onAction(UpdateAction.ConsumeResult)
                         },
-                        modifier = Modifier.focusRequester(actionFocus),
+                        enabled = result.downloadUrl != null,
+                        modifier = Modifier.focusRequester(primaryFocus),
                     )
                 }
             }

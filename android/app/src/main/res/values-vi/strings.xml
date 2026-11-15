@@ -438,6 +438,9 @@
     <string name="update_new_version_found">Đã tìm thấy phiên bản mới: %s</string>
     <string name="update_now">Cập nhật ngay</string>
     <string name="update_check_pre_release">Kiểm tra bản phát hành thử</string>
+    <string name="update_check_pre_release_summary">Tắt: chỉ bản chính thức. Bật: gồm bản phát hành trước và chọn phiên bản cao nhất.</string>
+    <string name="update_prerelease_badge">Bản phát hành trước</string>
+    <string name="update_no_compatible_apk">Không tìm thấy APK phù hợp cho thiết bị này.</string>
     <string name="update_checking_for_update">Đang kiểm tra bản cập nhật…</string>
 
     <string name="title_policy_group_type">Loại nhóm chính sách</string>

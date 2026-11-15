@@ -448,6 +448,9 @@
     <string name="update_new_version_found">عُثر على إصدار جديد: %s</string>
     <string name="update_now">التحديث الآن</string>
     <string name="update_check_pre_release">التحقق من الإصدارات التجريبية</string>
+    <string name="update_check_pre_release_summary">إيقاف: الإصدارات الرسمية فقط. تشغيل: تتضمن الإصدارات التجريبية ويُختار الأعلى إصدارًا.</string>
+    <string name="update_prerelease_badge">إصدار تجريبي</string>
+    <string name="update_no_compatible_apk">لم يتم العثور على APK متوافق مع هذا الجهاز.</string>
     <string name="update_checking_for_update">جارٍ التحقق من وجود تحديث…</string>
 
     <string name="title_policy_group_type">نوع مجموعة السياسات</string>

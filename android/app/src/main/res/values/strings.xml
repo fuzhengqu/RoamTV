@@ -440,6 +440,9 @@
     <string name="update_new_version_found">New version found: %s</string>
     <string name="update_now">Update now</string>
     <string name="update_check_pre_release">Check pre-release versions</string>
+    <string name="update_check_pre_release_summary">Off: check stable releases only. On: include pre-releases and pick the highest version.</string>
+    <string name="update_prerelease_badge">Pre-release</string>
+    <string name="update_no_compatible_apk">No compatible APK was found for this device.</string>
     <string name="update_checking_for_update">Checking for update…</string>
 
     <string name="title_policy_group_type">Policy group type</string>

@@ -440,6 +440,9 @@
     <string name="update_new_version_found">নতুন সংস্করণ পাওয়া গেছে: %s</string>
     <string name="update_now">এখনই আপডেট করুন</string>
     <string name="update_check_pre_release">প্রাক্‌-রিলিজ পরীক্ষা করুন</string>
+    <string name="update_check_pre_release_summary">বন্ধ: শুধু স্থিতিশীল সংস্করণ। চালু: প্রি-রিলিজসহ সর্বোচ্চ সংস্করণ বেছে নেওয়া হবে।</string>
+    <string name="update_prerelease_badge">প্রি-রিলিজ</string>
+    <string name="update_no_compatible_apk">এই ডিভাইসের জন্য উপযুক্ত APK পাওয়া যায়নি।</string>
     <string name="update_checking_for_update">আপডেট পরীক্ষা করা হচ্ছে…</string>
 
     <string name="title_policy_group_type">নীতি গ্রুপের ধরন</string>
