@@ -281,30 +281,24 @@ class SettingsViewModel(application: Application) : BaseViewModel(application) {
         _uiState.value = _uiState.value.copy(
             fields = _uiState.value.fields + (setting to normalized),
         )
-        viewModelScope.launch(Dispatchers.IO) {
-            MmkvManager.encodeSettings(setting.key, normalized)
-            SettingsChangeManager.notifySettingChanged(setting.key)
-        }
+        MmkvManager.encodeSettings(setting.key, normalized)
+        SettingsChangeManager.notifySettingChanged(setting.key)
     }
 
     private fun setDropdown(setting: SettingDropdown, value: String) {
         _uiState.value = _uiState.value.copy(
             dropdowns = _uiState.value.dropdowns + (setting to value),
         )
-        viewModelScope.launch(Dispatchers.IO) {
-            MmkvManager.encodeSettings(setting.key, value)
-            SettingsChangeManager.notifySettingChanged(setting.key)
-        }
+        MmkvManager.encodeSettings(setting.key, value)
+        SettingsChangeManager.notifySettingChanged(setting.key)
     }
 
     private fun persistSwitch(setting: SettingSwitch, value: Boolean) {
         _uiState.value = _uiState.value.copy(
             switches = _uiState.value.switches + (setting to value),
         )
-        viewModelScope.launch(Dispatchers.IO) {
-            MmkvManager.encodeSettings(setting.key, value)
-            SettingsChangeManager.notifySettingChanged(setting.key)
-        }
+        MmkvManager.encodeSettings(setting.key, value)
+        SettingsChangeManager.notifySettingChanged(setting.key)
     }
 
     private fun currentLanguageCode(): String = runCatching {

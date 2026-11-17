@@ -239,20 +239,21 @@ object CoreServiceManager {
         networkMonitor = NetworkMonitor(
             connectivity = connectivity,
             onUnderlyingNetworksChanged = { networks -> serviceControl?.get()?.setUnderlyingNetworks(networks) },
-            onHandover = { reloadCore() },
+            onHandover = { restartCore() },
         ).also { it.register() }
     }
 
     /**
-     * Restarts the core in place after the upstream network changed: the service, the notification
-     * and the VPN interface all stay up, so nothing of this is visible.
+     * Restarts the core in place: the service, the notification and the VPN interface all stay up,
+     * so nothing of this is visible. Used when the upstream network changes and when settings must
+     * be applied to an active connection.
      *
      * The config is rebuilt on purpose, outbound server domains are resolved while building it and
      * an address resolved on a network that is gone can be unusable on the new one.
      *
      * @return True if the core is running again.
      */
-    private fun reloadCore(): Boolean {
+    fun restartCore(): Boolean {
         if (isReloading) return false
         val service = getService() ?: return false
         if (!isRunning()) return false
@@ -484,14 +485,21 @@ object CoreServiceManager {
                 AppConfig.MSG_STATE_RESTART -> {
                     LogUtil.i(AppConfig.TAG, "StartCore-Manager: Restart service")
                     // The UI and daemon run in separate processes, so acknowledge the active
-                    // daemon before stopping it instead of relying on possibly stale UI state.
+                    // daemon before reloading it instead of relying on possibly stale UI state.
                     if (isOrderedBroadcast) resultCode = Activity.RESULT_OK
 
                     val pendingResult = goAsync()
                     CoroutineScope(Dispatchers.Default).launch {
                         try {
-                            serviceControl.stopService()
-                            delay(500L)
+                            if (!restartCore() && !isRunning()) {
+                                LogUtil.i(
+                                    AppConfig.TAG,
+                                    "StartCore-Manager: Core is not running, starting service",
+                                )
+                                LauncherManager.startService(serviceControl.getService())
+                            }
+                        } catch (e: Exception) {
+                            LogUtil.e(AppConfig.TAG, "StartCore-Manager: Restart failed", e)
                             LauncherManager.startService(serviceControl.getService())
                         } finally {
                             pendingResult.finish()

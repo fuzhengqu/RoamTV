@@ -116,6 +116,7 @@ class MainActivity : AppCompatActivity() {
                     onStartService = ::requestServiceStart,
                     onStopService = ::stopService,
                     onRestartService = ::restartService,
+                    onApplySettings = ::applySettings,
                 )
             }
         }
@@ -189,5 +190,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun restartService() {
         LauncherManager.restartServiceOrStart(this, ::requestServiceStart)
+    }
+
+    /**
+     * Applies settings to a running connection. A stopped service stays
+     * stopped; the persisted values are used on the next connection.
+     */
+    private fun applySettings() {
+        LauncherManager.restartService(this)
     }
 }

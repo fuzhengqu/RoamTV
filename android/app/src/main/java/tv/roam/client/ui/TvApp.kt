@@ -96,6 +96,7 @@ fun TvApp(
     onStartService: () -> Unit,
     onStopService: () -> Unit,
     onRestartService: () -> Unit,
+    onApplySettings: () -> Unit,
     navigator: TvNavigator = rememberTvNavigator(),
 ) {
     val context = LocalContext.current
@@ -119,7 +120,7 @@ fun TvApp(
         val restart = SettingsChangeManager.consumeRestartService()
         mainViewModel.refreshUiSettings()
         if (refreshGroups) mainViewModel.onAction(MainAction.RefreshGroups)
-        if (restart && mainViewModel.uiState.value.isRunning) onRestartService()
+        if (restart) onApplySettings()
     }
 
     val screen: @Composable () -> Unit = {
