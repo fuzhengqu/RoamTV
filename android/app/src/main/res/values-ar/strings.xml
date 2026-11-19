@@ -204,8 +204,8 @@
         <item>تخطي</item>
     </string-array>
 
-    <string name="title_pref_speed_enabled">تمكين عرض السرعة</string>
-    <string name="summary_pref_speed_enabled">عرض سرعات الاتصال الحالية في الإشعار.\nتوضح الأيقونة ما إذا كانت حركة الوكيل أم الحركة المباشرة هي الغالبة.</string>
+    <string name="title_pref_speed_enabled">عرض السرعة في الصفحة الرئيسية</string>
+    <string name="summary_pref_speed_enabled">عرض سرعة الوكيل والاتصال المباشر في أعلى الصفحة الرئيسية.</string>
 
     <string name="title_pref_sniffing_enabled">تفعيل اكتشاف نطاقات الوجهة (Sniffing)</string>
     <string name="summary_pref_sniffing_enabled">اكتشاف نطاقات الوجهة من حركة المرور (مفعّل افتراضيًا).</string>
@@ -605,7 +605,6 @@
     <string name="tv_key_ok">OK</string>
     <string name="tv_key_ok_action">اختيار</string>
     <string name="tv_key_menu">القائمة</string>
-    <string name="tv_key_menu_action">إجراءات</string>
     <string name="tv_key_back">رجوع</string>
     <string name="tv_key_back_action">رجوع</string>
     <string name="tv_placeholder_title">سيظهر في المرحلة التالية</string>
@@ -634,7 +633,7 @@
 
     <string name="language_follow_system">حسب النظام</string>
     <string name="tv_settings_language_summary">تُستخدم للقوائم ومربعات الحوار والرسائل. تُطبق التغييرات فورًا.</string>
-    <string name="tv_settings_restart_hint">يتم حفظ التغييرات فورًا. إذا كان الاتصال نشطًا، فسيُعاد تشغيله عند مغادرة الإعدادات.</string>
+    <string name="tv_settings_restart_hint">يتم حفظ التغييرات فورًا. إذا كان الاتصال نشطًا، فسيُعاد تحميل نواة الوكيل عند مغادرة الإعدادات.</string>
 
     <string name="tv_logcat_empty">لا توجد إدخالات في السجل.</string>
     <string name="tv_logcat_clear_message">مسح مخزن سجل النظام؟ سيتم مسح سجلات التطبيقات الأخرى أيضًا.</string>
@@ -648,8 +647,7 @@
     <string name="tv_import_empty">لا يوجد شيء للاستيراد.</string>
     <string name="tv_import_read_error">تعذر قراءة الملف المحدد.</string>
     <string name="tv_pairing_title">الاقتران بالهاتف</string>
-    <string name="tv_pairing_scan">امسح الرمز بكاميرا الهاتف للاستيراد.</string>
-    <string name="tv_pairing_code">الرمز: %1$s</string>
+    <string name="tv_pairing_scan">امسح بكاميرا الهاتف وأرسل إعداداً واحداً أو أكثر.</string>
     <string name="tv_pairing_address">عنوان التلفاز: %1$s</string>
     <string name="tv_pairing_expires">ينتهي خلال %1$d ثانية</string>
     <string name="tv_pairing_waiting">جارٍ تجهيز جلسة الاقتران…</string>
@@ -684,4 +682,12 @@
     <string name="tv_routing_enabled">مفعّل</string>
     <string name="tv_routing_empty">لا توجد قواعد توجيه بعد. أضف قاعدة أو استورد إعدادًا مسبقًا.</string>
     <string name="tv_per_app_empty">لا توجد تطبيقات مطابقة.</string>
+    <string name="tv_home_add_node">إضافة عقدة</string>
+    <string name="tv_home_batch">دفعة</string>
+    <string name="tv_home_batch_title">إجراءات الدفعة</string>
+    <string name="tv_speed_proxy">الوكيل</string>
+    <string name="tv_speed_direct">مباشر</string>
+    <string name="tv_speed_value">↑ %1$s   ↓ %2$s</string>
+    <string name="tv_pairing_imported">تم استيراد %1$d عنصر. يمكنك متابعة الإرسال من الهاتف.</string>
+    <string name="tv_pairing_finish">تم</string>
 </resources>

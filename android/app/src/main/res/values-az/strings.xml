@@ -204,8 +204,8 @@
         <item>ötür</item>
     </string-array>
 
-    <string name="title_pref_speed_enabled">Sürət göstəricisini aktivləşdir</string>
-    <string name="summary_pref_speed_enabled">Cari sürəti bildiriş panelində göstərin.\nİkona proksi və ya birbaşa trafikin üstünlük təşkil etdiyini bildirir.</string>
+    <string name="title_pref_speed_enabled">Əsas ekranda sürəti göstər</string>
+    <string name="summary_pref_speed_enabled">Proksi və birbaşa bağlantının cari sürətini əsas ekranın yuxarı hissəsində göstər.</string>
 
     <string name="title_pref_sniffing_enabled">Dinləməni aktivləşdir</string>
     <string name="summary_pref_sniffing_enabled">Trafikdən hədəf domenləri təyin edin (standart olaraq aktivdir).</string>
@@ -598,7 +598,6 @@
     <string name="tv_key_ok">OK</string>
     <string name="tv_key_ok_action">Seç</string>
     <string name="tv_key_menu">Menyu</string>
-    <string name="tv_key_menu_action">Əməliyyatlar</string>
     <string name="tv_key_back">Geri</string>
     <string name="tv_key_back_action">Geri</string>
     <string name="tv_placeholder_title">Növbəti mərhələdə</string>
@@ -627,7 +626,7 @@
 
     <string name="language_follow_system">Sistemlə eyni</string>
     <string name="tv_settings_language_summary">Menyu, dialoqlar və mesajlar üçün istifadə olunur. Dəyişikliklər dərhal tətbiq olunur.</string>
-    <string name="tv_settings_restart_hint">Dəyişikliklər dərhal yadda saxlanılır. Əgər qoşulmusunuzsa, Parametrlərdən çıxdıqda bağlantı yenidən başladılacaq.</string>
+    <string name="tv_settings_restart_hint">Dəyişikliklər dərhal yadda saxlanılır. Əgər qoşulmusunuzsa, Parametrlərdən çıxdıqda proksi nüvəsi yenidən yüklənəcək.</string>
 
     <string name="tv_logcat_empty">Jurnal qeydi yoxdur.</string>
     <string name="tv_logcat_clear_message">Sistem jurnal buferi təmizlənsin? Digər tətbiqlərin jurnalları da silinəcək.</string>
@@ -641,8 +640,7 @@
     <string name="tv_import_empty">İdxal ediləcək heç nə yoxdur.</string>
     <string name="tv_import_read_error">Seçilmiş faylı oxumaq mümkün olmadı.</string>
     <string name="tv_pairing_title">Telefonla cütləşdirin</string>
-    <string name="tv_pairing_scan">Telefon kamerası ilə skan edin.</string>
-    <string name="tv_pairing_code">Kod: %1$s</string>
+    <string name="tv_pairing_scan">Telefon kamerası ilə skan edin və bir və ya bir neçə konfiqurasiya göndərin.</string>
     <string name="tv_pairing_address">TV ünvanı: %1$s</string>
     <string name="tv_pairing_expires">%1$d saniyə sonra bitir</string>
     <string name="tv_pairing_waiting">Cütləşmə sessiyası hazırlanır…</string>
@@ -677,4 +675,12 @@
     <string name="tv_routing_enabled">Aktiv</string>
     <string name="tv_routing_empty">Hələ marşrut qaydası yoxdur. Qayda əlavə edin və ya preset idxal edin.</string>
     <string name="tv_per_app_empty">Uyğun tətbiq yoxdur.</string>
+    <string name="tv_home_add_node">Node əlavə et</string>
+    <string name="tv_home_batch">Toplu</string>
+    <string name="tv_home_batch_title">Toplu əməliyyatlar</string>
+    <string name="tv_speed_proxy">Proksi</string>
+    <string name="tv_speed_direct">Birbaşa</string>
+    <string name="tv_speed_value">↑ %1$s   ↓ %2$s</string>
+    <string name="tv_pairing_imported">%1$d element idxal edildi. Telefondan göndərməyə davam edə bilərsiniz.</string>
+    <string name="tv_pairing_finish">Bitdi</string>
 </resources>

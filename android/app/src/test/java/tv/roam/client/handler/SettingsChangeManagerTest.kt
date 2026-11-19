@@ -24,7 +24,7 @@ class SettingsChangeManagerTest {
 
     @Test
     fun `core setting requests a restart and refreshes groups`() {
-        SettingsChangeManager.notifySettingChanged(AppConfig.PREF_SPEED_ENABLED)
+        SettingsChangeManager.notifySettingChanged(AppConfig.PREF_LOGLEVEL)
 
         assertTrue(SettingsChangeManager.consumeRestartService())
         assertTrue(SettingsChangeManager.consumeSetupGroupTab())

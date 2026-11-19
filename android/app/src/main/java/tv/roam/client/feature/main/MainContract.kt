@@ -2,6 +2,7 @@ package tv.roam.client.feature.main
 import tv.roam.client.dto.ConnectionTestResult
 import tv.roam.client.dto.GroupMapItem
 import tv.roam.client.dto.LocateTarget
+import tv.roam.client.dto.TrafficSample
 
 /** Locale-neutral state formatted only when it reaches the main UI. */
 sealed interface MainStatus {
@@ -25,6 +26,9 @@ data class MainUiState(
     val locateTarget: LocateTarget? = null,
     val confirmRemove: Boolean = false,
     val doubleColumnDisplay: Boolean = false,
+    val speedEnabled: Boolean = false,
+    val traffic: TrafficSample? = null,
+    val lastImportedGuid: String? = null,
     val shareQRCodeBitmap: android.graphics.Bitmap? = null
 )
 

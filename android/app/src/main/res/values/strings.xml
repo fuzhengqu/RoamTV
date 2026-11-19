@@ -204,8 +204,8 @@
         <item>skip</item>
     </string-array>
 
-    <string name="title_pref_speed_enabled">Enable speed display</string>
-    <string name="summary_pref_speed_enabled">Show current speeds in the notification.\nThe icon indicates whether proxy or direct traffic is dominant.</string>
+    <string name="title_pref_speed_enabled">Show speed on Home</string>
+    <string name="summary_pref_speed_enabled">Show the current proxy and direct speeds at the top of the Home screen.</string>
 
     <string name="title_pref_sniffing_enabled">Enable Sniffing</string>
     <string name="summary_pref_sniffing_enabled">Detect destination domains from traffic (enabled by default).</string>
@@ -599,7 +599,6 @@
     <string name="tv_key_ok">OK</string>
     <string name="tv_key_ok_action">Select</string>
     <string name="tv_key_menu">Menu</string>
-    <string name="tv_key_menu_action">Actions</string>
     <string name="tv_key_back">Back</string>
     <string name="tv_key_back_action">Return</string>
     <string name="tv_placeholder_title">Coming in the next milestone</string>
@@ -627,7 +626,7 @@
     <string name="tv_confirm_bulk_message">This removes the matching servers from this group. Continue?</string>
     <string name="language_follow_system">Follow system</string>
     <string name="tv_settings_language_summary">Used for menus, dialogs and messages. Changes apply immediately.</string>
-    <string name="tv_settings_restart_hint">Changes save immediately. If connected, the connection restarts when you leave Settings.</string>
+    <string name="tv_settings_restart_hint">Changes save immediately. If connected, the proxy core reloads when you leave Settings.</string>
     <string name="tv_password_masked" translatable="false">••••••</string>
     <string name="tv_logcat_empty">No log entries.</string>
     <string name="tv_logcat_clear_message">Clear the system log buffer? Logs from other apps are cleared too.</string>
@@ -642,8 +641,7 @@
     <string name="tv_import_empty">Nothing to import.</string>
     <string name="tv_import_read_error">Could not read the selected file.</string>
     <string name="tv_pairing_title">Pair with your phone</string>
-    <string name="tv_pairing_scan">Scan with your phone camera to import.</string>
-    <string name="tv_pairing_code">Code: %1$s</string>
+    <string name="tv_pairing_scan">Scan with your phone camera and send one or more configurations.</string>
     <string name="tv_pairing_address">TV address: %1$s</string>
     <string name="tv_pairing_expires">Expires in %1$d s</string>
     <string name="tv_pairing_waiting">Preparing the pairing session…</string>
@@ -679,4 +677,12 @@
     <string name="tv_routing_empty">No routing rules yet. Add a rule or import a preset.</string>
     <string name="tv_per_app_empty">No matching apps.</string>
 
+    <string name="tv_home_add_node">Add node</string>
+    <string name="tv_home_batch">Batch</string>
+    <string name="tv_home_batch_title">Batch actions</string>
+    <string name="tv_speed_proxy">Proxy</string>
+    <string name="tv_speed_direct">Direct</string>
+    <string name="tv_speed_value">↑ %1$s   ↓ %2$s</string>
+    <string name="tv_pairing_imported">Imported %1$d item(s). You can keep sending from your phone.</string>
+    <string name="tv_pairing_finish">Done</string>
 </resources>

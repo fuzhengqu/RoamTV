@@ -205,6 +205,7 @@ private fun LogcatRow(
         border = ClickableSurfaceDefaults.border(
             focusedBorder = Border(
                 border = BorderStroke(3.dp, TvColors.Teal),
+                inset = 2.dp,
                 shape = shape,
             )
         ),

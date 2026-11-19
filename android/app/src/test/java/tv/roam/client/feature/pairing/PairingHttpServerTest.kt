@@ -8,35 +8,33 @@ import java.net.InetAddress
 import java.net.URL
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
-import java.util.concurrent.atomic.AtomicReference
 
 class PairingHttpServerTest {
 
     private val key = ByteArray(32) { (it * 3).toByte() }
 
     @Test
-    fun `serves the page and imports one encrypted payload`() {
+    fun `serves the page and imports several encrypted payloads`() {
         val session = PairingSession(
             id = "test-session",
-            code = "123456",
             key = key,
             expiresAtMillis = System.currentTimeMillis() + 60_000,
         )
-        val received = AtomicReference<String>()
-        val latch = CountDownLatch(1)
+        val received = java.util.Collections.synchronizedList(mutableListOf<String>())
+        val latch = CountDownLatch(2)
         val server = PairingHttpServer(
             session = session,
             bindAddress = InetAddress.getLoopbackAddress(),
             pageHtml = "<html><title>RoamTV pairing</title></html>",
             sjclJs = "// sjcl",
             onText = {
-                received.set(it)
+                received.add(it)
                 latch.countDown()
             },
         )
         val port = server.start()
         try {
-            val page = request("GET", "http://127.0.0.1:$port/s/test-session?code=123456")
+            val page = request("GET", "http://127.0.0.1:$port/s/test-session")
             assertEquals(200, page.code)
             assertTrue(page.body.contains("RoamTV pairing"))
 
@@ -67,8 +65,16 @@ class PairingHttpServerTest {
                 sessionId = session.id,
             )
             assertEquals(200, accepted.code)
+
+            val second = request(
+                "POST",
+                "http://127.0.0.1:$port/api/upload",
+                body = PairingCrypto.encrypt("second config", key),
+                sessionId = session.id,
+            )
+            assertEquals(200, second.code)
             assertTrue(latch.await(2, TimeUnit.SECONDS))
-            assertEquals("hello from phone", received.get())
+            assertEquals(listOf("hello from phone", "second config"), received)
         } finally {
             server.close()
         }

@@ -204,8 +204,8 @@
         <item>跳过</item>
     </string-array>
 
-    <string name="title_pref_speed_enabled">启用速度显示</string>
-    <string name="summary_pref_speed_enabled">在通知中显示当前速度。\n图标指示代理流量或直连流量哪一方占主导。</string>
+    <string name="title_pref_speed_enabled">首页显示实时速度</string>
+    <string name="summary_pref_speed_enabled">在首页顶部显示当前代理和直连速度。</string>
 
     <string name="title_pref_sniffing_enabled">启用流量探测 (Sniffing)</string>
     <string name="summary_pref_sniffing_enabled">从流量中探测目标域名（默认启用）。</string>
@@ -595,7 +595,6 @@
     <string name="tv_key_ok">OK</string>
     <string name="tv_key_ok_action">选择</string>
     <string name="tv_key_menu">菜单</string>
-    <string name="tv_key_menu_action">操作</string>
     <string name="tv_key_back">返回</string>
     <string name="tv_key_back_action">返回上一级</string>
     <string name="tv_placeholder_title">下个里程碑即将推出</string>
@@ -624,7 +623,7 @@
 
     <string name="language_follow_system">跟随系统</string>
     <string name="tv_settings_language_summary">用于菜单、对话框和提示信息。修改后立即生效。</string>
-    <string name="tv_settings_restart_hint">设置会立即保存。如果当前已连接，离开设置页面后会重启连接。</string>
+    <string name="tv_settings_restart_hint">设置会立即保存。如果当前已连接，离开设置页面后会重新加载代理核心。</string>
 
     <string name="tv_logcat_empty">没有日志条目。</string>
     <string name="tv_logcat_clear_message">清空系统日志缓冲区？其他应用的日志也会被清空。</string>
@@ -638,8 +637,7 @@
     <string name="tv_import_empty">没有可导入的内容。</string>
     <string name="tv_import_read_error">无法读取所选文件。</string>
     <string name="tv_pairing_title">与手机配对</string>
-    <string name="tv_pairing_scan">用手机相机扫码导入。</string>
-    <string name="tv_pairing_code">验证码：%1$s</string>
+    <string name="tv_pairing_scan">用手机相机扫码，可连续发送多个配置。</string>
     <string name="tv_pairing_address">电视地址：%1$s</string>
     <string name="tv_pairing_expires">%1$d 秒后过期</string>
     <string name="tv_pairing_waiting">正在准备配对会话…</string>
@@ -674,4 +672,12 @@
     <string name="tv_routing_enabled">启用</string>
     <string name="tv_routing_empty">还没有路由规则。添加一条规则或导入预设。</string>
     <string name="tv_per_app_empty">没有匹配的应用。</string>
+    <string name="tv_home_add_node">添加节点</string>
+    <string name="tv_home_batch">批量</string>
+    <string name="tv_home_batch_title">批量操作</string>
+    <string name="tv_speed_proxy">代理</string>
+    <string name="tv_speed_direct">直连</string>
+    <string name="tv_speed_value">↑ %1$s   ↓ %2$s</string>
+    <string name="tv_pairing_imported">已导入 %1$d 项，可继续在手机上发送。</string>
+    <string name="tv_pairing_finish">完成</string>
 </resources>

@@ -32,6 +32,29 @@ class TvNavigatorTest {
     }
 
     @Test
+    fun `back from a rail root returns home`() {
+        val navigator = TvNavigator()
+        navigator.openRoot(TvRoute.Routing)
+
+        assertTrue(navigator.back())
+        assertEquals(TvRoute.Home, navigator.current)
+        assertEquals(1, navigator.depth)
+    }
+
+    @Test
+    fun `back pops a detail before returning home`() {
+        val navigator = TvNavigator()
+        navigator.openRoot(TvRoute.Settings)
+        navigator.push(TvRoute.Logs)
+
+        assertTrue(navigator.back())
+        assertEquals(TvRoute.Settings, navigator.current)
+        assertTrue(navigator.back())
+        assertEquals(TvRoute.Home, navigator.current)
+        assertFalse(navigator.back())
+    }
+
+    @Test
     fun `pushing the current route is a no-op`() {
         val navigator = TvNavigator()
 

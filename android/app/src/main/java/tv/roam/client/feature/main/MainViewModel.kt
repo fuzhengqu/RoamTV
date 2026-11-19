@@ -81,7 +81,8 @@ class MainViewModel(
             selectedGroupId = dataSource.getSelectedSubscriptionId(),
             selectedGuid = dataSource.getSelectServer(),
             confirmRemove = dataSource.getConfirmRemove(),
-            doubleColumnDisplay = dataSource.getDoubleColumnDisplay()
+            doubleColumnDisplay = dataSource.getDoubleColumnDisplay(),
+            speedEnabled = dataSource.getSpeedEnabled(),
         )
     )
     val uiState: StateFlow<MainUiState> = _uiState.asStateFlow()
@@ -179,6 +180,12 @@ class MainViewModel(
                 if (testRequests.completeBulk(event.requestId) != null) {
                     cancelPendingTestResults()
                     resetTestStatus()
+                }
+            }
+
+            is MainServiceEvent.TrafficUpdate -> {
+                if (uiState.value.isRunning) {
+                    _uiState.update { it.copy(traffic = event.sample) }
                 }
             }
         }
@@ -342,9 +349,15 @@ class MainViewModel(
         _uiState.update {
             it.copy(
                 confirmRemove = dataSource.getConfirmRemove(),
-                doubleColumnDisplay = dataSource.getDoubleColumnDisplay()
+                doubleColumnDisplay = dataSource.getDoubleColumnDisplay(),
+                speedEnabled = dataSource.getSpeedEnabled(),
             )
         }
+    }
+
+    /** Clears the one-shot focus request created by the last import. */
+    fun clearLastImportedGuid() {
+        _uiState.update { it.copy(lastImportedGuid = null) }
     }
 
     // ---------- Group & server loading ----------
@@ -522,11 +535,18 @@ class MainViewModel(
         launchLoading {
             withContext(ioDispatcher) {
                 try {
+                    val groupId = uiState.value.selectedGroupId
+                    val before = dataSource.getServerGuidList(groupId).toSet()
                     val (count, countSub) = dataSource.importBatchConfig(
-                        configText, uiState.value.selectedGroupId, true
+                        configText, groupId, true
                     )
                     when {
                         count > 0 -> {
+                            val imported = dataSource.getServerGuidList(groupId)
+                                .lastOrNull { it !in before }
+                            if (imported != null) {
+                                _uiState.update { it.copy(lastImportedGuid = imported) }
+                            }
                             toast(dataSource.getString(R.string.title_import_config_count, count))
                             setupGroupTab(forceRefresh = true)
                         }
@@ -938,6 +958,7 @@ class MainViewModel(
             state.copy(
                 isRunning = running,
                 isTesting = testRequests.isTesting,
+                traffic = if (running) state.traffic else null,
                 status = if (!clearTestingText && state.isRunning == running) state.status
                 else if (running) MainStatus.Connected else MainStatus.Disconnected
             )

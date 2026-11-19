@@ -241,6 +241,7 @@ private fun AppRow(
         border = ClickableSurfaceDefaults.border(
             focusedBorder = Border(
                 border = androidx.compose.foundation.BorderStroke(3.dp, TvColors.Teal),
+                inset = 2.dp,
                 shape = RoundedCornerShape(14.dp),
             )
         ),

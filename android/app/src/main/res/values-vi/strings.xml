@@ -204,8 +204,8 @@
         <item>Bỏ qua</item>
     </string-array>
 
-    <string name="title_pref_speed_enabled">Hiển thị tốc độ mạng</string>
-    <string name="summary_pref_speed_enabled">Hiển thị tốc độ hiện tại trong thông báo.\nBiểu tượng cho biết lưu lượng proxy hay trực tiếp đang chiếm ưu thế.</string>
+    <string name="title_pref_speed_enabled">Hiển thị tốc độ trên Trang chủ</string>
+    <string name="summary_pref_speed_enabled">Hiển thị tốc độ proxy và kết nối trực tiếp ở đầu Trang chủ.</string>
 
     <string name="title_pref_sniffing_enabled">Bật Sniffing</string>
     <string name="summary_pref_sniffing_enabled">Phát hiện tên miền đích từ lưu lượng truy cập (bật theo mặc định).</string>
@@ -595,7 +595,6 @@
     <string name="tv_key_ok">OK</string>
     <string name="tv_key_ok_action">Chọn</string>
     <string name="tv_key_menu">Menu</string>
-    <string name="tv_key_menu_action">Thao tác</string>
     <string name="tv_key_back">Quay lại</string>
     <string name="tv_key_back_action">Quay lại</string>
     <string name="tv_placeholder_title">Sẽ có trong cột mốc tiếp theo</string>
@@ -624,7 +623,7 @@
 
     <string name="language_follow_system">Theo hệ thống</string>
     <string name="tv_settings_language_summary">Dùng cho menu, hộp thoại và thông báo. Thay đổi có hiệu lực ngay.</string>
-    <string name="tv_settings_restart_hint">Thay đổi được lưu ngay. Nếu đang kết nối, kết nối sẽ khởi động lại khi bạn rời Cài đặt.</string>
+    <string name="tv_settings_restart_hint">Thay đổi được lưu ngay. Nếu đang kết nối, lõi proxy sẽ tải lại khi bạn rời Cài đặt.</string>
 
     <string name="tv_logcat_empty">Không có mục nhật ký.</string>
     <string name="tv_logcat_clear_message">Xóa bộ đệm nhật ký hệ thống? Nhật ký của ứng dụng khác cũng bị xóa.</string>
@@ -638,8 +637,7 @@
     <string name="tv_import_empty">Không có nội dung để nhập.</string>
     <string name="tv_import_read_error">Không thể đọc tệp đã chọn.</string>
     <string name="tv_pairing_title">Ghép nối với điện thoại</string>
-    <string name="tv_pairing_scan">Quét mã bằng camera điện thoại để nhập.</string>
-    <string name="tv_pairing_code">Mã: %1$s</string>
+    <string name="tv_pairing_scan">Quét bằng camera điện thoại và gửi một hoặc nhiều cấu hình.</string>
     <string name="tv_pairing_address">Địa chỉ TV: %1$s</string>
     <string name="tv_pairing_expires">Hết hạn sau %1$d giây</string>
     <string name="tv_pairing_waiting">Đang chuẩn bị phiên ghép nối…</string>
@@ -674,4 +672,12 @@
     <string name="tv_routing_enabled">Bật</string>
     <string name="tv_routing_empty">Chưa có quy tắc định tuyến. Hãy thêm quy tắc hoặc nhập bộ quy tắc.</string>
     <string name="tv_per_app_empty">Không có ứng dụng phù hợp.</string>
+    <string name="tv_home_add_node">Thêm nút</string>
+    <string name="tv_home_batch">Hàng loạt</string>
+    <string name="tv_home_batch_title">Thao tác hàng loạt</string>
+    <string name="tv_speed_proxy">Proxy</string>
+    <string name="tv_speed_direct">Trực tiếp</string>
+    <string name="tv_speed_value">↑ %1$s   ↓ %2$s</string>
+    <string name="tv_pairing_imported">Đã nhập %1$d mục. Bạn có thể tiếp tục gửi từ điện thoại.</string>
+    <string name="tv_pairing_finish">Xong</string>
 </resources>

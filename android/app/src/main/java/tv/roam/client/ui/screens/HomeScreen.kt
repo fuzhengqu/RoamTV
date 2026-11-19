@@ -56,8 +56,10 @@ import androidx.tv.material3.SurfaceDefaults
 import androidx.tv.material3.Text
 import kotlinx.coroutines.flow.MutableStateFlow
 import tv.roam.client.R
+import tv.roam.client.dto.TrafficSample
 import tv.roam.client.dto.entities.ServersCache
 import tv.roam.client.enums.EConfigType
+import tv.roam.client.extension.toSpeedString
 import tv.roam.client.extension.toast
 import tv.roam.client.feature.main.MainAction
 import tv.roam.client.feature.main.MainStatus
@@ -81,10 +83,10 @@ private enum class BulkDelete {
 }
 
 /**
- * Television home: group tabs, a focusable server list and a persistent detail
- * pane. Selecting a server persists the selection; the detail pane owns the
- * explicit Connect / Test / Delete actions so browsing cannot accidentally
- * start a tunnel.
+ * Television home: group tabs, a focusable server list and a persistent action
+ * pane. Moving the list cursor only previews a server; the pane owns the
+ * explicit Connect / Edit / Share / Test / Delete actions so browsing cannot
+ * accidentally switch the active tunnel.
  */
 @Composable
 fun HomeScreen(
@@ -139,22 +141,33 @@ fun HomeScreen(
     var focusedGuid by rememberSaveable { mutableStateOf<String?>(null) }
     val focusRequesters = remember { mutableMapOf<String, FocusRequester>() }
     val importFocus = remember { FocusRequester() }
+    val detailPrimaryFocus = remember { FocusRequester() }
 
     var showSearch by remember { mutableStateOf(false) }
     var searchQuery by remember { mutableStateOf("") }
-    var showMore by remember { mutableStateOf(false) }
+    var showBatch by remember { mutableStateOf(false) }
     var showTypePicker by remember { mutableStateOf(false) }
     var deleteTarget by remember { mutableStateOf<ServersCache?>(null) }
     var bulkDelete by remember { mutableStateOf<BulkDelete?>(null) }
 
+    val activeServer = servers.firstOrNull { it.guid == selectedGuid }
     val detailServer = servers.firstOrNull { it.guid == focusedGuid }
-        ?: servers.firstOrNull { it.guid == selectedGuid }
+        ?: activeServer
         ?: servers.firstOrNull()
-    val detailIsCurrent = detailServer != null && isRunning && selectedGuid == detailServer.guid
+    val detailIsActive = detailServer != null && isRunning && selectedGuid == detailServer.guid
 
-    LaunchedEffect(servers.map { it.guid }, selectedGuid, groupId) {
+    LaunchedEffect(servers.map { it.guid }, selectedGuid, groupId, uiState.lastImportedGuid) {
         if (servers.isEmpty()) {
+            mainViewModel.clearLastImportedGuid()
             importFocus.requestFocus()
+            return@LaunchedEffect
+        }
+        val imported = uiState.lastImportedGuid
+            ?.takeIf { guid -> servers.any { it.guid == guid } }
+        if (imported != null) {
+            focusedGuid = imported
+            focusRequesters.getOrPut(imported) { FocusRequester() }.requestFocus()
+            mainViewModel.clearLastImportedGuid()
             return@LaunchedEffect
         }
         val currentFocusIsValid = focusedGuid != null && servers.any { it.guid == focusedGuid }
@@ -179,10 +192,21 @@ fun HomeScreen(
         }
     }
 
-    val selectServer: (ServersCache) -> Unit = { server ->
-        val changed = selectedGuid != server.guid
-        mainViewModel.updateSelectedGuid(server.guid)
-        if (changed && isRunning) onRestartService()
+    val openDetail: (ServersCache) -> Unit = { server ->
+        focusedGuid = server.guid
+        detailPrimaryFocus.requestFocus()
+    }
+
+    val editServer: (ServersCache) -> Unit = { server ->
+        when (server.profile.configType) {
+            EConfigType.POLICYGROUP -> onEditPolicyGroup(server.guid)
+            EConfigType.PROXYCHAIN -> onEditProxyChain(server.guid)
+            else -> onEditServer(
+                server.guid,
+                server.profile.configType.value,
+                isRunning && selectedGuid == server.guid,
+            )
+        }
     }
 
     Box(modifier = modifier.fillMaxSize()) {
@@ -198,15 +222,12 @@ fun HomeScreen(
                     isRunning -> TvColors.Success
                     else -> TvColors.TextMuted
                 },
-                connectLabel = if (detailIsCurrent) {
-                    stringResource(R.string.tv_action_disconnect)
-                } else {
-                    stringResource(R.string.tv_action_connect)
+                activeName = activeServer?.profile?.remarks?.takeIf {
+                    isRunning && it.isNotBlank()
                 },
-                connectEnabled = detailServer != null,
-                onConnect = { detailServer?.let(connectOrDisconnect) },
+                showSpeed = uiState.speedEnabled,
+                traffic = uiState.traffic,
                 onSearch = { showSearch = true },
-                onMore = { showMore = true },
             )
 
             if (groups.size > 1) {
@@ -228,20 +249,14 @@ fun HomeScreen(
                         )
                     }
                 }
-            } else {
-                Text(
-                    text = if (servers.size == 1) {
-                        stringResource(R.string.tv_home_server_count_one)
-                    } else {
-                        stringResource(R.string.tv_home_server_count, servers.size)
-                    },
-                    style = MaterialTheme.typography.labelLarge,
-                    color = TvColors.TextMuted,
-                    modifier = Modifier.padding(vertical = 10.dp),
-                )
             }
 
-            Spacer(Modifier.height(8.dp))
+            ServerListHeader(
+                serverCount = servers.size,
+                onImport = onImport,
+                onAdd = { showTypePicker = true },
+                onBatch = { showBatch = true },
+            )
 
             BoxWithConstraints(
                 modifier = Modifier
@@ -256,50 +271,55 @@ fun HomeScreen(
                         importFocus = importFocus,
                         onImport = onImport,
                     )
-                } else if (maxWidth >= 600.dp) {
+                } else {
+                    // Keep the list and the action pane side by side. The TV
+                    // rail leaves enough width even on a 1280x720 panel; the
+                    // pane narrows a little instead of falling back to a hidden
+                    // action menu.
+                    val paneWidth = if (maxWidth >= 700.dp) 320.dp else 280.dp
                     Row(Modifier.fillMaxSize()) {
                         ServerList(
                             modifier = Modifier
                                 .weight(1f)
                                 .fillMaxHeight(),
                             servers = servers,
-                            selectedGuid = selectedGuid,
+                            activeGuid = if (isRunning) selectedGuid else null,
                             focusRequesters = focusRequesters,
-                            onSelect = selectServer,
+                            onOpenDetail = openDetail,
                             onFocused = { focusedGuid = it },
                         )
                         Spacer(Modifier.width(16.dp))
                         DetailPane(
                             modifier = Modifier
-                                .width(280.dp)
+                                .width(paneWidth)
                                 .fillMaxHeight(),
                             server = detailServer,
-                            isRunning = isRunning,
-                            selectedGuid = selectedGuid,
+                            isActive = detailIsActive,
+                            primaryFocus = detailPrimaryFocus,
                             onConnect = { detailServer?.let(connectOrDisconnect) },
                             onTest = {
-                                val server = detailServer
-                                if (server != null && isRunning && selectedGuid == server.guid) {
+                                if (detailIsActive) {
                                     mainViewModel.testCurrentServerRealPing()
                                 } else {
                                     context.toast(R.string.tv_home_test_requires_connection)
                                 }
                             },
+                            onEdit = { detailServer?.let(editServer) },
+                            onShare = {
+                                detailServer?.let {
+                                    mainViewModel.onAction(MainAction.ShareQRCode(it.guid))
+                                }
+                            },
+                            onUpdateSubscription = {
+                                detailServer?.profile?.subscriptionId
+                                    ?.takeIf { it.isNotBlank() }
+                                    ?.let {
+                                        mainViewModel.onAction(MainAction.UpdateGroupSubscription(it))
+                                    }
+                            },
                             onDelete = { server -> deleteTarget = server },
                         )
                     }
-                } else {
-                    // 720p televisions do not have room for a 300dp detail
-                    // pane next to the rail. The list keeps the full width and
-                    // the same actions move into the More dialog.
-                    ServerList(
-                        modifier = Modifier.fillMaxSize(),
-                        servers = servers,
-                        selectedGuid = selectedGuid,
-                        focusRequesters = focusRequesters,
-                        onSelect = selectServer,
-                        onFocused = { focusedGuid = it },
-                    )
                 }
             }
         }
@@ -310,7 +330,6 @@ fun HomeScreen(
                 .fillMaxWidth(),
             hints = listOf(
                 stringResource(R.string.tv_key_ok) to stringResource(R.string.tv_key_ok_action),
-                stringResource(R.string.tv_key_menu) to stringResource(R.string.tv_key_menu_action),
                 stringResource(R.string.tv_key_back) to stringResource(R.string.tv_key_back_action),
             ),
         )
@@ -336,63 +355,21 @@ fun HomeScreen(
         )
     }
 
-    if (showMore) {
-        val selectedServer = servers.firstOrNull { it.guid == selectedGuid }
-        MoreDialog(
+    if (showBatch) {
+        BatchDialog(
             isRunning = isRunning,
             isTesting = isTesting,
-            selectedServer = selectedServer,
-            onTestSelected = {
-                showMore = false
-                if (selectedServer != null && isRunning && selectedGuid == selectedServer.guid) {
-                    mainViewModel.testCurrentServerRealPing()
-                } else {
-                    context.toast(R.string.tv_home_test_requires_connection)
-                }
-            },
-            onDeleteSelected = {
-                showMore = false
-                selectedServer?.let { deleteTarget = it }
-            },
-            onShareSelected = {
-                showMore = false
-                selectedServer?.let {
-                    mainViewModel.onAction(MainAction.ShareQRCode(it.guid))
-                }
-            },
-            onAddServer = {
-                showMore = false
-                showTypePicker = true
-            },
-            onEditSelected = {
-                showMore = false
-                selectedServer?.let {
-                    when (it.profile.configType) {
-                        EConfigType.POLICYGROUP -> onEditPolicyGroup(it.guid)
-                        EConfigType.PROXYCHAIN -> onEditProxyChain(it.guid)
-                        else -> onEditServer(
-                            it.guid,
-                            it.profile.configType.value,
-                            isRunning && selectedGuid == it.guid,
-                        )
-                    }
-                }
-            },
-            onDismiss = { showMore = false },
-            onImport = {
-                showMore = false
-                onImport()
-            },
+            onDismiss = { showBatch = false },
             onAction = { action ->
-                showMore = false
+                showBatch = false
                 mainViewModel.onAction(action)
             },
             onRestart = {
-                showMore = false
+                showBatch = false
                 onRestartService()
             },
             onBulkDelete = { target ->
-                showMore = false
+                showBatch = false
                 bulkDelete = target
             },
         )
@@ -467,14 +444,52 @@ fun HomeScreen(
 }
 
 @Composable
+private fun ServerListHeader(
+    serverCount: Int,
+    onImport: () -> Unit,
+    onAdd: () -> Unit,
+    onBatch: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(56.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        Text(
+            text = if (serverCount == 1) {
+                stringResource(R.string.tv_home_server_count_one)
+            } else {
+                stringResource(R.string.tv_home_server_count, serverCount)
+            },
+            style = MaterialTheme.typography.labelLarge,
+            color = TvColors.TextMuted,
+            modifier = Modifier.weight(1f),
+        )
+        TvSecondaryButton(
+            text = stringResource(R.string.tv_action_import),
+            onClick = onImport,
+        )
+        TvSecondaryButton(
+            text = stringResource(R.string.tv_home_add_node),
+            onClick = onAdd,
+        )
+        TvSecondaryButton(
+            text = stringResource(R.string.tv_home_batch),
+            onClick = onBatch,
+        )
+    }
+}
+
+@Composable
 private fun HomeTopBand(
     statusText: String,
     statusColor: Color,
-    connectLabel: String,
-    connectEnabled: Boolean,
-    onConnect: () -> Unit,
+    activeName: String?,
+    showSpeed: Boolean,
+    traffic: TrafficSample?,
     onSearch: () -> Unit,
-    onMore: () -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -491,29 +506,50 @@ private fun HomeTopBand(
         TvStatusDot(color = statusColor)
         Spacer(Modifier.width(10.dp))
         Text(
-            text = statusText,
+            text = if (activeName == null) statusText else "$statusText · $activeName",
             style = MaterialTheme.typography.titleSmall,
             color = TvColors.TextMuted,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier.weight(1f),
         )
-        TvPrimaryButton(
-            text = connectLabel,
-            onClick = onConnect,
-            enabled = connectEnabled,
-        )
-        Spacer(Modifier.width(8.dp))
+        if (showSpeed && traffic != null) {
+            SpeedReadout(traffic = traffic)
+            Spacer(Modifier.width(12.dp))
+        }
         TvIconAction(
             iconRes = R.drawable.ic_search_24dp,
             contentDescription = stringResource(R.string.acc_search),
             onClick = onSearch,
         )
-        TvIconAction(
-            iconRes = R.drawable.ic_more_vert_24dp,
-            contentDescription = stringResource(R.string.acc_more),
-            onClick = onMore,
+    }
+}
+
+@Composable
+private fun SpeedReadout(traffic: TrafficSample) {
+    Column(horizontalAlignment = Alignment.End) {
+        Text(
+            text = stringResource(R.string.tv_speed_proxy) + " " + stringResource(
+                R.string.tv_speed_value,
+                traffic.proxyUp.toSpeedString(),
+                traffic.proxyDown.toSpeedString(),
+            ),
+            style = MaterialTheme.typography.labelLarge,
+            color = TvColors.Teal,
+            maxLines = 1,
         )
+        if (traffic.directUp + traffic.directDown > 0L) {
+            Text(
+                text = stringResource(R.string.tv_speed_direct) + " " + stringResource(
+                    R.string.tv_speed_value,
+                    traffic.directUp.toSpeedString(),
+                    traffic.directDown.toSpeedString(),
+                ),
+                style = MaterialTheme.typography.labelSmall,
+                color = TvColors.TextMuted,
+                maxLines = 1,
+            )
+        }
     }
 }
 
@@ -571,14 +607,14 @@ private fun EmptyHome(
 private fun ServerList(
     modifier: Modifier,
     servers: List<ServersCache>,
-    selectedGuid: String?,
+    activeGuid: String?,
     focusRequesters: MutableMap<String, FocusRequester>,
-    onSelect: (ServersCache) -> Unit,
+    onOpenDetail: (ServersCache) -> Unit,
     onFocused: (String) -> Unit,
 ) {
     LazyColumn(
         modifier = modifier,
-        contentPadding = PaddingValues(bottom = 8.dp),
+        contentPadding = PaddingValues(top = 6.dp, bottom = 8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         items(servers, key = { it.guid }) { server ->
@@ -587,9 +623,9 @@ private fun ServerList(
             }
             ServerRow(
                 server = server,
-                selected = server.guid == selectedGuid,
+                selected = server.guid == activeGuid,
                 focusRequester = focusRequester,
-                onClick = { onSelect(server) },
+                onClick = { onOpenDetail(server) },
                 onFocused = { onFocused(server.guid) },
             )
         }
@@ -627,6 +663,7 @@ private fun ServerRow(
         border = ClickableSurfaceDefaults.border(
             focusedBorder = Border(
                 border = androidx.compose.foundation.BorderStroke(3.dp, TvColors.Teal),
+                inset = 2.dp,
                 shape = RoundedCornerShape(14.dp),
             )
         ),
@@ -703,10 +740,13 @@ private fun LatencyBadge(delayMillis: Long) {
 private fun DetailPane(
     modifier: Modifier,
     server: ServersCache?,
-    isRunning: Boolean,
-    selectedGuid: String?,
+    isActive: Boolean,
+    primaryFocus: FocusRequester,
     onConnect: () -> Unit,
     onTest: () -> Unit,
+    onEdit: () -> Unit,
+    onShare: () -> Unit,
+    onUpdateSubscription: () -> Unit,
     onDelete: (ServersCache) -> Unit,
 ) {
     Surface(
@@ -769,32 +809,61 @@ private fun DetailPane(
                     style = MaterialTheme.typography.labelLarge,
                     color = TvColors.TextMuted,
                 )
-                LatencyBadge(server.testDelayMillis)
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    if (isActive) {
+                        Text(
+                            text = stringResource(R.string.tv_status_connected),
+                            style = MaterialTheme.typography.labelLarge,
+                            color = TvColors.Success,
+                        )
+                    }
+                    LatencyBadge(server.testDelayMillis)
+                }
             }
 
             Spacer(Modifier.height(2.dp))
 
-            val isCurrent = isRunning && selectedGuid == server.guid
             TvPrimaryButton(
-                text = if (isCurrent) {
+                text = if (isActive) {
                     stringResource(R.string.tv_action_disconnect)
                 } else {
                     stringResource(R.string.tv_action_connect)
                 },
                 onClick = onConnect,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .focusRequester(primaryFocus),
             )
             TvSecondaryButton(
                 text = stringResource(R.string.tv_action_test),
                 onClick = onTest,
                 modifier = Modifier.fillMaxWidth(),
-                enabled = isCurrent,
             )
+            TvSecondaryButton(
+                text = stringResource(R.string.menu_item_edit_config),
+                onClick = onEdit,
+                modifier = Modifier.fillMaxWidth(),
+            )
+            TvSecondaryButton(
+                text = stringResource(R.string.share_method_qrcode),
+                onClick = onShare,
+                modifier = Modifier.fillMaxWidth(),
+            )
+            if (server.profile.subscriptionId.isNotBlank()) {
+                TvSecondaryButton(
+                    text = stringResource(R.string.title_sub_update),
+                    onClick = onUpdateSubscription,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
             TvSecondaryButton(
                 text = stringResource(R.string.action_delete),
                 onClick = { onDelete(server) },
                 modifier = Modifier.fillMaxWidth(),
-                enabled = selectedGuid != server.guid,
+                enabled = !isActive,
             )
         }
     }
@@ -865,17 +934,10 @@ private fun SearchDialog(
 }
 
 @Composable
-private fun MoreDialog(
+private fun BatchDialog(
     isRunning: Boolean,
     isTesting: Boolean,
-    selectedServer: ServersCache?,
-    onTestSelected: () -> Unit,
-    onDeleteSelected: () -> Unit,
-    onShareSelected: () -> Unit,
-    onAddServer: () -> Unit,
-    onEditSelected: () -> Unit,
     onDismiss: () -> Unit,
-    onImport: () -> Unit,
     onAction: (MainAction) -> Unit,
     onRestart: () -> Unit,
     onBulkDelete: (BulkDelete) -> Unit,
@@ -886,7 +948,7 @@ private fun MoreDialog(
     TvDialog(onDismissRequest = onDismiss) {
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(
-                text = stringResource(R.string.tv_nav_more),
+                text = stringResource(R.string.tv_home_batch_title),
                 style = MaterialTheme.typography.headlineSmall,
                 color = TvColors.Text,
             )
@@ -897,59 +959,16 @@ private fun MoreDialog(
                 verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
                 MenuRow(
-                    label = stringResource(R.string.menu_item_add_config),
-                    iconRes = R.drawable.ic_add_24dp,
-                    onClick = onAddServer,
-                    modifier = Modifier.focusRequester(firstFocus),
-                )
-                MenuRow(
-                    label = stringResource(R.string.tv_action_import),
-                    iconRes = R.drawable.ic_add_24dp,
-                    onClick = onImport,
-                )
-                MenuRow(
                     label = stringResource(R.string.title_ping_all_server),
                     iconRes = R.drawable.ic_fab_check,
                     onClick = { onAction(MainAction.TestAllServers) },
+                    modifier = Modifier.focusRequester(firstFocus),
                 )
                 MenuRow(
                     label = stringResource(R.string.title_real_ping_all_server),
                     iconRes = R.drawable.ic_fab_check,
                     onClick = { onAction(MainAction.TestRealAllServers) },
                 )
-                if (selectedServer != null) {
-                    MenuRow(
-                        label = stringResource(R.string.menu_item_edit_config) +
-                            " · " + selectedServer.profile.remarks,
-                        iconRes = R.drawable.ic_edit_24dp,
-                        onClick = onEditSelected,
-                    )
-                    MenuRow(
-                        label = stringResource(R.string.tv_action_test) +
-                            " · " + selectedServer.profile.remarks,
-                        iconRes = R.drawable.ic_fab_check,
-                        onClick = onTestSelected,
-                    )
-                    MenuRow(
-                        label = stringResource(R.string.share_method_qrcode) +
-                            " · " + selectedServer.profile.remarks,
-                        iconRes = R.drawable.ic_share_24dp,
-                        onClick = onShareSelected,
-                    )
-                    MenuRow(
-                        label = stringResource(R.string.action_delete) +
-                            " · " + selectedServer.profile.remarks,
-                        iconRes = R.drawable.ic_delete_24dp,
-                        onClick = onDeleteSelected,
-                    )
-                }
-                if (isTesting) {
-                    MenuRow(
-                        label = stringResource(R.string.action_cancel),
-                        iconRes = R.drawable.ic_stop_24dp,
-                        onClick = { onAction(MainAction.CancelTesting) },
-                    )
-                }
                 MenuRow(
                     label = stringResource(R.string.title_sort_by_test_results),
                     iconRes = R.drawable.ic_check_update_24dp,
@@ -960,6 +979,13 @@ private fun MoreDialog(
                     iconRes = R.drawable.ic_refresh_24dp,
                     onClick = { onAction(MainAction.UpdateSubscriptions) },
                 )
+                if (isTesting) {
+                    MenuRow(
+                        label = stringResource(R.string.action_cancel),
+                        iconRes = R.drawable.ic_stop_24dp,
+                        onClick = { onAction(MainAction.CancelTesting) },
+                    )
+                }
                 if (isRunning) {
                     MenuRow(
                         label = stringResource(R.string.title_service_restart),

@@ -30,16 +30,16 @@ enum class PairingStatus {
 data class PairingUiState(
     val status: PairingStatus = PairingStatus.Idle,
     val qrCode: Bitmap? = null,
-    val code: String? = null,
     val address: String? = null,
     val secondsLeft: Int = 0,
+    val importedCount: Int = 0,
     @StringRes val errorRes: Int? = null,
 )
 
 /**
- * Owns the temporary LAN pairing server. The server is stopped when the user
- * leaves the import screen, when a payload is received, or when the session
- * expires. Nothing is persisted.
+ * Owns the temporary LAN pairing server. The server keeps accepting payloads
+ * until the user finishes, leaves the import screen, or the session expires,
+ * so one QR scan can import several configurations. Nothing is persisted.
  */
 class PairingViewModel(application: Application) : BaseViewModel(application) {
 
@@ -101,8 +101,10 @@ class PairingViewModel(application: Application) : BaseViewModel(application) {
                 sjclJs = sjclJs,
                 onText = { text ->
                     viewModelScope.launch(Dispatchers.Main) {
+                        _uiState.value = _uiState.value.copy(
+                            importedCount = _uiState.value.importedCount + 1,
+                        )
                         _received.send(text)
-                        stopInternal()
                     }
                 },
             )
@@ -120,8 +122,6 @@ class PairingViewModel(application: Application) : BaseViewModel(application) {
                     append(port)
                     append("/s/")
                     append(session.id)
-                    append("?code=")
-                    append(session.code)
                     append('#')
                     append(PairingCrypto.base64Url(session.key))
                 }
@@ -133,7 +133,6 @@ class PairingViewModel(application: Application) : BaseViewModel(application) {
                 _uiState.value = PairingUiState(
                     status = PairingStatus.Ready,
                     qrCode = qr,
-                    code = session.code,
                     address = "${address.hostAddress}:$port",
                     secondsLeft = (PairingSessionFactory.DEFAULT_TTL_MILLIS / 1000).toInt(),
                 )

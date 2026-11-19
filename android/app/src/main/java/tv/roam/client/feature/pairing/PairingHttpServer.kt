@@ -14,11 +14,12 @@ import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 
 /**
- * Minimal one-shot HTTP server for the phone pairing page.
+ * Minimal HTTP server for the phone pairing page.
  *
  * It intentionally supports only the two routes the page needs, binds to the
- * selected LAN address, caps the request size and POST count, and closes after
- * one successful import. Configuration text is never logged.
+ * selected LAN address, caps the request size and POST count, and accepts
+ * several encrypted payloads until the session expires or the user finishes.
+ * Configuration text is never logged.
  */
 class PairingHttpServer(
     private val session: PairingSession,
@@ -30,7 +31,6 @@ class PairingHttpServer(
     private var serverSocket: ServerSocket? = null
     private var worker: Thread? = null
     private val closed = AtomicBoolean(false)
-    private val consumed = AtomicBoolean(false)
     private val postAttempts = AtomicInteger(0)
 
     /** Binds an ephemeral port and starts the accept loop. Returns the port. */
@@ -119,10 +119,6 @@ class PairingHttpServer(
     }
 
     private fun handleUpload(request: Request, output: BufferedOutputStream) {
-        if (consumed.get()) {
-            respond(output, 410, "Gone", "text/plain", "gone")
-            return
-        }
         if (session.isExpired()) {
             respond(output, 410, "Gone", "text/plain", "expired")
             return
@@ -142,13 +138,8 @@ class PairingHttpServer(
             respond(output, 400, "Bad Request", "text/plain", "invalid payload")
             return
         }
-        if (!consumed.compareAndSet(false, true)) {
-            respond(output, 410, "Gone", "text/plain", "gone")
-            return
-        }
         respond(output, 200, "OK", "text/plain; charset=utf-8", "ok")
         runCatching { onText(text) }
-        close()
     }
 
     private fun readRequest(input: BufferedInputStream): Request? {
@@ -242,6 +233,6 @@ class PairingHttpServer(
         const val MAX_BODY_BYTES = 64 * 1024
         const val MAX_HEADER_BYTES = 8 * 1024
         const val MAX_LINE_BYTES = 4 * 1024
-        const val MAX_POST_ATTEMPTS = 5
+        const val MAX_POST_ATTEMPTS = 20
     }
 }

@@ -53,6 +53,7 @@ fun TvRailItem(
         border = ClickableSurfaceDefaults.border(
             focusedBorder = Border(
                 border = BorderStroke(3.dp, TvColors.Teal),
+                inset = 2.dp,
                 shape = RoundedCornerShape(12.dp),
             )
         ),
@@ -194,6 +195,7 @@ fun TvSettingsRow(
         border = ClickableSurfaceDefaults.border(
             focusedBorder = Border(
                 border = BorderStroke(3.dp, TvColors.Teal),
+                inset = 2.dp,
                 shape = RoundedCornerShape(14.dp),
             )
         ),
@@ -272,6 +274,7 @@ fun TvChip(
         border = ClickableSurfaceDefaults.border(
             focusedBorder = Border(
                 border = BorderStroke(3.dp, TvColors.Teal),
+                inset = 2.dp,
                 shape = RoundedCornerShape(50),
             )
         ),

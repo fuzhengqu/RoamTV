@@ -13,9 +13,11 @@ import androidx.core.app.NotificationCompat
 import tv.roam.client.AppConfig
 import tv.roam.client.R
 import tv.roam.client.core.CoreServiceManager
+import tv.roam.client.dto.TrafficSample
 import tv.roam.client.dto.entities.ProfileItem
 import tv.roam.client.extension.delay
 import tv.roam.client.extension.toSpeedString
+import tv.roam.client.helper.MessageHelper
 import tv.roam.client.helper.NotificationHelper
 import tv.roam.client.util.LogUtil
 import kotlinx.coroutines.CoroutineScope
@@ -31,7 +33,7 @@ object NotificationManager {
     private const val NOTIFICATION_PENDING_INTENT_STOP_V2RAY = 1
     private const val NOTIFICATION_PENDING_INTENT_RESTART_V2RAY = 2
     private const val NOTIFICATION_ICON_THRESHOLD = 3000
-    private const val QUERY_INTERVAL_MS = 3000L
+    private const val QUERY_INTERVAL_MS = 2000L
 
     private var lastQueryTime = 0L
     private var mBuilder: NotificationCompat.Builder? = null
@@ -39,11 +41,12 @@ object NotificationManager {
     private var mNotificationManager: NotificationManager? = null
 
     /**
-     * Starts the speed notification.
-     * @param currentConfig The current profile configuration.
+     * Starts the traffic sampler. It runs while the core is up so the Home
+     * header can show live speeds even when the notification is not used on a
+     * television. The notification text is still refreshed when the setting is
+     * enabled.
      */
     fun startSpeedNotification() {
-        if (MmkvManager.decodeSettingsBool(AppConfig.PREF_SPEED_ENABLED) != true) return
         if (speedNotificationJob != null || CoreServiceManager.isRunning() == false) return
 
         var lastZeroSpeed = false
@@ -270,19 +273,21 @@ object NotificationManager {
         val proxyTotal = proxyUplink + proxyDownlink
         val directTotal = directUplink + directDownlink
         val zeroSpeed = proxyTotal + directTotal == 0L
-        if (!zeroSpeed || !lastZeroSpeed) {
+        val sample = TrafficSample(
+            proxyUp = (proxyUplink / sinceLastQueryInSeconds).toLong(),
+            proxyDown = (proxyDownlink / sinceLastQueryInSeconds).toLong(),
+            directUp = (directUplink / sinceLastQueryInSeconds).toLong(),
+            directDown = (directDownlink / sinceLastQueryInSeconds).toLong(),
+        )
+        getService()?.let { service ->
+            MessageHelper.sendMsg2UI(service, AppConfig.MSG_TRAFFIC_UPDATE, sample)
+        }
+        if (MmkvManager.decodeSettingsBool(AppConfig.PREF_SPEED_ENABLED) == true &&
+            (!zeroSpeed || !lastZeroSpeed)
+        ) {
             val text = StringBuilder()
-            appendSpeedString(
-                text, AppConfig.TAG_PROXY,
-                proxyUplink / sinceLastQueryInSeconds,
-                proxyDownlink / sinceLastQueryInSeconds
-            )
-
-            appendSpeedString(
-                text, AppConfig.TAG_DIRECT,
-                directUplink / sinceLastQueryInSeconds,
-                directDownlink / sinceLastQueryInSeconds
-            )
+            appendSpeedString(text, AppConfig.TAG_PROXY, sample.proxyUp.toDouble(), sample.proxyDown.toDouble())
+            appendSpeedString(text, AppConfig.TAG_DIRECT, sample.directUp.toDouble(), sample.directDown.toDouble())
             updateNotification(text.toString(), proxyTotal, directTotal)
         }
         lastQueryTime = queryTime

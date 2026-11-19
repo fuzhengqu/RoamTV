@@ -1,6 +1,7 @@
 package tv.roam.client.feature.main
 import tv.roam.client.dto.ConnectionTestResult
 import tv.roam.client.dto.RealPingResult
+import tv.roam.client.dto.TrafficSample
 
 sealed class MainServiceEvent {
     data object StateRunning : MainServiceEvent()
@@ -14,4 +15,5 @@ sealed class MainServiceEvent {
     data class MeasureConfigNotify(val progress: String, val requestId: String) : MainServiceEvent()
     data class MeasureConfigFinish(val requestId: String) : MainServiceEvent()
     data class MeasureConfigCancelled(val requestId: String) : MainServiceEvent()
+    data class TrafficUpdate(val sample: TrafficSample) : MainServiceEvent()
 }

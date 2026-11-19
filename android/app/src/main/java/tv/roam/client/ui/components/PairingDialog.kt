@@ -83,14 +83,16 @@ fun PairingDialog(
                         style = MaterialTheme.typography.bodyMedium,
                         color = TvColors.TextMuted,
                     )
-                    Text(
-                        text = stringResource(
-                            R.string.tv_pairing_code,
-                            state.code.orEmpty(),
-                        ),
-                        style = MaterialTheme.typography.headlineMedium,
-                        color = TvColors.Teal,
-                    )
+                    if (state.importedCount > 0) {
+                        Text(
+                            text = stringResource(
+                                R.string.tv_pairing_imported,
+                                state.importedCount,
+                            ),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = TvColors.Success,
+                        )
+                    }
                     Text(
                         text = stringResource(
                             R.string.tv_pairing_address,
@@ -112,7 +114,11 @@ fun PairingDialog(
                 PairingStatus.Idle -> Unit
             }
             TvPrimaryButton(
-                text = stringResource(R.string.action_cancel),
+                text = if (state.importedCount > 0) {
+                    stringResource(R.string.tv_pairing_finish)
+                } else {
+                    stringResource(R.string.action_cancel)
+                },
                 onClick = onCancel,
                 modifier = Modifier.focusRequester(cancelFocus),
             )

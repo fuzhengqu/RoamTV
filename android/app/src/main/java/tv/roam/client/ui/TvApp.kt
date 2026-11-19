@@ -104,7 +104,7 @@ fun TvApp(
     var showMore by remember { mutableStateOf(false) }
 
     BackHandler(enabled = true) {
-        if (!navigator.pop()) {
+        if (!navigator.back()) {
             activity?.moveTaskToBack(true)
         }
     }

@@ -4,7 +4,6 @@ import java.security.SecureRandom
 
 data class PairingSession(
     val id: String,
-    val code: String,
     val key: ByteArray,
     val expiresAtMillis: Long,
 ) {
@@ -24,7 +23,6 @@ object PairingSessionFactory {
         val idBytes = ByteArray(ID_BYTES).also(random::nextBytes)
         return PairingSession(
             id = PairingCrypto.base64Url(idBytes),
-            code = (random.nextInt(1_000_000)).toString().padStart(6, '0'),
             key = PairingCrypto.newKey(),
             expiresAtMillis = nowMillis + ttlMillis,
         )

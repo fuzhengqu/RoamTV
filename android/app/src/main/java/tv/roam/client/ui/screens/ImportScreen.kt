@@ -81,12 +81,12 @@ fun ImportScreen(
     var showTextDialog by remember { mutableStateOf(false) }
     val initialFocus = remember { FocusRequester() }
 
-    val importText: (String) -> Unit = { text ->
+    val importText: (String, Boolean) -> Unit = { text, returnHome ->
         if (text.isBlank()) {
             context.toast(R.string.tv_import_empty)
         } else {
             mainViewModel.onAction(MainAction.ImportBatchConfig(text))
-            onImported()
+            if (returnHome) onImported()
         }
     }
 
@@ -105,7 +105,7 @@ fun ImportScreen(
                 if (text.isNullOrBlank() || text.length > MAX_IMPORT_TEXT_LENGTH) {
                     context.toast(R.string.tv_import_read_error)
                 } else {
-                    importText(text)
+                    importText(text, true)
                 }
             }
         }
@@ -137,9 +137,10 @@ fun ImportScreen(
     }
 
     LaunchedEffect(Unit) {
+        // Keep the QR session open after each payload so several configs can be
+        // sent from the same phone page without scanning again.
         pairingViewModel.received.collect { text ->
-            showPairing = false
-            importText(text)
+            importText(text, false)
         }
     }
 
@@ -189,7 +190,7 @@ fun ImportScreen(
                             val text = withContext(Dispatchers.IO) {
                                 Utils.getClipboard(context)
                             }
-                            importText(text)
+                            importText(text, true)
                         }
                     },
                 )
@@ -227,8 +228,10 @@ fun ImportScreen(
         PairingDialog(
             state = pairingState,
             onCancel = {
+                val finish = pairingState.importedCount > 0
                 pairingViewModel.stop()
                 showPairing = false
+                if (finish) onImported()
             },
         )
     }
@@ -237,7 +240,7 @@ fun ImportScreen(
         ImportTextDialog(
             onImport = { text ->
                 showTextDialog = false
-                importText(text)
+                importText(text, true)
             },
             onDismiss = { showTextDialog = false },
         )

@@ -10,6 +10,7 @@ import tv.roam.client.R
 import tv.roam.client.dto.ConnectionTestResult
 import tv.roam.client.dto.RealPingResult
 import tv.roam.client.dto.SubscriptionUpdateResult
+import tv.roam.client.dto.TrafficSample
 import tv.roam.client.dto.TestServiceMessage
 import tv.roam.client.dto.entities.ProfileItem
 import tv.roam.client.dto.entities.ServerAffiliationInfo
@@ -72,6 +73,9 @@ class MainRepository(
                     requestId
                 )
                 AppConfig.MSG_MEASURE_CONFIG_CANCEL -> MainServiceEvent.MeasureConfigCancelled(requestId)
+                AppConfig.MSG_TRAFFIC_UPDATE -> safeIntent
+                    .serializable<TrafficSample>("content")
+                    ?.let { MainServiceEvent.TrafficUpdate(it) }
 
                 else -> null
             }
@@ -120,6 +124,9 @@ class MainRepository(
 
     override fun getDoubleColumnDisplay(): Boolean =
         MmkvManager.decodeSettingsBool(AppConfig.PREF_DOUBLE_COLUMN_DISPLAY, false)
+
+    override fun getSpeedEnabled(): Boolean =
+        MmkvManager.decodeSettingsBool(AppConfig.PREF_SPEED_ENABLED, false)
 
     override fun isGroupAllDisplayEnabled(): Boolean =
         MmkvManager.decodeSettingsBool(AppConfig.PREF_GROUP_ALL_DISPLAY)

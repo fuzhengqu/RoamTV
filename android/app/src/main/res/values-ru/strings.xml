@@ -204,8 +204,8 @@
         <item>Пропускать</item>
     </string-array>
 
-    <string name="title_pref_speed_enabled">Показывать скорость</string>
-    <string name="summary_pref_speed_enabled">Показывать текущую скорость в уведомлении.\nЗначок указывает, какой трафик преобладает: через прокси или напрямую.</string>
+    <string name="title_pref_speed_enabled">Показывать скорость на главном экране</string>
+    <string name="summary_pref_speed_enabled">Показывать текущую скорость прокси и прямого подключения в верхней части главного экрана.</string>
 
     <string name="title_pref_sniffing_enabled">Анализировать трафик (sniffing)</string>
     <string name="summary_pref_sniffing_enabled">Определять домены назначения в трафике (по умолчанию включено)</string>
@@ -601,7 +601,6 @@
     <string name="tv_key_ok">OK</string>
     <string name="tv_key_ok_action">Выбрать</string>
     <string name="tv_key_menu">Меню</string>
-    <string name="tv_key_menu_action">Действия</string>
     <string name="tv_key_back">Назад</string>
     <string name="tv_key_back_action">Назад</string>
     <string name="tv_placeholder_title">Появится на следующем этапе</string>
@@ -630,7 +629,7 @@
 
     <string name="language_follow_system">Как в системе</string>
     <string name="tv_settings_language_summary">Используется для меню, диалогов и сообщений. Изменения применяются сразу.</string>
-    <string name="tv_settings_restart_hint">Изменения сохраняются сразу. Если соединение активно, оно перезапустится при выходе из настроек.</string>
+    <string name="tv_settings_restart_hint">Изменения сохраняются сразу. Если соединение активно, прокси-ядро перезагрузится при выходе из настроек.</string>
 
     <string name="tv_logcat_empty">Нет записей журнала.</string>
     <string name="tv_logcat_clear_message">Очистить системный буфер журнала? Журналы других приложений также будут очищены.</string>
@@ -644,8 +643,7 @@
     <string name="tv_import_empty">Нечего импортировать.</string>
     <string name="tv_import_read_error">Не удалось прочитать выбранный файл.</string>
     <string name="tv_pairing_title">Сопряжение с телефоном</string>
-    <string name="tv_pairing_scan">Отсканируйте код камерой телефона.</string>
-    <string name="tv_pairing_code">Код: %1$s</string>
+    <string name="tv_pairing_scan">Отсканируйте камерой телефона и отправьте одну или несколько конфигураций.</string>
     <string name="tv_pairing_address">Адрес ТВ: %1$s</string>
     <string name="tv_pairing_expires">Истекает через %1$d с</string>
     <string name="tv_pairing_waiting">Подготовка сеанса сопряжения…</string>
@@ -680,4 +678,12 @@
     <string name="tv_routing_enabled">Включено</string>
     <string name="tv_routing_empty">Правил маршрутизации пока нет. Добавьте правило или импортируйте набор.</string>
     <string name="tv_per_app_empty">Нет подходящих приложений.</string>
+    <string name="tv_home_add_node">Добавить узел</string>
+    <string name="tv_home_batch">Пакетно</string>
+    <string name="tv_home_batch_title">Пакетные действия</string>
+    <string name="tv_speed_proxy">Прокси</string>
+    <string name="tv_speed_direct">Прямое</string>
+    <string name="tv_speed_value">↑ %1$s   ↓ %2$s</string>
+    <string name="tv_pairing_imported">Импортировано: %1$d. Можно продолжать отправлять с телефона.</string>
+    <string name="tv_pairing_finish">Готово</string>
 </resources>

@@ -204,8 +204,8 @@
         <item>এড়িয়ে যান</item>
     </string-array>
 
-    <string name="title_pref_speed_enabled">গতি প্রদর্শন সক্রিয় করুন</string>
-    <string name="summary_pref_speed_enabled">বিজ্ঞপ্তিতে বর্তমান সংযোগের গতি দেখান।\nআইকনটি প্রক্সি বা সরাসরি ট্রাফিকের মধ্যে কোনটি বেশি তা দেখায়।</string>
+    <string name="title_pref_speed_enabled">হোমে গতি দেখান</string>
+    <string name="summary_pref_speed_enabled">হোম স্ক্রিনের উপরে প্রক্সি এবং সরাসরি সংযোগের বর্তমান গতি দেখান।</string>
 
     <string name="title_pref_sniffing_enabled">ট্রাফিকের গন্তব্য ডোমেইন শনাক্তকরণ চালু করুন (Sniffing)</string>
     <string name="summary_pref_sniffing_enabled">ট্রাফিক থেকে গন্তব্য ডোমেইন শনাক্ত করুন (ডিফল্টভাবে চালু)।</string>
@@ -597,7 +597,6 @@
     <string name="tv_key_ok">OK</string>
     <string name="tv_key_ok_action">নির্বাচন</string>
     <string name="tv_key_menu">মেনু</string>
-    <string name="tv_key_menu_action">কার্য</string>
     <string name="tv_key_back">ফিরুন</string>
     <string name="tv_key_back_action">ফিরুন</string>
     <string name="tv_placeholder_title">পরবর্তী মাইলফলকে</string>
@@ -626,7 +625,7 @@
 
     <string name="language_follow_system">সিস্টেম অনুযায়ী</string>
     <string name="tv_settings_language_summary">মেনু, ডায়ালগ ও বার্তার জন্য ব্যবহৃত হয়। পরিবর্তন সাথে সাথে 적용됩니다.</string>
-    <string name="tv_settings_restart_hint">পরিবর্তনগুলি সাথে সাথে সংরক্ষিত হয়। সংযুক্ত থাকলে, সেটিংস থেকে বেরোনোর সময় সংযোগটি পুনরায় চালু হবে।</string>
+    <string name="tv_settings_restart_hint">পরিবর্তনগুলি সাথে সাথে সংরক্ষিত হয়। সংযুক্ত থাকলে, সেটিংস থেকে বেরোনোর সময় প্রক্সি কোর পুনরায় লোড হবে।</string>
 
     <string name="tv_logcat_empty">কোনো লগ এন্ট্রি নেই।</string>
     <string name="tv_logcat_clear_message">সিস্টেম লগ বাফার মুছবেন? অন্য অ্যাপের লগও মুছে যাবে।</string>
@@ -640,8 +639,7 @@
     <string name="tv_import_empty">আমদানি করার কিছু নেই।</string>
     <string name="tv_import_read_error">নির্বাচিত ফাইল পড়া যায়নি।</string>
     <string name="tv_pairing_title">ফোনের সাথে পেয়ার করুন</string>
-    <string name="tv_pairing_scan">ফোনের ক্যামেরা দিয়ে স্ক্যান করুন।</string>
-    <string name="tv_pairing_code">কোড: %1$s</string>
+    <string name="tv_pairing_scan">ফোনের ক্যামেরা দিয়ে স্ক্যান করুন এবং এক বা একাধিক কনফিগারেশন পাঠান।</string>
     <string name="tv_pairing_address">টিভি ঠিকানা: %1$s</string>
     <string name="tv_pairing_expires">%1$d সেকেন্ডে মেয়াদ শেষ</string>
     <string name="tv_pairing_waiting">পেয়ারিং সেশন প্রস্তুত হচ্ছে…</string>
@@ -676,4 +674,12 @@
     <string name="tv_routing_enabled">সক্রিয়</string>
     <string name="tv_routing_empty">এখনও কোনো রাউটিং নিয়ম নেই। একটি নিয়ম যোগ করুন বা প্রিসেট আমদানি করুন।</string>
     <string name="tv_per_app_empty">কোনো মিলে যাওয়া অ্যাপ নেই।</string>
+    <string name="tv_home_add_node">নোড যোগ করুন</string>
+    <string name="tv_home_batch">ব্যাচ</string>
+    <string name="tv_home_batch_title">ব্যাচ ক্রিয়া</string>
+    <string name="tv_speed_proxy">প্রক্সি</string>
+    <string name="tv_speed_direct">সরাসরি</string>
+    <string name="tv_speed_value">↑ %1$s   ↓ %2$s</string>
+    <string name="tv_pairing_imported">%1$dটি আইটেম আমদানি হয়েছে। ফোন থেকে আরও পাঠাতে পারেন।</string>
+    <string name="tv_pairing_finish">সম্পন্ন</string>
 </resources>

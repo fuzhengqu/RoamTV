@@ -204,8 +204,8 @@
         <item>略過</item>
     </string-array>
 
-    <string name="title_pref_speed_enabled">啟用速度顯示</string>
-    <string name="summary_pref_speed_enabled">在通知中顯示目前速度。\n圖示會指出代理流量或直接連線流量何者較多。</string>
+    <string name="title_pref_speed_enabled">首頁顯示即時速度</string>
+    <string name="summary_pref_speed_enabled">在首頁頂部顯示目前代理與直連速度。</string>
 
     <string name="title_pref_sniffing_enabled">啟用流量探測 (Sniffing)</string>
     <string name="summary_pref_sniffing_enabled">從流量中探測目標網域（預設啟用）。</string>
@@ -595,7 +595,6 @@
     <string name="tv_key_ok">OK</string>
     <string name="tv_key_ok_action">選擇</string>
     <string name="tv_key_menu">選單</string>
-    <string name="tv_key_menu_action">操作</string>
     <string name="tv_key_back">返回</string>
     <string name="tv_key_back_action">返回上一層</string>
     <string name="tv_placeholder_title">下個里程碑即將推出</string>
@@ -624,7 +623,7 @@
 
     <string name="language_follow_system">跟隨系統</string>
     <string name="tv_settings_language_summary">用於選單、對話方塊和提示訊息。修改後立即生效。</string>
-    <string name="tv_settings_restart_hint">設定會立即儲存。若目前為連線狀態，離開設定頁面後會重新啟動連線。</string>
+    <string name="tv_settings_restart_hint">設定會立即儲存。若目前為連線狀態，離開設定頁面後會重新載入代理核心。</string>
 
     <string name="tv_logcat_empty">沒有日誌項目。</string>
     <string name="tv_logcat_clear_message">清空系統日誌緩衝區？其他應用程式的日誌也會被清空。</string>
@@ -638,8 +637,7 @@
     <string name="tv_import_empty">沒有可匯入的內容。</string>
     <string name="tv_import_read_error">無法讀取所選檔案。</string>
     <string name="tv_pairing_title">與手機配對</string>
-    <string name="tv_pairing_scan">用手機相機掃碼匯入。</string>
-    <string name="tv_pairing_code">驗證碼：%1$s</string>
+    <string name="tv_pairing_scan">用手機相機掃碼，可連續傳送多個設定。</string>
     <string name="tv_pairing_address">電視位址：%1$s</string>
     <string name="tv_pairing_expires">%1$d 秒後過期</string>
     <string name="tv_pairing_waiting">正在準備配對工作階段…</string>
@@ -674,4 +672,12 @@
     <string name="tv_routing_enabled">啟用</string>
     <string name="tv_routing_empty">還沒有路由規則。新增一條規則或匯入預設。</string>
     <string name="tv_per_app_empty">沒有符合的應用程式。</string>
+    <string name="tv_home_add_node">新增節點</string>
+    <string name="tv_home_batch">批次</string>
+    <string name="tv_home_batch_title">批次操作</string>
+    <string name="tv_speed_proxy">代理</string>
+    <string name="tv_speed_direct">直連</string>
+    <string name="tv_speed_value">↑ %1$s   ↓ %2$s</string>
+    <string name="tv_pairing_imported">已匯入 %1$d 項，可繼續在手機上傳送。</string>
+    <string name="tv_pairing_finish">完成</string>
 </resources>

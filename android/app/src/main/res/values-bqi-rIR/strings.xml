@@ -204,8 +204,8 @@
         <item>گوم زیڌن</item>
     </string-array>
 
-    <string name="title_pref_speed_enabled">ره وندن نشووݩ داڌن سورعت</string>
-    <string name="summary_pref_speed_enabled">سورعت هیم سکویی من وارسۊوی نشووݩ داڌه ابۊ.\nنماڌ نشووݩ اده ک ترافیک پروکسی قلوه هڌ یا ترافیک موستقیم.</string>
+    <string name="title_pref_speed_enabled">نمایش سرعت در صفحه اصلی</string>
+    <string name="summary_pref_speed_enabled">نمایش سرعت لحظه‌ای پروکسی و اتصال مستقیم در بالای صفحه اصلی.</string>
 
     <string name="title_pref_sniffing_enabled">ره وندن و در کشیڌن نوم دامنه موورد نزر (Sniffing)</string>
     <string name="summary_pref_sniffing_enabled">قپ ریت سی و در کشیڌن نوم دامنه واقعی ز کتنا (پؽش فرز رۊشن هڌ)</string>
@@ -597,7 +597,6 @@
     <string name="tv_key_ok">OK</string>
     <string name="tv_key_ok_action">انتخاب</string>
     <string name="tv_key_menu">منو</string>
-    <string name="tv_key_menu_action">اقدامات</string>
     <string name="tv_key_back">بازگشت</string>
     <string name="tv_key_back_action">بازگشت</string>
     <string name="tv_placeholder_title">در مرحله بعدی</string>
@@ -626,7 +625,7 @@
 
     <string name="language_follow_system">مطابق سیستم</string>
     <string name="tv_settings_language_summary">برای منوها، گفتگوها و پیام‌ها استفاده می‌شود. تغییرات فوراً اعمال می‌شوند.</string>
-    <string name="tv_settings_restart_hint">تغییرات فوراً ذخیره می‌شوند. اگر متصل هستید، با خروج از تنظیمات اتصال دوباره راه‌اندازی می‌شود.</string>
+    <string name="tv_settings_restart_hint">تغییرات فوراً ذخیره می‌شوند. اگر متصل هستید، با خروج از تنظیمات هسته پروکسی دوباره بارگذاری می‌شود.</string>
 
     <string name="tv_logcat_empty">هیچ ورودی گزارشی وجود ندارد.</string>
     <string name="tv_logcat_clear_message">بافر گزارش سیستم پاک شود؟ گزارش‌های برنامه‌های دیگر نیز پاک می‌شوند.</string>
@@ -640,8 +639,7 @@
     <string name="tv_import_empty">چیزی برای ورود وجود ندارد.</string>
     <string name="tv_import_read_error">فایل انتخاب‌شده خوانده نشد.</string>
     <string name="tv_pairing_title">جفت‌سازی با گوشی</string>
-    <string name="tv_pairing_scan">با دوربین گوشی اسکن کنید.</string>
-    <string name="tv_pairing_code">کد: %1$s</string>
+    <string name="tv_pairing_scan">با دوربین گوشی اسکن کنید و یک یا چند پیکربندی بفرستید.</string>
     <string name="tv_pairing_address">نشانی تلویزیون: %1$s</string>
     <string name="tv_pairing_expires">%1$d ثانیه تا انقضا</string>
     <string name="tv_pairing_waiting">در حال آماده‌سازی جلسه جفت‌سازی…</string>
@@ -676,4 +674,12 @@
     <string name="tv_routing_enabled">فعال</string>
     <string name="tv_routing_empty">هنوز قاعده مسیریابی وجود ندارد. یک قاعده اضافه کنید یا یک پیش‌تنظیم وارد کنید.</string>
     <string name="tv_per_app_empty">برنامه‌ای مطابقت ندارد.</string>
+    <string name="tv_home_add_node">افزودن گره</string>
+    <string name="tv_home_batch">دسته‌ای</string>
+    <string name="tv_home_batch_title">عملیات دسته‌ای</string>
+    <string name="tv_speed_proxy">پروکسی</string>
+    <string name="tv_speed_direct">مستقیم</string>
+    <string name="tv_speed_value">↑ %1$s   ↓ %2$s</string>
+    <string name="tv_pairing_imported">%1$d مورد وارد شد. می‌توانید از گوشی ادامه دهید.</string>
+    <string name="tv_pairing_finish">پایان</string>
 </resources>

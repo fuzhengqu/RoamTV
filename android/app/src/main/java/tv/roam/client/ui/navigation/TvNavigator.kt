@@ -178,6 +178,20 @@ class TvNavigator(initial: List<TvRoute> = listOf(TvRoute.Home)) {
         return true
     }
 
+    /**
+     * Handles the remote Back key. Details pop to their parent, any other rail
+     * destination returns Home, and only Home lets the activity leave the
+     * foreground.
+     */
+    fun back(): Boolean {
+        if (pop()) return true
+        if (current != TvRoute.Home) {
+            openRoot(TvRoute.Home)
+            return true
+        }
+        return false
+    }
+
     fun popToRoot(): Boolean {
         if (stack.size <= 1) return false
         while (stack.size > 1) stack.removeAt(stack.lastIndex)
