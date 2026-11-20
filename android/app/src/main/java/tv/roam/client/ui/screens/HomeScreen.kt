@@ -773,10 +773,12 @@ private fun DetailPane(
             return@Surface
         }
 
+        val scrollState = rememberScrollState()
+        LaunchedEffect(server.guid) { scrollState.scrollTo(0) }
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(scrollState)
                 .padding(18.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
