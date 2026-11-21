@@ -60,6 +60,10 @@ sealed interface TvRoute {
         override val key: String = "import"
     }
 
+    data object More : TvRoute {
+        override val key: String = "more"
+    }
+
     /**
      * Server editor route. The GUID, protocol type and restart flag are part of
      * the key so process recreation reopens the same profile, not a list row.
@@ -102,7 +106,8 @@ val TvRoute.isTopLevel: Boolean
         TvRoute.Routing,
         TvRoute.PerApp,
         TvRoute.Assets,
-        TvRoute.Settings -> true
+        TvRoute.Settings,
+        TvRoute.More -> true
 
         else -> false
     }
@@ -213,6 +218,7 @@ class TvNavigator(initial: List<TvRoute> = listOf(TvRoute.Home)) {
             TvRoute.About,
             TvRoute.Update,
             TvRoute.Import,
+            TvRoute.More,
         ).associateBy { it.key }
 
         private fun fromKey(key: String): TvRoute {

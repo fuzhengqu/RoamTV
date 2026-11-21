@@ -47,7 +47,7 @@ fun TvNavRail(
         TvDestination.entries.associateWith { FocusRequester() }
     }
     val moreRequester = remember { FocusRequester() }
-    val currentRequester = if (current.key in secondaryKeys) {
+    val currentRequester = if (current.key == TvRoute.More.key || current.key in secondaryKeys) {
         moreRequester
     } else {
         val destination = TvDestination.entries.firstOrNull { it.route.key == current.key }
@@ -118,7 +118,7 @@ fun TvNavRail(
                 TvRailItem(
                     label = stringResource(R.string.tv_nav_more),
                     iconRes = R.drawable.ic_more_vert_24dp,
-                    selected = current.key in secondaryKeys,
+                    selected = current.key == TvRoute.More.key || current.key in secondaryKeys,
                     onClick = onMore,
                     modifier = Modifier.focusRequester(moreRequester),
                 )

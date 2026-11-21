@@ -2,6 +2,7 @@ package tv.roam.client.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -150,6 +151,7 @@ fun PerAppProxyScreen(
             } else {
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(top = 6.dp, bottom = 8.dp),
                     verticalArrangement = Arrangement.spacedBy(6.dp),
                 ) {
                     items(apps, key = { it.packageName }) { app ->

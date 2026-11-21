@@ -5,6 +5,8 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -103,6 +105,7 @@ fun TvPrimaryButton(
         modifier = modifier.height(52.dp),
         enabled = enabled,
         scale = ButtonDefaults.scale(focusedScale = 1f),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 0.dp),
         colors = ButtonDefaults.colors(
             containerColor = TvColors.Teal,
             contentColor = TvColors.Deep,
@@ -122,7 +125,9 @@ fun TvPrimaryButton(
         glow = ButtonDefaults.glow(Glow.None, Glow.None, Glow.None),
     ) {
         Box(
-            modifier = if (centerContent) Modifier.fillMaxWidth() else Modifier,
+            modifier = Modifier
+                .fillMaxHeight()
+                .then(if (centerContent) Modifier.fillMaxWidth() else Modifier),
             contentAlignment = Alignment.Center,
         ) {
             Text(text = text, style = MaterialTheme.typography.titleSmall)
@@ -145,6 +150,7 @@ fun TvSecondaryButton(
             .defaultMinSize(minWidth = 88.dp),
         enabled = enabled,
         scale = OutlinedButtonDefaults.scale(focusedScale = 1f),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 0.dp),
         colors = OutlinedButtonDefaults.colors(
             containerColor = Color.Transparent,
             contentColor = TvColors.Text,
@@ -164,7 +170,9 @@ fun TvSecondaryButton(
         glow = OutlinedButtonDefaults.glow(Glow.None, Glow.None, Glow.None),
     ) {
         Box(
-            modifier = if (centerContent) Modifier.fillMaxWidth() else Modifier,
+            modifier = Modifier
+                .fillMaxHeight()
+                .then(if (centerContent) Modifier.fillMaxWidth() else Modifier),
             contentAlignment = Alignment.Center,
         ) {
             Text(text = text, style = MaterialTheme.typography.titleSmall)
@@ -187,6 +195,7 @@ fun TvCompactButton(
             .defaultMinSize(minWidth = 88.dp),
         enabled = enabled,
         scale = OutlinedButtonDefaults.scale(focusedScale = 1f),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 0.dp),
         colors = OutlinedButtonDefaults.colors(
             containerColor = Color.Transparent,
             contentColor = TvColors.Text,
@@ -205,12 +214,17 @@ fun TvCompactButton(
         ),
         glow = OutlinedButtonDefaults.glow(Glow.None, Glow.None, Glow.None),
     ) {
-        Text(
-            text = text,
-            style = MaterialTheme.typography.labelMedium,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-        )
+        Box(
+            modifier = Modifier.fillMaxHeight(),
+            contentAlignment = Alignment.Center,
+        ) {
+            Text(
+                text = text,
+                style = MaterialTheme.typography.labelMedium,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
     }
 }
 
