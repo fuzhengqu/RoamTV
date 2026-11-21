@@ -616,7 +616,6 @@
     <string name="tv_home_empty_body">Импортируйте подписку или конфигурацию, чтобы начать.</string>
     <string name="tv_home_select_server">Выберите сервер, чтобы увидеть подробности.</string>
     <string name="tv_home_test_requires_connection">Сначала подключитесь, чтобы выполнить реальный тест задержки.</string>
-    <string name="tv_home_untested">Не проверено</string>
     <string name="tv_home_ungrouped">Без группы</string>
     <string name="tv_home_server_count">Серверов: %1$d</string>
     <string name="tv_home_protocol">Протокол</string>
@@ -684,6 +683,7 @@
     <string name="tv_speed_proxy">Прокси</string>
     <string name="tv_speed_direct">Прямое</string>
     <string name="tv_speed_value">↑ %1$s   ↓ %2$s</string>
+    <string name="tv_pane_actions">Действия</string>
     <string name="tv_action_update_subscription">Обновить</string>
     <string name="tv_pairing_imported">Импортировано: %1$d. Можно продолжать отправлять с телефона.</string>
     <string name="tv_pairing_finish">Готово</string>

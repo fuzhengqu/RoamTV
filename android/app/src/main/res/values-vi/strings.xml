@@ -610,7 +610,6 @@
     <string name="tv_home_empty_body">Nhập đăng ký hoặc cấu hình để bắt đầu.</string>
     <string name="tv_home_select_server">Chọn một máy chủ để xem chi tiết.</string>
     <string name="tv_home_test_requires_connection">Hãy kết nối trước để chạy kiểm tra độ trễ thực.</string>
-    <string name="tv_home_untested">Chưa kiểm tra</string>
     <string name="tv_home_ungrouped">Không nhóm</string>
     <string name="tv_home_server_count">%1$d máy chủ</string>
     <string name="tv_home_protocol">Giao thức</string>
@@ -678,6 +677,7 @@
     <string name="tv_speed_proxy">Proxy</string>
     <string name="tv_speed_direct">Trực tiếp</string>
     <string name="tv_speed_value">↑ %1$s   ↓ %2$s</string>
+    <string name="tv_pane_actions">Thao tác</string>
     <string name="tv_action_update_subscription">Cập nhật</string>
     <string name="tv_pairing_imported">Đã nhập %1$d mục. Bạn có thể tiếp tục gửi từ điện thoại.</string>
     <string name="tv_pairing_finish">Xong</string>

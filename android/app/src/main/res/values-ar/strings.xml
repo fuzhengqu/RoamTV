@@ -620,7 +620,6 @@
     <string name="tv_home_empty_body">استورد اشتراكًا أو إعدادًا للبدء.</string>
     <string name="tv_home_select_server">اختر خادمًا لعرض التفاصيل.</string>
     <string name="tv_home_test_requires_connection">اتصل أولاً لإجراء اختبار تأخير حقيقي.</string>
-    <string name="tv_home_untested">لم يتم الاختبار</string>
     <string name="tv_home_ungrouped">بدون مجموعة</string>
     <string name="tv_home_server_count">%1$d خوادم</string>
     <string name="tv_home_protocol">البروتوكول</string>
@@ -688,6 +687,7 @@
     <string name="tv_speed_proxy">الوكيل</string>
     <string name="tv_speed_direct">مباشر</string>
     <string name="tv_speed_value">↑ %1$s   ↓ %2$s</string>
+    <string name="tv_pane_actions">إجراءات</string>
     <string name="tv_action_update_subscription">تحديث</string>
     <string name="tv_pairing_imported">تم استيراد %1$d عنصر. يمكنك متابعة الإرسال من الهاتف.</string>
     <string name="tv_pairing_finish">تم</string>

@@ -610,7 +610,6 @@
     <string name="tv_home_empty_body">匯入訂閱或設定以開始使用。</string>
     <string name="tv_home_select_server">選擇一個節點以查看詳細資料。</string>
     <string name="tv_home_test_requires_connection">請先連線，再進行真實延遲測試。</string>
-    <string name="tv_home_untested">未測試</string>
     <string name="tv_home_ungrouped">未分組</string>
     <string name="tv_home_server_count">%1$d 個節點</string>
     <string name="tv_home_protocol">通訊協定</string>
@@ -678,6 +677,7 @@
     <string name="tv_speed_proxy">代理</string>
     <string name="tv_speed_direct">直連</string>
     <string name="tv_speed_value">↑ %1$s   ↓ %2$s</string>
+    <string name="tv_pane_actions">操作</string>
     <string name="tv_action_update_subscription">更新訂閱</string>
     <string name="tv_pairing_imported">已匯入 %1$d 項，可繼續在手機上傳送。</string>
     <string name="tv_pairing_finish">完成</string>

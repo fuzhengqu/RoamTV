@@ -34,6 +34,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.tv.material3.Border
 import androidx.tv.material3.ClickableSurfaceDefaults
 import androidx.tv.material3.Icon
+import androidx.tv.material3.Glow
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Surface
 import androidx.tv.material3.Text
@@ -238,13 +239,15 @@ private fun AppRow(
             .fillMaxWidth()
             .height(72.dp),
         shape = ClickableSurfaceDefaults.shape(shape = RoundedCornerShape(14.dp)),
+        scale = ClickableSurfaceDefaults.scale(focusedScale = 1f),
         border = ClickableSurfaceDefaults.border(
             focusedBorder = Border(
-                border = androidx.compose.foundation.BorderStroke(3.dp, TvColors.Teal),
+                border = androidx.compose.foundation.BorderStroke(2.dp, TvColors.Teal),
                 inset = 2.dp,
                 shape = RoundedCornerShape(14.dp),
             )
         ),
+        glow = ClickableSurfaceDefaults.glow(Glow.None, Glow.None, Glow.None),
         colors = ClickableSurfaceDefaults.colors(
             containerColor = TvColors.Surface,
             contentColor = TvColors.Text,

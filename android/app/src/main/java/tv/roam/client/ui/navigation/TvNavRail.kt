@@ -91,7 +91,7 @@ fun TvNavRail(
             // panel. Give the primary items the exact remaining height so the
             // weighted column cannot collapse to zero, then scroll when 1.3x text
             // or a short panel makes them taller than the viewport.
-            val primaryHeight = (maxHeight - 152.dp).coerceAtLeast(52.dp)
+            val primaryHeight = (maxHeight - 84.dp).coerceAtLeast(52.dp)
             Column(
                 modifier = Modifier
                     .height(primaryHeight)
@@ -112,15 +112,17 @@ fun TvNavRail(
                         ),
                     )
                 }
+                // "More" is a peer of the primary destinations, not a footer.
+                // It keeps its dialog but shares the same list, spacing and
+                // scroll behaviour.
+                TvRailItem(
+                    label = stringResource(R.string.tv_nav_more),
+                    iconRes = R.drawable.ic_more_vert_24dp,
+                    selected = current.key in secondaryKeys,
+                    onClick = onMore,
+                    modifier = Modifier.focusRequester(moreRequester),
+                )
             }
-
-            TvRailItem(
-                label = stringResource(R.string.tv_nav_more),
-                iconRes = R.drawable.ic_more_vert_24dp,
-                selected = current.key in secondaryKeys,
-                onClick = onMore,
-                modifier = Modifier.focusRequester(moreRequester),
-            )
             Spacer(Modifier.height(8.dp))
         }
     }

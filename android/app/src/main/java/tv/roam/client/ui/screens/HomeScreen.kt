@@ -50,6 +50,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.tv.material3.Border
 import androidx.tv.material3.ClickableSurfaceDefaults
 import androidx.tv.material3.Icon
+import androidx.tv.material3.Glow
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Surface
 import androidx.tv.material3.SurfaceDefaults
@@ -661,13 +662,15 @@ private fun ServerRow(
             .focusRequester(focusRequester)
             .onFocusChanged { if (it.isFocused) onFocused() },
         shape = ClickableSurfaceDefaults.shape(shape = RoundedCornerShape(14.dp)),
+        scale = ClickableSurfaceDefaults.scale(focusedScale = 1f),
         border = ClickableSurfaceDefaults.border(
             focusedBorder = Border(
-                border = androidx.compose.foundation.BorderStroke(3.dp, TvColors.Teal),
+                border = androidx.compose.foundation.BorderStroke(2.dp, TvColors.Teal),
                 inset = 2.dp,
                 shape = RoundedCornerShape(14.dp),
             )
         ),
+        glow = ClickableSurfaceDefaults.glow(Glow.None, Glow.None, Glow.None),
         colors = ClickableSurfaceDefaults.colors(
             containerColor = if (selected) TvColors.Teal.copy(alpha = 0.10f) else TvColors.Surface,
             contentColor = TvColors.Text,
@@ -698,7 +701,9 @@ private fun ServerRow(
                     overflow = TextOverflow.Ellipsis,
                 )
             }
-            LatencyBadge(server.testDelayMillis)
+            if (server.testDelayMillis > 0L) {
+                LatencyBadge(server.testDelayMillis)
+            }
             if (selected) {
                 Spacer(Modifier.width(10.dp))
                 Icon(
@@ -714,16 +719,11 @@ private fun ServerRow(
 @Composable
 private fun LatencyBadge(delayMillis: Long) {
     val color = when {
-        delayMillis <= 0L -> TvColors.TextMuted
         delayMillis < 200L -> TvColors.Success
         delayMillis < 500L -> TvColors.Amber
         else -> TvColors.Error
     }
-    val text = if (delayMillis > 0L) {
-        stringResource(R.string.server_test_delay_value, delayMillis)
-    } else {
-        stringResource(R.string.tv_home_untested)
-    }
+    val text = stringResource(R.string.server_test_delay_value, delayMillis)
     Box(
         modifier = Modifier
             .background(color.copy(alpha = 0.16f), RoundedCornerShape(8.dp))
@@ -783,46 +783,30 @@ private fun DetailPane(
                 .padding(14.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
-            Text(
-                text = server.profile.remarks.ifBlank { server.profile.server.orEmpty() },
-                style = MaterialTheme.typography.titleMedium,
-                color = TvColors.Text,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis,
-            )
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = buildString {
-                        append(server.profile.configType.name)
-                        val address = listOf(
-                            server.profile.server.orEmpty(),
-                            server.profile.serverPort.orEmpty()
-                        )
-                            .filter { it.isNotBlank() }
-                            .joinToString(":")
-                        if (address.isNotBlank()) {
-                            append(" · ")
-                            append(address)
-                        }
-                    },
-                    style = MaterialTheme.typography.bodySmall,
+                    text = stringResource(R.string.tv_pane_actions),
+                    style = MaterialTheme.typography.labelLarge,
                     color = TvColors.TextMuted,
+                    maxLines = 1,
+                )
+                Text(
+                    text = " · ",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = TvColors.TextMuted,
+                    maxLines = 1,
+                )
+                Text(
+                    text = server.profile.remarks.ifBlank { server.profile.server.orEmpty() },
+                    style = MaterialTheme.typography.titleSmall,
+                    color = TvColors.Text,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.weight(1f),
                 )
-                if (isActive) {
-                    Text(
-                        text = stringResource(R.string.tv_status_connected),
-                        style = MaterialTheme.typography.labelSmall,
-                        color = TvColors.Success,
-                    )
-                } else {
-                    LatencyBadge(server.testDelayMillis)
-                }
             }
 
             Spacer(Modifier.height(2.dp))
@@ -837,6 +821,7 @@ private fun DetailPane(
                 modifier = Modifier
                     .fillMaxWidth()
                     .focusRequester(primaryFocus),
+                centerContent = true,
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -845,12 +830,10 @@ private fun DetailPane(
                 TvCompactButton(
                     text = stringResource(R.string.tv_action_test),
                     onClick = onTest,
-                    modifier = Modifier.weight(1f),
                 )
                 TvCompactButton(
                     text = stringResource(R.string.menu_item_edit_config),
                     onClick = onEdit,
-                    modifier = Modifier.weight(1f),
                 )
             }
             Row(
@@ -860,20 +843,17 @@ private fun DetailPane(
                 TvCompactButton(
                     text = stringResource(R.string.share_method_qrcode),
                     onClick = onShare,
-                    modifier = Modifier.weight(1f),
                 )
                 if (server.profile.subscriptionId.isNotBlank()) {
                     TvCompactButton(
                         text = stringResource(R.string.tv_action_update_subscription),
                         onClick = onUpdateSubscription,
-                        modifier = Modifier.weight(1f),
                     )
                 }
             }
             TvCompactButton(
                 text = stringResource(R.string.action_delete),
                 onClick = { onDelete(server) },
-                modifier = Modifier.fillMaxWidth(),
                 enabled = !isActive,
             )
         }

@@ -615,7 +615,6 @@
     <string name="tv_home_empty_body">Import a subscription or configuration to get started.</string>
     <string name="tv_home_select_server">Select a server to see its details.</string>
     <string name="tv_home_test_requires_connection">Connect first to run a real-ping test.</string>
-    <string name="tv_home_untested">Not tested</string>
     <string name="tv_home_ungrouped">Ungrouped</string>
     <string name="tv_home_server_count">%1$d servers</string>
     <string name="tv_home_server_count_one">1 server</string>
@@ -683,6 +682,7 @@
     <string name="tv_speed_proxy">Proxy</string>
     <string name="tv_speed_direct">Direct</string>
     <string name="tv_speed_value">↑ %1$s   ↓ %2$s</string>
+    <string name="tv_pane_actions">Actions</string>
     <string name="tv_action_update_subscription">Update</string>
     <string name="tv_pairing_imported">Imported %1$d item(s). You can keep sending from your phone.</string>
     <string name="tv_pairing_finish">Done</string>

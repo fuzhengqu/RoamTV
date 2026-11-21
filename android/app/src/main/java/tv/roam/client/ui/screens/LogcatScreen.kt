@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.tv.material3.Border
 import androidx.tv.material3.ClickableSurfaceDefaults
+import androidx.tv.material3.Glow
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Surface
 import androidx.tv.material3.Text
@@ -202,13 +203,15 @@ private fun LogcatRow(
         onClick = onClick,
         modifier = modifier.fillMaxWidth(),
         shape = ClickableSurfaceDefaults.shape(shape = shape),
+        scale = ClickableSurfaceDefaults.scale(focusedScale = 1f),
         border = ClickableSurfaceDefaults.border(
             focusedBorder = Border(
-                border = BorderStroke(3.dp, TvColors.Teal),
+                border = BorderStroke(2.dp, TvColors.Teal),
                 inset = 2.dp,
                 shape = shape,
             )
         ),
+        glow = ClickableSurfaceDefaults.glow(Glow.None, Glow.None, Glow.None),
         colors = ClickableSurfaceDefaults.colors(
             containerColor = TvColors.Surface,
             contentColor = TvColors.Text,

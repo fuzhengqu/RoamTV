@@ -5,6 +5,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,6 +27,7 @@ import androidx.tv.material3.Border
 import androidx.tv.material3.Button
 import androidx.tv.material3.ButtonDefaults
 import androidx.tv.material3.ClickableSurfaceDefaults
+import androidx.tv.material3.Glow
 import androidx.tv.material3.Icon
 import androidx.tv.material3.IconButton
 import androidx.tv.material3.IconButtonDefaults
@@ -50,13 +52,15 @@ fun TvRailItem(
             .fillMaxWidth()
             .height(52.dp),
         shape = ClickableSurfaceDefaults.shape(shape = RoundedCornerShape(12.dp)),
+        scale = ClickableSurfaceDefaults.scale(focusedScale = 1f),
         border = ClickableSurfaceDefaults.border(
             focusedBorder = Border(
-                border = BorderStroke(3.dp, TvColors.Teal),
+                border = BorderStroke(2.dp, TvColors.Teal),
                 inset = 2.dp,
                 shape = RoundedCornerShape(12.dp),
             )
         ),
+        glow = ClickableSurfaceDefaults.glow(Glow.None, Glow.None, Glow.None),
         colors = ClickableSurfaceDefaults.colors(
             containerColor = if (selected) TvColors.Teal.copy(alpha = 0.14f) else Color.Transparent,
             contentColor = if (selected) TvColors.Teal else TvColors.TextMuted,
@@ -92,11 +96,13 @@ fun TvPrimaryButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    centerContent: Boolean = false,
 ) {
     Button(
         onClick = onClick,
         modifier = modifier.height(52.dp),
         enabled = enabled,
+        scale = ButtonDefaults.scale(focusedScale = 1f),
         colors = ButtonDefaults.colors(
             containerColor = TvColors.Teal,
             contentColor = TvColors.Deep,
@@ -109,12 +115,18 @@ fun TvPrimaryButton(
         ),
         border = ButtonDefaults.border(
             border = Border(BorderStroke(2.dp, Color.Transparent), inset = 0.dp, shape = RoundedCornerShape(50)),
-            focusedBorder = Border(BorderStroke(3.dp, TvColors.Text), inset = 0.dp, shape = RoundedCornerShape(50)),
+            focusedBorder = Border(BorderStroke(2.dp, TvColors.Text), inset = 2.dp, shape = RoundedCornerShape(50)),
             pressedBorder = Border(BorderStroke(2.dp, Color.Transparent), inset = 0.dp, shape = RoundedCornerShape(50)),
             disabledBorder = Border(BorderStroke(2.dp, Color.Transparent), inset = 0.dp, shape = RoundedCornerShape(50)),
         ),
+        glow = ButtonDefaults.glow(Glow.None, Glow.None, Glow.None),
     ) {
-        Text(text = text, style = MaterialTheme.typography.titleSmall)
+        Box(
+            modifier = if (centerContent) Modifier.fillMaxWidth() else Modifier,
+            contentAlignment = Alignment.Center,
+        ) {
+            Text(text = text, style = MaterialTheme.typography.titleSmall)
+        }
     }
 }
 
@@ -124,11 +136,15 @@ fun TvSecondaryButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    centerContent: Boolean = false,
 ) {
     OutlinedButton(
         onClick = onClick,
-        modifier = modifier.height(52.dp),
+        modifier = modifier
+            .height(52.dp)
+            .defaultMinSize(minWidth = 88.dp),
         enabled = enabled,
+        scale = OutlinedButtonDefaults.scale(focusedScale = 1f),
         colors = OutlinedButtonDefaults.colors(
             containerColor = Color.Transparent,
             contentColor = TvColors.Text,
@@ -141,12 +157,18 @@ fun TvSecondaryButton(
         ),
         border = OutlinedButtonDefaults.border(
             border = Border(BorderStroke(1.dp, TvColors.TextMuted), inset = 0.dp, shape = RoundedCornerShape(50)),
-            focusedBorder = Border(BorderStroke(3.dp, TvColors.Teal), inset = 0.dp, shape = RoundedCornerShape(50)),
+            focusedBorder = Border(BorderStroke(2.dp, TvColors.Teal), inset = 2.dp, shape = RoundedCornerShape(50)),
             pressedBorder = Border(BorderStroke(1.dp, TvColors.TealDim), inset = 0.dp, shape = RoundedCornerShape(50)),
             disabledBorder = Border(BorderStroke(1.dp, TvColors.SurfaceVariant), inset = 0.dp, shape = RoundedCornerShape(50)),
         ),
+        glow = OutlinedButtonDefaults.glow(Glow.None, Glow.None, Glow.None),
     ) {
-        Text(text = text, style = MaterialTheme.typography.titleSmall)
+        Box(
+            modifier = if (centerContent) Modifier.fillMaxWidth() else Modifier,
+            contentAlignment = Alignment.Center,
+        ) {
+            Text(text = text, style = MaterialTheme.typography.titleSmall)
+        }
     }
 }
 
@@ -160,8 +182,11 @@ fun TvCompactButton(
 ) {
     OutlinedButton(
         onClick = onClick,
-        modifier = modifier.height(42.dp),
+        modifier = modifier
+            .height(42.dp)
+            .defaultMinSize(minWidth = 88.dp),
         enabled = enabled,
+        scale = OutlinedButtonDefaults.scale(focusedScale = 1f),
         colors = OutlinedButtonDefaults.colors(
             containerColor = Color.Transparent,
             contentColor = TvColors.Text,
@@ -174,10 +199,11 @@ fun TvCompactButton(
         ),
         border = OutlinedButtonDefaults.border(
             border = Border(BorderStroke(1.dp, TvColors.TextMuted), inset = 0.dp, shape = RoundedCornerShape(50)),
-            focusedBorder = Border(BorderStroke(3.dp, TvColors.Teal), inset = 1.5.dp, shape = RoundedCornerShape(50)),
+            focusedBorder = Border(BorderStroke(2.dp, TvColors.Teal), inset = 2.dp, shape = RoundedCornerShape(50)),
             pressedBorder = Border(BorderStroke(1.dp, TvColors.TealDim), inset = 0.dp, shape = RoundedCornerShape(50)),
             disabledBorder = Border(BorderStroke(1.dp, TvColors.SurfaceVariant), inset = 0.dp, shape = RoundedCornerShape(50)),
         ),
+        glow = OutlinedButtonDefaults.glow(Glow.None, Glow.None, Glow.None),
     ) {
         Text(
             text = text,
@@ -230,13 +256,15 @@ fun TvSettingsRow(
             .fillMaxWidth()
             .height(64.dp),
         shape = ClickableSurfaceDefaults.shape(shape = RoundedCornerShape(14.dp)),
+        scale = ClickableSurfaceDefaults.scale(focusedScale = 1f),
         border = ClickableSurfaceDefaults.border(
             focusedBorder = Border(
-                border = BorderStroke(3.dp, TvColors.Teal),
+                border = BorderStroke(2.dp, TvColors.Teal),
                 inset = 2.dp,
                 shape = RoundedCornerShape(14.dp),
             )
         ),
+        glow = ClickableSurfaceDefaults.glow(Glow.None, Glow.None, Glow.None),
         colors = ClickableSurfaceDefaults.colors(
             containerColor = TvColors.Surface,
             contentColor = TvColors.Text,
@@ -309,13 +337,15 @@ fun TvChip(
         onClick = onClick,
         modifier = modifier.height(40.dp),
         shape = ClickableSurfaceDefaults.shape(shape = RoundedCornerShape(50)),
+        scale = ClickableSurfaceDefaults.scale(focusedScale = 1f),
         border = ClickableSurfaceDefaults.border(
             focusedBorder = Border(
-                border = BorderStroke(3.dp, TvColors.Teal),
+                border = BorderStroke(2.dp, TvColors.Teal),
                 inset = 2.dp,
                 shape = RoundedCornerShape(50),
             )
         ),
+        glow = ClickableSurfaceDefaults.glow(Glow.None, Glow.None, Glow.None),
         colors = ClickableSurfaceDefaults.colors(
             containerColor = if (selected) TvColors.Teal else TvColors.SurfaceVariant,
             contentColor = if (selected) TvColors.Deep else TvColors.Text,

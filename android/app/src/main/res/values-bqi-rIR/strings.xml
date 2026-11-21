@@ -612,7 +612,6 @@
     <string name="tv_home_empty_body">برای شروع یک اشتراک یا پیکربندی وارد کنید.</string>
     <string name="tv_home_select_server">برای دیدن جزئیات یک سرور انتخاب کنید.</string>
     <string name="tv_home_test_requires_connection">برای اجرای آزمون تأخیر واقعی ابتدا متصل شوید.</string>
-    <string name="tv_home_untested">آزمایش نشده</string>
     <string name="tv_home_ungrouped">بدون گروه</string>
     <string name="tv_home_server_count">%1$d سرور</string>
     <string name="tv_home_protocol">پروتکل</string>
@@ -680,6 +679,7 @@
     <string name="tv_speed_proxy">پروکسی</string>
     <string name="tv_speed_direct">مستقیم</string>
     <string name="tv_speed_value">↑ %1$s   ↓ %2$s</string>
+    <string name="tv_pane_actions">عملیات</string>
     <string name="tv_action_update_subscription">به‌روزرسانی</string>
     <string name="tv_pairing_imported">%1$d مورد وارد شد. می‌توانید از گوشی ادامه دهید.</string>
     <string name="tv_pairing_finish">پایان</string>

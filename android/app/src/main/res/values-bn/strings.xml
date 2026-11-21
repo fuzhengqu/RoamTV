@@ -612,7 +612,6 @@
     <string name="tv_home_empty_body">শুরু করতে একটি সাবস্ক্রিপশন বা কনফিগারেশন আমদানি করুন।</string>
     <string name="tv_home_select_server">বিস্তারিত দেখতে একটি সার্ভার বেছে নিন।</string>
     <string name="tv_home_test_requires_connection">প্রকৃত বিলম্ব পরীক্ষার জন্য প্রথমে সংযোগ করুন।</string>
-    <string name="tv_home_untested">পরীক্ষা করা হয়নি</string>
     <string name="tv_home_ungrouped">গ্রুপহীন</string>
     <string name="tv_home_server_count">%1$d সার্ভার</string>
     <string name="tv_home_protocol">প্রোটোকল</string>
@@ -680,6 +679,7 @@
     <string name="tv_speed_proxy">প্রক্সি</string>
     <string name="tv_speed_direct">সরাসরি</string>
     <string name="tv_speed_value">↑ %1$s   ↓ %2$s</string>
+    <string name="tv_pane_actions">ক্রিয়া</string>
     <string name="tv_action_update_subscription">আপডেট</string>
     <string name="tv_pairing_imported">%1$dটি আইটেম আমদানি হয়েছে। ফোন থেকে আরও পাঠাতে পারেন।</string>
     <string name="tv_pairing_finish">সম্পন্ন</string>

@@ -613,7 +613,6 @@
     <string name="tv_home_empty_body">Başlamaq üçün abunə və ya konfiqurasiya idxal edin.</string>
     <string name="tv_home_select_server">Təfərrüatları görmək üçün server seçin.</string>
     <string name="tv_home_test_requires_connection">Real gecikmə testi üçün əvvəlcə qoşulun.</string>
-    <string name="tv_home_untested">Test edilməyib</string>
     <string name="tv_home_ungrouped">Qrupsuz</string>
     <string name="tv_home_server_count">%1$d server</string>
     <string name="tv_home_protocol">Protokol</string>
@@ -681,6 +680,7 @@
     <string name="tv_speed_proxy">Proksi</string>
     <string name="tv_speed_direct">Birbaşa</string>
     <string name="tv_speed_value">↑ %1$s   ↓ %2$s</string>
+    <string name="tv_pane_actions">Əməliyyatlar</string>
     <string name="tv_action_update_subscription">Yenilə</string>
     <string name="tv_pairing_imported">%1$d element idxal edildi. Telefondan göndərməyə davam edə bilərsiniz.</string>
     <string name="tv_pairing_finish">Bitdi</string>
