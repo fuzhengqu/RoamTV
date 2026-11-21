@@ -809,12 +809,23 @@ class MainViewModel(
     }
 
     fun removeServerAndRefresh(guid: String) {
-        if (guid == uiState.value.selectedGuid) {
+        // Deleting the active profile would pull the tunnel out from under the
+        // running core. A stopped service may delete any profile; the selected
+        // slot then moves to a surviving entry in the same group.
+        if (guid == uiState.value.selectedGuid && uiState.value.isRunning) {
             toast(R.string.toast_action_not_allowed)
             return
         }
         viewModelScope.launch(ioDispatcher) {
             dataSource.removeServer(guid)
+            if (guid == uiState.value.selectedGuid) {
+                val replacement = dataSource
+                    .getServerGuidList(uiState.value.selectedGroupId)
+                    .firstOrNull { it != guid }
+                    .orEmpty()
+                dataSource.setSelectServer(replacement)
+                _uiState.update { it.copy(selectedGuid = replacement) }
+            }
             cacheMutex.withLock { groupDataCache.clear() }
             setupGroupTab(forceRefresh = true).join()
         }
