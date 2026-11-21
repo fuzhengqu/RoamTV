@@ -678,6 +678,7 @@
     <string name="tv_speed_proxy">Proxy</string>
     <string name="tv_speed_direct">Trực tiếp</string>
     <string name="tv_speed_value">↑ %1$s   ↓ %2$s</string>
+    <string name="tv_action_update_subscription">Cập nhật</string>
     <string name="tv_pairing_imported">Đã nhập %1$d mục. Bạn có thể tiếp tục gửi từ điện thoại.</string>
     <string name="tv_pairing_finish">Xong</string>
 </resources>

@@ -683,6 +683,7 @@
     <string name="tv_speed_proxy">Proxy</string>
     <string name="tv_speed_direct">Direct</string>
     <string name="tv_speed_value">↑ %1$s   ↓ %2$s</string>
+    <string name="tv_action_update_subscription">Update</string>
     <string name="tv_pairing_imported">Imported %1$d item(s). You can keep sending from your phone.</string>
     <string name="tv_pairing_finish">Done</string>
 </resources>

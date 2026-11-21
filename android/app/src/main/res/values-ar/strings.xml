@@ -688,6 +688,7 @@
     <string name="tv_speed_proxy">الوكيل</string>
     <string name="tv_speed_direct">مباشر</string>
     <string name="tv_speed_value">↑ %1$s   ↓ %2$s</string>
+    <string name="tv_action_update_subscription">تحديث</string>
     <string name="tv_pairing_imported">تم استيراد %1$d عنصر. يمكنك متابعة الإرسال من الهاتف.</string>
     <string name="tv_pairing_finish">تم</string>
 </resources>

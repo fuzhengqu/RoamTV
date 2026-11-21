@@ -684,6 +684,7 @@
     <string name="tv_speed_proxy">Прокси</string>
     <string name="tv_speed_direct">Прямое</string>
     <string name="tv_speed_value">↑ %1$s   ↓ %2$s</string>
+    <string name="tv_action_update_subscription">Обновить</string>
     <string name="tv_pairing_imported">Импортировано: %1$d. Можно продолжать отправлять с телефона.</string>
     <string name="tv_pairing_finish">Готово</string>
 </resources>

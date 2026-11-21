@@ -678,6 +678,7 @@
     <string name="tv_speed_proxy">代理</string>
     <string name="tv_speed_direct">直連</string>
     <string name="tv_speed_value">↑ %1$s   ↓ %2$s</string>
+    <string name="tv_action_update_subscription">更新訂閱</string>
     <string name="tv_pairing_imported">已匯入 %1$d 項，可繼續在手機上傳送。</string>
     <string name="tv_pairing_finish">完成</string>
 </resources>

@@ -65,6 +65,7 @@ import tv.roam.client.feature.main.MainAction
 import tv.roam.client.feature.main.MainStatus
 import tv.roam.client.feature.main.MainViewModel
 import tv.roam.client.ui.components.TvChip
+import tv.roam.client.ui.components.TvCompactButton
 import tv.roam.client.ui.components.TvConfirmDialog
 import tv.roam.client.ui.components.TvDialog
 import tv.roam.client.ui.components.TvIconAction
@@ -779,49 +780,47 @@ private fun DetailPane(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(scrollState)
-                .padding(18.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+                .padding(14.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Text(
                 text = server.profile.remarks.ifBlank { server.profile.server.orEmpty() },
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.titleMedium,
                 color = TvColors.Text,
                 maxLines = 2,
-                overflow = TextOverflow.Ellipsis,
-            )
-            Text(
-                text = listOf(
-                    server.profile.server.orEmpty(),
-                    server.profile.serverPort.orEmpty()
-                )
-                    .filter { it.isNotBlank() }
-                    .joinToString(":"),
-                style = MaterialTheme.typography.bodySmall,
-                color = TvColors.TextMuted,
-                maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
-                    text = server.profile.configType.name,
-                    style = MaterialTheme.typography.labelLarge,
-                    color = TvColors.TextMuted,
-                )
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                ) {
-                    if (isActive) {
-                        Text(
-                            text = stringResource(R.string.tv_status_connected),
-                            style = MaterialTheme.typography.labelLarge,
-                            color = TvColors.Success,
+                    text = buildString {
+                        append(server.profile.configType.name)
+                        val address = listOf(
+                            server.profile.server.orEmpty(),
+                            server.profile.serverPort.orEmpty()
                         )
-                    }
+                            .filter { it.isNotBlank() }
+                            .joinToString(":")
+                        if (address.isNotBlank()) {
+                            append(" · ")
+                            append(address)
+                        }
+                    },
+                    style = MaterialTheme.typography.bodySmall,
+                    color = TvColors.TextMuted,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.weight(1f),
+                )
+                if (isActive) {
+                    Text(
+                        text = stringResource(R.string.tv_status_connected),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = TvColors.Success,
+                    )
+                } else {
                     LatencyBadge(server.testDelayMillis)
                 }
             }
@@ -839,29 +838,39 @@ private fun DetailPane(
                     .fillMaxWidth()
                     .focusRequester(primaryFocus),
             )
-            TvSecondaryButton(
-                text = stringResource(R.string.tv_action_test),
-                onClick = onTest,
+            Row(
                 modifier = Modifier.fillMaxWidth(),
-            )
-            TvSecondaryButton(
-                text = stringResource(R.string.menu_item_edit_config),
-                onClick = onEdit,
-                modifier = Modifier.fillMaxWidth(),
-            )
-            TvSecondaryButton(
-                text = stringResource(R.string.share_method_qrcode),
-                onClick = onShare,
-                modifier = Modifier.fillMaxWidth(),
-            )
-            if (server.profile.subscriptionId.isNotBlank()) {
-                TvSecondaryButton(
-                    text = stringResource(R.string.title_sub_update),
-                    onClick = onUpdateSubscription,
-                    modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                TvCompactButton(
+                    text = stringResource(R.string.tv_action_test),
+                    onClick = onTest,
+                    modifier = Modifier.weight(1f),
+                )
+                TvCompactButton(
+                    text = stringResource(R.string.menu_item_edit_config),
+                    onClick = onEdit,
+                    modifier = Modifier.weight(1f),
                 )
             }
-            TvSecondaryButton(
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                TvCompactButton(
+                    text = stringResource(R.string.share_method_qrcode),
+                    onClick = onShare,
+                    modifier = Modifier.weight(1f),
+                )
+                if (server.profile.subscriptionId.isNotBlank()) {
+                    TvCompactButton(
+                        text = stringResource(R.string.tv_action_update_subscription),
+                        onClick = onUpdateSubscription,
+                        modifier = Modifier.weight(1f),
+                    )
+                }
+            }
+            TvCompactButton(
                 text = stringResource(R.string.action_delete),
                 onClick = { onDelete(server) },
                 modifier = Modifier.fillMaxWidth(),

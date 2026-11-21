@@ -680,6 +680,7 @@
     <string name="tv_speed_proxy">প্রক্সি</string>
     <string name="tv_speed_direct">সরাসরি</string>
     <string name="tv_speed_value">↑ %1$s   ↓ %2$s</string>
+    <string name="tv_action_update_subscription">আপডেট</string>
     <string name="tv_pairing_imported">%1$dটি আইটেম আমদানি হয়েছে। ফোন থেকে আরও পাঠাতে পারেন।</string>
     <string name="tv_pairing_finish">সম্পন্ন</string>
 </resources>

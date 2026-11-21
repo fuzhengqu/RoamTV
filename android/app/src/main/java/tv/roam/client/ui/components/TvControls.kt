@@ -150,6 +150,44 @@ fun TvSecondaryButton(
     }
 }
 
+/** Compact secondary action used by the Home detail pane's two-column grid. */
+@Composable
+fun TvCompactButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+) {
+    OutlinedButton(
+        onClick = onClick,
+        modifier = modifier.height(42.dp),
+        enabled = enabled,
+        colors = OutlinedButtonDefaults.colors(
+            containerColor = Color.Transparent,
+            contentColor = TvColors.Text,
+            focusedContainerColor = TvColors.Teal,
+            focusedContentColor = TvColors.Deep,
+            pressedContainerColor = TvColors.SurfaceFocused,
+            pressedContentColor = TvColors.Text,
+            disabledContainerColor = Color.Transparent,
+            disabledContentColor = TvColors.TextMuted,
+        ),
+        border = OutlinedButtonDefaults.border(
+            border = Border(BorderStroke(1.dp, TvColors.TextMuted), inset = 0.dp, shape = RoundedCornerShape(50)),
+            focusedBorder = Border(BorderStroke(3.dp, TvColors.Teal), inset = 1.5.dp, shape = RoundedCornerShape(50)),
+            pressedBorder = Border(BorderStroke(1.dp, TvColors.TealDim), inset = 0.dp, shape = RoundedCornerShape(50)),
+            disabledBorder = Border(BorderStroke(1.dp, TvColors.SurfaceVariant), inset = 0.dp, shape = RoundedCornerShape(50)),
+        ),
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.labelMedium,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+        )
+    }
+}
+
 @Composable
 fun TvIconAction(
     @DrawableRes iconRes: Int,
