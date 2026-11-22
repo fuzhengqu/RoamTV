@@ -172,13 +172,11 @@ fun HomeScreen(
             mainViewModel.clearLastImportedGuid()
             return@LaunchedEffect
         }
-        val currentFocusIsValid = focusedGuid != null && servers.any { it.guid == focusedGuid }
-        if (!currentFocusIsValid) {
-            val target = selectedGuid?.takeIf { guid -> servers.any { it.guid == guid } }
-                ?: servers.first().guid
-            focusedGuid = target
-            focusRequesters.getOrPut(target) { FocusRequester() }.requestFocus()
-        }
+        val target = focusedGuid?.takeIf { guid -> servers.any { it.guid == guid } }
+            ?: selectedGuid?.takeIf { guid -> servers.any { it.guid == guid } }
+            ?: servers.first().guid
+        focusedGuid = target
+        focusRequesters.getOrPut(target) { FocusRequester() }.requestFocus()
     }
 
     val connectOrDisconnect: (ServersCache) -> Unit = { server ->
@@ -830,31 +828,42 @@ private fun DetailPane(
                 TvCompactButton(
                     text = stringResource(R.string.tv_action_test),
                     onClick = onTest,
+                    modifier = Modifier.weight(1f),
+                    centerContent = true,
                 )
                 TvCompactButton(
                     text = stringResource(R.string.menu_item_edit_config),
                     onClick = onEdit,
+                    modifier = Modifier.weight(1f),
+                    centerContent = true,
                 )
             }
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
+                val hasSubscription = server.profile.subscriptionId.isNotBlank()
                 TvCompactButton(
                     text = stringResource(R.string.share_method_qrcode),
                     onClick = onShare,
+                    modifier = if (hasSubscription) Modifier.weight(1f) else Modifier.fillMaxWidth(),
+                    centerContent = true,
                 )
-                if (server.profile.subscriptionId.isNotBlank()) {
+                if (hasSubscription) {
                     TvCompactButton(
                         text = stringResource(R.string.tv_action_update_subscription),
                         onClick = onUpdateSubscription,
+                        modifier = Modifier.weight(1f),
+                        centerContent = true,
                     )
                 }
             }
             TvCompactButton(
                 text = stringResource(R.string.action_delete),
                 onClick = { onDelete(server) },
+                modifier = Modifier.fillMaxWidth(),
                 enabled = !isActive,
+                centerContent = true,
             )
         }
     }
@@ -949,6 +958,7 @@ private fun BatchDialog(
                     .verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
+                Spacer(Modifier.height(6.dp))
                 MenuRow(
                     label = stringResource(R.string.title_ping_all_server),
                     iconRes = R.drawable.ic_fab_check,
@@ -1043,6 +1053,7 @@ private fun ServerTypeDialog(
                     .verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
+                Spacer(Modifier.height(6.dp))
                 entries.forEachIndexed { index, (type, labelRes) ->
                     MenuRow(
                         label = stringResource(labelRes),

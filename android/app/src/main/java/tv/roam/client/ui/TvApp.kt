@@ -13,6 +13,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -96,6 +97,7 @@ fun TvApp(
 ) {
     val context = LocalContext.current
     val activity = remember(context) { context.findActivity() }
+    val saveableStateHolder = rememberSaveableStateHolder()
 
     BackHandler(enabled = true) {
         if (!navigator.back()) {
@@ -118,7 +120,8 @@ fun TvApp(
     }
 
     val screen: @Composable () -> Unit = {
-        when (val route = current) {
+        saveableStateHolder.SaveableStateProvider(current.key) {
+            when (val route = current) {
             TvRoute.Home -> HomeScreen(
                 mainViewModel = mainViewModel,
                 onStartService = onStartService,
@@ -298,6 +301,7 @@ fun TvApp(
                     null
                 },
             )
+            }
         }
     }
 

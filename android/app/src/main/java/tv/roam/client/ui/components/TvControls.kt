@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
@@ -145,9 +144,7 @@ fun TvSecondaryButton(
 ) {
     OutlinedButton(
         onClick = onClick,
-        modifier = modifier
-            .height(52.dp)
-            .defaultMinSize(minWidth = 88.dp),
+        modifier = modifier.height(52.dp),
         enabled = enabled,
         scale = OutlinedButtonDefaults.scale(focusedScale = 1f),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 0.dp),
@@ -187,12 +184,11 @@ fun TvCompactButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    centerContent: Boolean = false,
 ) {
     OutlinedButton(
         onClick = onClick,
-        modifier = modifier
-            .height(42.dp)
-            .defaultMinSize(minWidth = 88.dp),
+        modifier = modifier.height(42.dp),
         enabled = enabled,
         scale = OutlinedButtonDefaults.scale(focusedScale = 1f),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 0.dp),
@@ -215,7 +211,9 @@ fun TvCompactButton(
         glow = OutlinedButtonDefaults.glow(Glow.None, Glow.None, Glow.None),
     ) {
         Box(
-            modifier = Modifier.fillMaxHeight(),
+            modifier = Modifier
+                .fillMaxHeight()
+                .then(if (centerContent) Modifier.fillMaxWidth() else Modifier),
             contentAlignment = Alignment.Center,
         ) {
             Text(

@@ -1200,6 +1200,7 @@ private fun LanguageDialog(
                     .verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
+                Spacer(Modifier.height(6.dp))
                 languageValues.forEachIndexed { index, code ->
                     val label = if (code == "auto") {
                         stringResource(R.string.language_follow_system)

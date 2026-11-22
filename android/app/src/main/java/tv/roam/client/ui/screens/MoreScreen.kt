@@ -13,11 +13,16 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import tv.roam.client.R
@@ -33,8 +38,16 @@ fun MoreScreen(
     onSelect: (TvRoute) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val firstFocus = remember { FocusRequester() }
-    LaunchedEffect(Unit) { firstFocus.requestFocus() }
+    val requesters = remember { mutableMapOf<String, FocusRequester>() }
+    var lastFocusedKey by rememberSaveable { mutableStateOf<String?>(null) }
+    LaunchedEffect(Unit) {
+        val target = TvSecondaryDestination.entries
+            .firstOrNull { it.route.key == lastFocusedKey }
+            ?.route
+            ?.key
+            ?: TvSecondaryDestination.entries.first().route.key
+        requesters.getOrPut(target) { FocusRequester() }.requestFocus()
+    }
 
     Box(modifier = modifier.fillMaxSize()) {
         Column(
@@ -51,16 +64,19 @@ fun MoreScreen(
                 verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
                 items(TvSecondaryDestination.entries, key = { it.route.key }) { destination ->
+                    val requester = remember(destination.route.key) {
+                        requesters.getOrPut(destination.route.key) { FocusRequester() }
+                    }
                     TvSettingsRow(
                         label = stringResource(destination.labelRes),
                         value = "",
                         iconRes = secondaryIcon(destination),
                         onClick = { onSelect(destination.route) },
-                        modifier = if (destination == TvSecondaryDestination.entries.first()) {
-                            Modifier.focusRequester(firstFocus)
-                        } else {
-                            Modifier
-                        },
+                        modifier = Modifier
+                            .focusRequester(requester)
+                            .onFocusChanged {
+                                if (it.isFocused) lastFocusedKey = destination.route.key
+                            },
                     )
                 }
             }

@@ -12,11 +12,15 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -44,7 +48,8 @@ fun SubscriptionsScreen(
 ) {
     val context = LocalContext.current
     val state by viewModel.uiState.collectAsStateWithLifecycle()
-    val firstFocus = remember { FocusRequester() }
+    val rowFocus = remember { mutableMapOf<String, FocusRequester>() }
+    var lastFocusedGuid by rememberSaveable { mutableStateOf<String?>(null) }
 
     LaunchedEffect(Unit) {
         viewModel.onAction(SubscriptionsAction.Load)
@@ -68,8 +73,12 @@ fun SubscriptionsScreen(
         context.toast(message)
         viewModel.onAction(SubscriptionsAction.ConsumeMessage)
     }
-    LaunchedEffect(state.isLoading) {
-        if (!state.isLoading && state.rows.isNotEmpty()) firstFocus.requestFocus()
+    LaunchedEffect(state.isLoading, state.rows.map { it.guid }) {
+        if (state.isLoading || state.rows.isEmpty()) return@LaunchedEffect
+        val target = lastFocusedGuid
+            ?.takeIf { guid -> state.rows.any { it.guid == guid } }
+            ?: state.rows.first().guid
+        rowFocus.getOrPut(target) { FocusRequester() }.requestFocus()
     }
 
     Box(modifier = modifier.fillMaxSize()) {
@@ -126,13 +135,16 @@ fun SubscriptionsScreen(
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     items(state.rows, key = { it.guid }) { row ->
+                        val requester = remember(row.guid) {
+                            rowFocus.getOrPut(row.guid) { FocusRequester() }
+                        }
                         SubscriptionRowView(
                             row = row,
-                            modifier = if (row.guid == state.rows.firstOrNull()?.guid) {
-                                Modifier.focusRequester(firstFocus)
-                            } else {
-                                Modifier
-                            },
+                            modifier = Modifier
+                                .focusRequester(requester)
+                                .onFocusChanged {
+                                    if (it.isFocused) lastFocusedGuid = row.guid
+                                },
                             onClick = { onEdit(row.guid) },
                         )
                     }

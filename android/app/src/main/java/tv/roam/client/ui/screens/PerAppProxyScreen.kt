@@ -74,13 +74,12 @@ fun PerAppProxyScreen(
         viewModel.loadApps(context)
     }
     LaunchedEffect(apps.map { it.packageName }, focusedPackage) {
-        val current = focusedPackage ?: return@LaunchedEffect
-        val target = current.takeIf { pkg -> apps.any { it.packageName == pkg } }
+        val target = focusedPackage
+            ?.takeIf { pkg -> apps.any { it.packageName == pkg } }
             ?: apps.firstOrNull()?.packageName
-        if (target != null) {
-            focusedPackage = target
-            appFocus[target]?.requestFocus()
-        }
+            ?: return@LaunchedEffect
+        focusedPackage = target
+        appFocus[target]?.requestFocus()
     }
 
     Box(modifier = modifier.fillMaxSize()) {
