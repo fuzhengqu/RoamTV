@@ -102,10 +102,11 @@ documentation). It does not change this layout.
 
 ## Verification
 
-The v1.14 layout was checked on a physical Sony BRAVIA (1920x1080 logical,
-Android 12) and on 1280x720 and 3840x2160 emulators. Checks covered D-pad
-traversal, dialog focus, More/Back restoration, Home editor return, Per-app
-first focus, 1.3x font scale and RTL.
+The v1.14 layout was verified on a physical Sony BRAVIA (1920x1080 logical,
+Android 12). Checks covered D-pad traversal, dialog focus, More/Back
+restoration, Home editor return and Per-app first focus. The v1.15 branding
+build rechecked Home and the rail at 1080p and 1280x720dp on an API 36
+emulator; 4K, RTL, 1.3x font scale and TalkBack were not re-run.
 
 Screenshots of the frozen layout live in `docs/assets/ui/`. A screenshot proves
 appearance only; focus and state restoration still need a runtime check.
