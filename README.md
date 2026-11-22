@@ -44,7 +44,8 @@ VPN 服务。
 **Servers and subscriptions**
 
 - Manual server profiles and groups, including import from clipboard, a local
-  file, a QR code shown by the app, or a full JSON configuration.
+  file, a phone pairing page (QR plus one-time code), or a full JSON
+  configuration.
 - Subscription groups with update, rename, and delete.
 - Server editor for VMess, VLESS, Shadowsocks, SOCKS, HTTP, Trojan, WireGuard,
   Hysteria2, and custom configurations. See [Limitations](#limitations--限制)
