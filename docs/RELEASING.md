@@ -106,6 +106,9 @@ tags untouched.
   - `APP_KEY_PASSWORD`
   - `GPG_PRIVATE_KEY`
 - Confirm the selected commit has a green `Build APK` run.
+- Confirm the TV layout still matches `docs/UI_BASELINE.md`. A branding-only
+  release must show no layout change; a visual change needs its own task
+  requirement and before/after 1080p TV screenshots.
 - Check whether `master` is protected. If direct pushes are blocked, use a
   release pull request and tag after it merges.
 
