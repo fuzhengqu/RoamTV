@@ -30,6 +30,11 @@ require incompatible actions.
 - Give every interactive element a visible focus state that is not colour-only:
   the theme uses a bright surface and a 2dp inset focus border. Keep the focused
   element inside the overscan safe area and bring it into view.
+- A scroll container whose first child can take focus must reserve 6dp of top
+  content padding, using `TvSettingsColumn` or
+  `LazyColumn(contentPadding = PaddingValues(top = 6.dp))`. A raw
+  `verticalScroll` clips the first row's rounded top corners and 2dp focus ring;
+  verify all four corners of the first ring on a TV.
 - Use stable domain identifiers (server GUIDs, group IDs, subscription IDs,
   ruleset IDs, package names) for keys and saved focus. Never use a list index,
   adapter position, or paging offset as identity.
@@ -72,6 +77,9 @@ unrelated change.
   asymmetric padding.
 - Keep the 12dp surface radius and the 2dp inset focus border. Do not enable
   `focusedScale` or glow.
+- The first focusable row in a scroll list starts 6dp below the top bar, so
+  all four corners of its focus ring are visible. Use `TvSettingsColumn` for
+  full-screen settings/form columns.
 - Keep More as a top-level right-hand page; tools remain full-screen subpages
   and Back returns to More with its last focused row.
 - Keep the per-route `SaveableStateHolder`, More/Subscriptions focus memory,

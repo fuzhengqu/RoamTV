@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -35,6 +33,7 @@ import tv.roam.client.ui.components.TvKeyHintBar
 import tv.roam.client.ui.components.TvOptionsDialog
 import tv.roam.client.ui.components.TvPrimaryButton
 import tv.roam.client.ui.components.TvSecondaryButton
+import tv.roam.client.ui.components.TvSettingsColumn
 import tv.roam.client.ui.components.TvSettingsRow
 import tv.roam.client.ui.components.TvTextEditDialog
 import tv.roam.client.ui.components.TvTopBar
@@ -99,11 +98,10 @@ fun ProxyChainEditorScreen(
                     modifier = Modifier.padding(top = 24.dp),
                 )
             } else {
-                Column(
+                TvSettingsColumn(
                     modifier = Modifier
                         .weight(1f)
-                        .fillMaxWidth()
-                        .verticalScroll(rememberScrollState()),
+                        .fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(6.dp),
                 ) {
                     val remarksDisplay = if (state.remarks.isEmpty()) {

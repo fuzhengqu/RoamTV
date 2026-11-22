@@ -12,8 +12,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -44,6 +42,7 @@ import tv.roam.client.ui.components.TvConfirmDialog
 import tv.roam.client.ui.components.TvKeyHintBar
 import tv.roam.client.ui.components.TvPrimaryButton
 import tv.roam.client.ui.components.TvSecondaryButton
+import tv.roam.client.ui.components.TvSettingsColumn
 import tv.roam.client.ui.components.TvSettingsRow
 import tv.roam.client.ui.components.TvTextEditDialog
 import tv.roam.client.ui.components.TvTopBar
@@ -177,11 +176,10 @@ fun UserAssetEditorScreen(
                     modifier = Modifier.padding(top = 24.dp),
                 )
             } else {
-                Column(
+                TvSettingsColumn(
                     modifier = Modifier
-                        .fillMaxWidth()
                         .weight(1f)
-                        .verticalScroll(rememberScrollState()),
+                        .fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(6.dp),
                 ) {
                     if (state.isFileAsset) {

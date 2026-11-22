@@ -70,6 +70,9 @@ documentation). It does not change this layout.
 - Corner radius: 12dp for surfaces and rail rows; pill shape for buttons.
 - Focus ring: 2dp border inset by 2dp inside the component. The global focus
   scale and glow are disabled; do not reintroduce them.
+- The first focusable row in a scroll list starts 6dp below the top bar. All
+  four corners of its focus ring must be visible; use `TvSettingsColumn` for
+  full-screen settings and form lists.
 - Labels are centered in content-sized buttons. Primary Connect fills the pane
   width; compact actions fill their grid cell.
 - Dialogs trap focus and restore it on dismissal. Destructive confirmations

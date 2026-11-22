@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -33,6 +31,7 @@ import tv.roam.client.ui.components.TvDialog
 import tv.roam.client.ui.components.TvKeyHintBar
 import tv.roam.client.ui.components.TvScrollableText
 import tv.roam.client.ui.components.TvSecondaryButton
+import tv.roam.client.ui.components.TvSettingsColumn
 import tv.roam.client.ui.components.TvSettingsRow
 import tv.roam.client.ui.components.TvTopBar
 import tv.roam.client.ui.theme.TvColors
@@ -62,11 +61,8 @@ fun AboutScreen(
                 title = stringResource(R.string.title_about),
                 onBack = onBack,
             )
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
+            TvSettingsColumn(
+                modifier = Modifier.fillMaxSize(),
             ) {
                 TvSettingsRow(
                     label = stringResource(R.string.title_oss_license),

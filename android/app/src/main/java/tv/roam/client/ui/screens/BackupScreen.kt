@@ -48,6 +48,7 @@ import tv.roam.client.ui.components.TvKeyHintBar
 import tv.roam.client.ui.components.TvOptionsDialog
 import tv.roam.client.ui.components.TvPrimaryButton
 import tv.roam.client.ui.components.TvSecondaryButton
+import tv.roam.client.ui.components.TvSettingsColumn
 import tv.roam.client.ui.components.TvSettingsRow
 import tv.roam.client.ui.components.TvTextEditDialog
 import tv.roam.client.ui.components.TvTopBar
@@ -152,11 +153,8 @@ fun BackupScreen(
                     modifier = Modifier.padding(vertical = 8.dp),
                 )
             }
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
+            TvSettingsColumn(
+                modifier = Modifier.fillMaxSize(),
             ) {
                 TvSettingsRow(
                     label = stringResource(R.string.title_configuration_backup),
