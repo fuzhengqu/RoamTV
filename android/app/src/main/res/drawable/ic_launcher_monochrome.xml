@@ -4,16 +4,25 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
+    <!-- Television body. -->
     <path
         android:fillColor="@android:color/transparent"
         android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="7"
         android:strokeLineCap="round"
-        android:pathData="M32,54 A22,22 0 1 1 32.1,54" />
+        android:strokeLineJoin="round"
+        android:strokeWidth="5"
+        android:pathData="M33,34 L75,34 A7,7 0 0 1 82,41 L82,69 A7,7 0 0 1 75,76 L33,76 A7,7 0 0 1 26,69 L26,41 A7,7 0 0 1 33,34 Z" />
+    <!-- Antennae and stand. -->
     <path
-        android:fillColor="#FFFFFFFF"
-        android:pathData="M46,38 L72,54 L46,70 Z" />
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeLineCap="round"
+        android:strokeWidth="5"
+        android:pathData="M42,27 L54,35 M66,27 L54,35 M44,76 L41,84 M64,76 L67,84" />
+    <!-- Globe. -->
     <path
-        android:fillColor="#FFFFFFFF"
-        android:pathData="M78,22 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0" />
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="4"
+        android:pathData="M67,55 A13,13 0 1 1 41,55 A13,13 0 1 1 67,55 M41,55 L67,55 M60,55 A6,13 0 1 1 48,55 A6,13 0 1 1 60,55" />
 </vector>

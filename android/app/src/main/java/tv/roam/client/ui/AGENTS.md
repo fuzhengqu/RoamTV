@@ -28,8 +28,8 @@ require incompatible actions.
   optional Menu key. A touch-only or pointer-only path is a bug. Long-press is
   an enhancement, never the only way to reach an action.
 - Give every interactive element a visible focus state that is not colour-only:
-  the theme uses a bright surface, a 3dp border and a small scale change. Keep
-  the focused element inside the overscan safe area and bring it into view.
+  the theme uses a bright surface and a 2dp inset focus border. Keep the focused
+  element inside the overscan safe area and bring it into view.
 - Use stable domain identifiers (server GUIDs, group IDs, subscription IDs,
   ruleset IDs, package names) for keys and saved focus. Never use a list index,
   adapter position, or paging offset as identity.
@@ -55,6 +55,30 @@ require incompatible actions.
   content area. Scroll the content, not the key-hint bar.
 - The bottom key-hint bar is part of the screen contract: it tells the viewer
   which remote actions exist. Keep it localized and visible.
+
+## Frozen v1.14 layout baseline
+
+The layout shipped in v1.14 is frozen. `docs/UI_BASELINE.md` is the reference
+for every value below. A later feature must reuse the existing components and
+spacing; do not redesign, re-measure or "polish" this layout as part of an
+unrelated change.
+
+- Keep the 5% `TvOverscan` frame, the 200dp rail, the 64dp top bar, the 40dp
+  key-hint bar and the 560dp maximum Settings/More column.
+- Keep the Home action pane at 320dp from 700dp content width and 280dp below
+  that, with a 16dp gap to the list.
+- Keep `TvPrimaryButton`/`TvSecondaryButton` at 52dp and `TvCompactButton` at
+  42dp. Labels stay centered; do not shrink a button to its text or add
+  asymmetric padding.
+- Keep the 12dp surface radius and the 2dp inset focus border. Do not enable
+  `focusedScale` or glow.
+- Keep More as a top-level right-hand page; tools remain full-screen subpages
+  and Back returns to More with its last focused row.
+- Keep the per-route `SaveableStateHolder`, More/Subscriptions focus memory,
+  Home's return to the originating node and Per-app's first-app focus.
+- A visual change needs an explicit task requirement plus before/after real-TV
+  screenshots at 1080p. Branding changes (icon, banner, sidebar mark, copy) do
+  not change this layout.
 
 ## Text input
 

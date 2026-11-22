@@ -74,7 +74,7 @@ fun TvNavRail(
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
             ) {
                 Image(
-                    painter = painterResource(R.mipmap.ic_launcher_foreground),
+                    painter = painterResource(R.drawable.ic_brand_mark),
                     contentDescription = null,
                     modifier = Modifier.size(32.dp),
                 )

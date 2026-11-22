@@ -1,38 +1,61 @@
-<p>A remote-first network client built for Android TV. Every function is
-operable with a TV remote, with an overscan-safe layout and clear focus states.</p>
+<p>RoamTV is an Xray/V2Ray proxy client for Android TV and Google TV. It
+connects to a server or subscription you already have and is operated entirely
+with a TV remote.</p>
 
-<h3>Features</h3>
+<p>RoamTV does not provide proxy servers, accounts, or a VPN service.</p>
 
-<ul>
-<li>Connect / disconnect, server profiles and groups, subscriptions</li>
-<li>Routing rules, DNS, per-app proxy and user assets</li>
-<li>Connection testing, logs, configuration backup and restore</li>
-<li>Settings, update check and open-source licenses</li>
-<li>Config import without a camera: clipboard, a pairing-code LAN push from a
-phone, document picker and a step-by-step wizard</li>
-</ul>
-
-<h3>Geoip and Geosite</h3>
+<h3>Television-first interface</h3>
 
 <ul>
-<li><code>geoip.dat</code> and <code>geosite.dat</code> live in the app-private
-<code>app_assets</code> directory. The Asset files screen shows the current
-files, their size and date, and can replace them from a URL, a local file or
-Download all.</li>
-<li>Rule data can be imported manually; third-party rule files are supported.</li>
+<li>D-pad navigation with visible focus states and a 5% overscan-safe layout.</li>
+<li>OK selects, Back returns one level, Menu opens the actions for the focused
+item.</li>
+<li>Home keeps Connect, Test, Edit, QR, subscription update, and Delete together
+in one action pane.</li>
 </ul>
 
-<h3>Development</h3>
+<h3>Servers and subscriptions</h3>
 
-<p>The Android project is in the <code>android/</code> Gradle directory. All
-build tools live inside the repository under <code>.tooling/</code>; no
-system-level environment variable is changed. Full toolchain versions, native
-build steps and release reproduction are documented in
-<code>docs/COMPLIANCE.md</code>.</p>
+<ul>
+<li>Manual profiles and groups, subscription groups, search, sorting, latency
+test, and live speed.</li>
+<li>VLESS (including Reality/XTLS), VMess, Shadowsocks, Trojan, WireGuard, SOCKS
+and HTTP through the bundled Xray core.</li>
+<li>Routing rules, DNS, per-app proxy, and geoip/geosite asset files.</li>
+<li>VPN, proxy-only, and root modes.</li>
+</ul>
 
-<h3>License</h3>
+<h3>Import without a camera</h3>
 
-<p>RoamTV is free software licensed under the GNU General Public License,
-version 3. The modification notice, upstream attribution, third-party license
-texts and the Corresponding Source offer are included in the repository and
-available from the app's Legal screen. There is no warranty.</p>
+<ul>
+<li>Clipboard, local file, document picker, and a step-by-step wizard.</li>
+<li>The TV shows a QR code; the phone sends the encrypted configuration over the
+local network with a one-time pairing code.</li>
+</ul>
+
+<h3>Operations</h3>
+
+<ul>
+<li>Connection logs with level selection and search.</li>
+<li>Configuration backup and restore through the system document picker.</li>
+<li>Update check, open-source licenses, and bundled Xray / hev-socks5-tunnel
+versions.</li>
+</ul>
+
+<h3>Requirements</h3>
+
+<ul>
+<li>Android 8.0 (API 26) or newer on a TV, Google TV device, or Android TV box.</li>
+<li>Your own proxy server or subscription. RoamTV does not sell or operate
+servers.</li>
+</ul>
+
+<h3>Protocol note</h3>
+
+<p>The server editor keeps Hysteria2 fields and share-link parsing for
+compatibility with imported configurations, but the bundled Xray core does not
+provide a Hysteria2 outbound. Use VLESS, VMess, Shadowsocks, Trojan, WireGuard,
+SOCKS, or HTTP for a working connection.</p>
+
+<p>No analytics, advertising, or telemetry are included. RoamTV is free software
+under GPLv3; source and build instructions are in the GitHub repository.</p>
