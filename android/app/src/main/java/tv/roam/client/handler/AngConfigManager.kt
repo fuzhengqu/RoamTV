@@ -14,7 +14,9 @@ import tv.roam.client.dto.entities.SubscriptionUsageInfo
 import tv.roam.client.enums.EConfigType
 import tv.roam.client.extension.isNotNullEmpty
 import tv.roam.client.fmt.CustomFmt
+import tv.roam.client.fmt.CustomOutboundFmt
 import tv.roam.client.fmt.Hysteria2Fmt
+import tv.roam.client.fmt.MasqueFmt
 import tv.roam.client.fmt.ShadowsocksFmt
 import tv.roam.client.fmt.SocksFmt
 import tv.roam.client.fmt.TrojanFmt
@@ -50,6 +52,7 @@ object AngConfigManager {
             EConfigType.WIREGUARD.protocolScheme to WireguardFmt::parse,
             EConfigType.HYSTERIA2.protocolScheme to Hysteria2Fmt::parse,
             AppConfig.HY2 to Hysteria2Fmt::parse,
+            EConfigType.MASQUE.protocolScheme to MasqueFmt::parse,
         )
     }
 
@@ -165,6 +168,7 @@ object AngConfigManager {
                 EConfigType.TROJAN -> TrojanFmt.toUri(config)
                 EConfigType.WIREGUARD -> WireguardFmt.toUri(config)
                 EConfigType.HYSTERIA2 -> Hysteria2Fmt.toUri(config)
+                EConfigType.MASQUE -> MasqueFmt.toUri(config)
                 else -> {}
             }
         } catch (e: Exception) {
@@ -326,6 +330,30 @@ object AngConfigManager {
     private fun parseCustomConfigServer(server: String?, subid: String, append: Boolean): Int {
         if (server == null) {
             return 0
+        }
+        val customOutbound = JsonUtil.parseString(server)
+        if (customOutbound != null &&
+            customOutbound.has("protocol") &&
+            !customOutbound.has("outbounds") &&
+            !customOutbound.has("inbounds")
+        ) {
+            try {
+                val (profile, raw) = CustomOutboundFmt.parse(server)
+                if (raw.isBlank()) return 0
+                profile.subscriptionId = subid
+                profile.description = generateDescription(profile)
+                commitProfiles(
+                    configs = listOf(ParsedProfile(profile, raw)),
+                    subid = subid,
+                    append = append,
+                )
+                return 1
+            } catch (e: ProfileStorageException) {
+                throw e
+            } catch (e: Exception) {
+                LogUtil.e(AppConfig.TAG, "Failed to parse custom outbound JSON", e)
+                return 0
+            }
         }
         if (server.contains("inbounds")
             && server.contains("outbounds")

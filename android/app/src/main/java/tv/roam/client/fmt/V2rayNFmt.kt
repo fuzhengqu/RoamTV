@@ -15,8 +15,8 @@ object V2rayNFmt : FmtBase() {
             idMap.putIfAbsent(item.IndexId.orEmpty(), item)
         }
 
-        return idMap.values.map { item ->
-            item.toProfileItem().apply {
+        return idMap.values.mapNotNull { item ->
+            item.toProfileItem()?.apply {
                 val proto = item.ProtoExtraObj
                 policyGroupSubscriptionId = if (proto?.SubChildItems == "self") {
                     subId

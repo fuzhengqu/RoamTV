@@ -2,10 +2,12 @@ package tv.roam.client.feature.routing
 
 import android.app.Application
 import tv.roam.client.AppConfig
+import tv.roam.client.dto.UrlContentRequest
 import tv.roam.client.dto.entities.RulesetItem
 import tv.roam.client.enums.RoutingType
 import tv.roam.client.handler.MmkvManager
 import tv.roam.client.handler.SettingsManager
+import tv.roam.client.util.HttpUtil
 import tv.roam.client.util.JsonUtil
 import tv.roam.client.util.Utils
 
@@ -66,9 +68,16 @@ class RoutingRepository(private val app: Application) : RoutingDataSource {
     }
 
     override fun importFromClipboard(): Boolean {
-        val content = Utils.getClipboard(app)
+        val content = Utils.getClipboard(app).trim()
         if (content.isBlank()) return false
-        return SettingsManager.resetRoutingRulesets(content)
+        val payload = if (content.startsWith("http://", ignoreCase = true) ||
+            content.startsWith("https://", ignoreCase = true)
+        ) {
+            HttpUtil.getUrlContent(UrlContentRequest(url = content)) ?: return false
+        } else {
+            content
+        }
+        return SettingsManager.resetRoutingRulesets(payload)
     }
 
     override fun exportToClipboard(): Boolean {

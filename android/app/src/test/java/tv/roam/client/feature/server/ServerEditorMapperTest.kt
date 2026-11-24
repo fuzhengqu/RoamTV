@@ -196,3 +196,72 @@ class ServerEditorMapperTest {
         assertTrue(fields.contains(ServerField.XhttpMode))
     }
 }
+
+class MasqueEditorTest {
+
+    @Test
+    fun `new masque state has warp defaults and tls transport`() {
+        val state = ServerEditorMapper.initialState(EConfigType.MASQUE)
+
+        assertEquals(AppConfig.DEFAULT_PORT.toString(), state.value(ServerField.Port))
+        assertEquals("masque", state.value(ServerField.Network))
+        assertEquals("h3", state.value(ServerField.Alpn))
+        assertEquals(AppConfig.TLS, state.value(ServerField.StreamSecurity))
+        assertTrue(state.value(ServerField.LocalAddress).contains("172.16.0.2/32"))
+        assertTrue(state.value(ServerField.RemoteDns).contains("1.1.1.1"))
+    }
+
+    @Test
+    fun `masque fields survive a round trip`() {
+        val item = ProfileItem.create(EConfigType.MASQUE).copy(
+            remarks = "WARP",
+            server = "example.com",
+            serverPort = "443",
+            secretKey = "private",
+            publicKey = "public",
+            localAddress = "172.16.0.2/32",
+            remoteDNS = "1.1.1.1",
+            host = "cdn.example.com",
+            path = "/masque",
+            alpn = "h3",
+            headers = """{"X-Test":"yes"}""",
+            security = AppConfig.TLS,
+            network = "masque",
+        )
+
+        val state = ServerEditorMapper.fromProfile(item)
+        val restored = ServerEditorMapper.toProfile(state, ProfileItem.create(EConfigType.MASQUE))
+
+        assertEquals(EConfigType.MASQUE, restored.configType)
+        assertEquals("example.com", restored.server)
+        assertEquals("443", restored.serverPort)
+        assertEquals("private", restored.secretKey)
+        assertEquals("public", restored.publicKey)
+        assertEquals("172.16.0.2/32", restored.localAddress)
+        assertEquals("1.1.1.1", restored.remoteDNS)
+        assertEquals("cdn.example.com", restored.host)
+        assertEquals("/masque", restored.path)
+        assertEquals("h3", restored.alpn)
+        assertEquals("""{"X-Test":"yes"}""", restored.headers)
+        assertEquals(AppConfig.TLS, restored.security)
+        assertEquals("masque", restored.network)
+        assertFalse(restored.insecure!!)
+    }
+
+    @Test
+    fun `masque rejects non string header values`() {
+        val state = ServerEditorMapper.initialState(EConfigType.MASQUE).copy(
+            values = mapOf(
+                ServerField.Remarks to "WARP",
+                ServerField.Address to "example.com",
+                ServerField.Port to "443",
+                ServerField.Alpn to "h3",
+                ServerField.Headers to """{"X-Test":1}""",
+            ),
+        )
+
+        val errors = ServerEditorMapper.validate(state)
+
+        assertEquals(R.string.tv_editor_error_json, errors[ServerField.Headers])
+    }
+}

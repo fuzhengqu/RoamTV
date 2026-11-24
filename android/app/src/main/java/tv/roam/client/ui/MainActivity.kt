@@ -12,6 +12,8 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import tv.roam.client.AngApplication
 import tv.roam.client.R
 import tv.roam.client.core.LauncherManager
@@ -94,7 +96,8 @@ class MainActivity : AppCompatActivity() {
         handleIntent(intent)
 
         setContent {
-            RoamTvTheme {
+            val dynamicColor by settingsViewModel.dynamicColor.collectAsStateWithLifecycle()
+            RoamTvTheme(dynamicColor = dynamicColor) {
                 TvApp(
                     mainViewModel = mainViewModel,
                     settingsViewModel = settingsViewModel,

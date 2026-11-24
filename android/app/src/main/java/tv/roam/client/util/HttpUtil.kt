@@ -6,6 +6,8 @@ import tv.roam.client.BuildConfig
 import tv.roam.client.dto.UrlContentRequest
 import okhttp3.Credentials
 import okhttp3.Headers
+import okhttp3.HttpUrl.Companion.toHttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.File
@@ -153,6 +155,11 @@ object HttpUtil {
         var redirects = 0
         val maxRedirects = 3
 
+        // Custom headers and embedded credentials belong to the original origin.
+        // Never forward them to a redirect target on another host.
+        val originalUrl = requireNotNull(request.url).toHttpUrl()
+        val headersMap = JsonUtil.parseHeadersToMap(request.requestHeaders)
+
         while (redirects++ < maxRedirects) {
             if (currentUrl == null) continue
             val client = buildOkHttpClient(request.timeout, request.httpPort, request.proxyUsername, request.proxyPassword, followRedirects = false)
@@ -167,15 +174,19 @@ object HttpUtil {
                 .header("User-agent", finalUserAgent)
                 .header("Connection", "close")
 
-            applyEmbeddedBasicAuthHeader(currentUrl, requestBuilder)
+            val targetUrl = currentUrl.toHttpUrl()
+            val sameOrigin = targetUrl.scheme == originalUrl.scheme &&
+                targetUrl.host == originalUrl.host &&
+                targetUrl.port == originalUrl.port
 
-
-            val headersMap = JsonUtil.parseHeadersToMap(request.requestHeaders)
-            for ((key, value) in headersMap) {
-                LogUtil.d(AppConfig.TAG, "Adding custom header: $key = $value")
-                try {
-                    requestBuilder.header(key, value)
-                } catch (_: IllegalArgumentException) {
+            if (sameOrigin) {
+                applyEmbeddedBasicAuthHeader(currentUrl, requestBuilder)
+                for ((key, value) in headersMap) {
+                    LogUtil.d(AppConfig.TAG, "Adding custom header: $key")
+                    try {
+                        requestBuilder.header(key, value)
+                    } catch (_: IllegalArgumentException) {
+                    }
                 }
             }
 
@@ -190,10 +201,15 @@ object HttpUtil {
                         if (location.isNullOrEmpty()) {
                             throw IOException("Redirect location not found")
                         }
-                        currentUrl = resolveLocation(currentUrl, location)
-                        if (currentUrl.isNullOrEmpty()) {
-                            throw IOException("Failed to resolve redirect location")
+                        val nextUrl = resolveLocation(currentUrl, location)
+                            ?.toHttpUrlOrNull()
+                            ?: throw IOException("Failed to resolve redirect location")
+
+                        if (targetUrl.isHttps && !nextUrl.isHttps) {
+                            throw IOException("HTTPS to HTTP redirect is not allowed")
                         }
+
+                        currentUrl = nextUrl.toString()
                         continue
                     }
 

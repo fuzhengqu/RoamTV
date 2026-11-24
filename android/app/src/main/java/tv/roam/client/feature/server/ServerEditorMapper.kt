@@ -21,7 +21,7 @@ object ServerEditorMapper {
     fun initialState(type: EConfigType): ServerEditorState {
         val values = linkedMapOf<ServerField, String>()
         values[ServerField.Remarks] = ""
-        if (type == EConfigType.CUSTOM) {
+        if (type == EConfigType.CUSTOM || type == EConfigType.CUSTOM_OUTBOUND) {
             values[ServerField.Content] = ""
         } else {
             values[ServerField.Address] = ""
@@ -31,6 +31,7 @@ object ServerEditorMapper {
             values[ServerField.StreamSecurity] = when (type) {
                 EConfigType.TROJAN -> AppConfig.TLS
                 EConfigType.HYSTERIA2 -> AppConfig.TLS
+                EConfigType.MASQUE -> AppConfig.TLS
                 else -> ""
             }
             if (type == EConfigType.WIREGUARD) {
@@ -41,6 +42,13 @@ object ServerEditorMapper {
             }
             if (type == EConfigType.HYSTERIA2) {
                 values[ServerField.AllowInsecure] = ""
+            }
+            if (type == EConfigType.MASQUE) {
+                values[ServerField.Network] = NetworkType.MASQUE.type
+                values[ServerField.LocalAddress] =
+                    "${AppConfig.MASQUE_LOCAL_ADDRESS_V4},${AppConfig.MASQUE_LOCAL_ADDRESS_V6}"
+                values[ServerField.RemoteDns] = AppConfig.MASQUE_LOCAL_REMOTE_DNS
+                values[ServerField.Alpn] = "h3"
             }
         }
         return ServerEditorState(
@@ -66,11 +74,17 @@ object ServerEditorMapper {
         values[ServerField.PublicKey] = item.publicKey.orEmpty()
         values[ServerField.PreSharedKey] = item.preSharedKey.orEmpty()
         values[ServerField.Reserved] = item.reserved ?: "0,0,0"
-        values[ServerField.LocalAddress] =
-            item.localAddress ?: AppConfig.WIREGUARD_LOCAL_ADDRESS_V4
+        values[ServerField.LocalAddress] = item.localAddress ?: if (type == EConfigType.MASQUE) {
+            "${AppConfig.MASQUE_LOCAL_ADDRESS_V4},${AppConfig.MASQUE_LOCAL_ADDRESS_V6}"
+        } else {
+            AppConfig.WIREGUARD_LOCAL_ADDRESS_V4
+        }
         values[ServerField.Mtu] = item.mtu?.toString() ?: AppConfig.WIREGUARD_LOCAL_MTU
-        values[ServerField.RemoteDns] =
-            item.remoteDNS ?: AppConfig.WIREGUARD_LOCAL_REMOTE_DNS
+        values[ServerField.RemoteDns] = item.remoteDNS ?: if (type == EConfigType.MASQUE) {
+            AppConfig.MASQUE_LOCAL_REMOTE_DNS
+        } else {
+            AppConfig.WIREGUARD_LOCAL_REMOTE_DNS
+        }
         values[ServerField.ObfsPassword] = item.obfsPassword.orEmpty()
         values[ServerField.PortHopping] = item.portHopping.orEmpty()
         values[ServerField.PortHoppingInterval] = item.portHoppingInterval.orEmpty()
@@ -102,6 +116,7 @@ object ServerEditorMapper {
         values[ServerField.EchConfigList] = item.echConfigList.orEmpty()
         values[ServerField.VerifyPeerCertByName] = item.verifyPeerCertByName.orEmpty()
         values[ServerField.PinnedCa256] = item.pinnedCA256.orEmpty()
+        values[ServerField.Headers] = item.headers.orEmpty()
         return ServerEditorState(
             guid = "",
             configType = type,
@@ -119,8 +134,9 @@ object ServerEditorMapper {
         val isSocksOrHttp = type == EConfigType.SOCKS || type == EConfigType.HTTP
         val isWireguard = type == EConfigType.WIREGUARD
         val isHysteria2 = type == EConfigType.HYSTERIA2
+        val isMasque = type == EConfigType.MASQUE
 
-        if (type == EConfigType.CUSTOM) {
+        if (type == EConfigType.CUSTOM || type == EConfigType.CUSTOM_OUTBOUND) {
             return initial.copy(
                 configType = type,
                 remarks = state.value(ServerField.Remarks).trim(),
@@ -140,9 +156,9 @@ object ServerEditorMapper {
             },
             flow = if (isVless) state.value(ServerField.Flow) else null,
             username = if (isSocksOrHttp) state.value(ServerField.Username) else null,
-            secretKey = if (isWireguard) state.value(ServerField.SecretKey) else null,
+            secretKey = if (isWireguard || isMasque) state.value(ServerField.SecretKey) else null,
             publicKey = when {
-                isWireguard -> state.value(ServerField.PublicKey)
+                isWireguard || isMasque -> state.value(ServerField.PublicKey)
                 state.value(ServerField.StreamSecurity) == AppConfig.REALITY ->
                     state.value(ServerField.PublicKeyReality)
 
@@ -150,16 +166,17 @@ object ServerEditorMapper {
             },
             preSharedKey = if (isWireguard) state.value(ServerField.PreSharedKey) else null,
             reserved = if (isWireguard) state.value(ServerField.Reserved) else null,
-            localAddress = if (isWireguard) state.value(ServerField.LocalAddress) else null,
+            localAddress = if (isWireguard || isMasque) state.value(ServerField.LocalAddress) else null,
             mtu = if (isWireguard) state.value(ServerField.Mtu).toIntOrNull() else null,
-            remoteDNS = if (isWireguard) state.value(ServerField.RemoteDns) else null,
+            remoteDNS = if (isWireguard || isMasque) state.value(ServerField.RemoteDns) else null,
+            headers = if (isMasque) state.value(ServerField.Headers).nullIfBlank() else null,
             obfsPassword = if (isHysteria2) state.value(ServerField.ObfsPassword) else null,
             portHopping = if (isHysteria2) state.value(ServerField.PortHopping) else null,
             portHoppingInterval =
                 if (isHysteria2) state.value(ServerField.PortHoppingInterval) else null,
             bandwidthDown = if (isHysteria2) state.value(ServerField.BandwidthDown) else null,
             bandwidthUp = if (isHysteria2) state.value(ServerField.BandwidthUp) else null,
-            network = state.value(ServerField.Network),
+            network = if (isMasque) NetworkType.MASQUE.type else state.value(ServerField.Network),
             headerType = state.value(ServerField.HeaderType),
             mode = state.value(ServerField.Mode).nullIfBlank(),
             xhttpMode = state.value(ServerField.XhttpMode).nullIfBlank(),
@@ -180,13 +197,18 @@ object ServerEditorMapper {
                 null
             },
             security = when {
+                isMasque -> AppConfig.TLS
                 isHysteria2 && state.value(ServerField.StreamSecurity).isBlank() -> AppConfig.TLS
                 else -> state.value(ServerField.StreamSecurity)
             },
             sni = state.value(ServerField.Sni),
-            insecure = state.isOn(ServerField.AllowInsecure),
+            insecure = if (isMasque) false else state.isOn(ServerField.AllowInsecure),
             fingerPrint = state.value(ServerField.Fingerprint),
-            alpn = state.value(ServerField.Alpn),
+            alpn = if (isMasque) {
+                state.value(ServerField.Alpn).ifBlank { "h3" }
+            } else {
+                state.value(ServerField.Alpn)
+            },
             shortId = state.value(ServerField.ShortId),
             spiderX = state.value(ServerField.SpiderX),
             mldsa65Verify = state.value(ServerField.Mldsa65Verify),
@@ -205,7 +227,7 @@ object ServerEditorMapper {
         if (state.value(ServerField.Remarks).isBlank()) {
             errors[ServerField.Remarks] = R.string.tv_editor_error_required
         }
-        if (type == EConfigType.CUSTOM) {
+        if (type == EConfigType.CUSTOM || type == EConfigType.CUSTOM_OUTBOUND) {
             if (state.value(ServerField.Content).isBlank()) {
                 errors[ServerField.Content] = R.string.tv_editor_error_required
             }
@@ -239,11 +261,30 @@ object ServerEditorMapper {
         ) {
             errors[ServerField.FinalMask] = R.string.tv_editor_error_json
         }
+        if (type == EConfigType.MASQUE) {
+            if (state.value(ServerField.Alpn).trim() !in setOf("h2", "h3")) {
+                errors[ServerField.Alpn] = R.string.tv_editor_error_required
+            }
+            if (state.value(ServerField.Headers).isNotBlank() &&
+                !isJsonStringMap(state.value(ServerField.Headers))
+            ) {
+                errors[ServerField.Headers] = R.string.tv_editor_error_json
+            }
+        }
         return errors
     }
 
     private fun isJsonObject(value: String): Boolean = try {
         JsonParser.parseString(value).isJsonObject
+    } catch (_: Exception) {
+        false
+    }
+
+    private fun isJsonStringMap(value: String): Boolean = try {
+        val obj = JsonParser.parseString(value)
+        obj.isJsonObject && obj.asJsonObject.entrySet().all {
+            it.value.isJsonPrimitive && it.value.asJsonPrimitive.isString
+        }
     } catch (_: Exception) {
         false
     }
@@ -308,7 +349,8 @@ object ServerEditorMapper {
         ServerField.BrowserDialerMode -> R.array.browser_dialer_mode_value
         ServerField.StreamSecurity -> R.array.streamsecurityxs
         ServerField.Fingerprint -> R.array.streamsecurity_utls
-        ServerField.Alpn -> R.array.streamsecurity_alpn
+        ServerField.Alpn ->
+            if (type == EConfigType.MASQUE) R.array.masque_alpn else R.array.streamsecurity_alpn
         ServerField.Flow -> R.array.flows
         else -> null
     }

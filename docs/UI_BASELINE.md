@@ -13,7 +13,7 @@ documentation). It does not change this layout.
 | Item | Value |
 |---|---|
 | Overscan | 5% of the current width and height on every edge (`TvOverscan`) |
-| Background | fixed dark vertical gradient; no light theme |
+| Background | dark vertical gradient; optional Monet palette on Android 12+; no light theme |
 | Left rail | 200dp wide, full height |
 | Rail header | 64dp high, 12dp horizontal padding, 32dp mark, 10dp gap |
 | Rail item | 52dp high, 12dp corner radius, 14dp horizontal padding, 24dp icon |
@@ -73,6 +73,9 @@ documentation). It does not change this layout.
 - The first focusable row in a scroll list starts 6dp below the top bar. All
   four corners of its focus ring must be visible; use `TvSettingsColumn` for
   full-screen settings and form lists.
+- Monet dynamic colour is a colour-only option in Settings. It uses the system
+  wallpaper palette on Android 12+ and keeps the same dark surfaces, layout,
+  focus and typography.
 - Labels are centered in content-sized buttons. Primary Connect fills the pane
   width; compact actions fill their grid cell.
 - Dialogs trap focus and restore it on dismissal. Destructive confirmations

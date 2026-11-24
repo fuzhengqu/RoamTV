@@ -1037,6 +1037,8 @@ private fun ServerTypeDialog(
         EConfigType.TROJAN to R.string.menu_item_import_config_manually_trojan,
         EConfigType.WIREGUARD to R.string.menu_item_import_config_manually_wireguard,
         EConfigType.HYSTERIA2 to R.string.menu_item_import_config_manually_hysteria2,
+        EConfigType.MASQUE to R.string.menu_item_import_config_manually_masque,
+        EConfigType.CUSTOM_OUTBOUND to R.string.menu_item_import_config_manually_custom_outbound,
         EConfigType.CUSTOM to R.string.tv_editor_protocol_custom,
     )
 

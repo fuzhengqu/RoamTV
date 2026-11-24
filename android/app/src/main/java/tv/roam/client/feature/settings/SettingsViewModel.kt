@@ -2,6 +2,7 @@ package tv.roam.client.feature.settings
 
 import android.app.Application
 import android.content.Intent
+import android.os.Build
 import android.provider.Settings
 import androidx.annotation.ArrayRes
 import androidx.annotation.StringRes
@@ -42,6 +43,7 @@ internal enum class SettingSwitch(val key: String, val default: Boolean) {
     StartOnBoot(AppConfig.PREF_IS_BOOTED, false),
     RootMode(AppConfig.PREF_ROOT_MODE_ENABLE, false),
     RootLanSharing(AppConfig.PREF_ROOT_LAN_SHARING, false),
+    DynamicColor(AppConfig.PREF_DYNAMIC_COLOR, false),
 }
 
 internal enum class SettingField(
@@ -184,6 +186,11 @@ class SettingsViewModel(application: Application) : BaseViewModel(application) {
     private val _language = MutableStateFlow(currentLanguageCode())
     val language = _language.asStateFlow()
 
+    private val _dynamicColor = MutableStateFlow(
+        MmkvManager.decodeSettingsBool(AppConfig.PREF_DYNAMIC_COLOR, false)
+    )
+    val dynamicColor: StateFlow<Boolean> = _dynamicColor.asStateFlow()
+
     private val _uiState = MutableStateFlow(SettingsUiState())
     internal val uiState: StateFlow<SettingsUiState> = _uiState.asStateFlow()
 
@@ -217,6 +224,9 @@ class SettingsViewModel(application: Application) : BaseViewModel(application) {
         viewModelScope.launch(Dispatchers.IO) {
             val switches = SettingSwitch.entries.associateWith {
                 MmkvManager.decodeSettingsBool(it.key, it.default)
+            }.toMutableMap()
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+                switches[SettingSwitch.DynamicColor] = false
             }
             val fields = SettingField.entries.associateWith {
                 MmkvManager.decodeSettingsString(it.key, it.default) ?: it.default
@@ -298,6 +308,9 @@ class SettingsViewModel(application: Application) : BaseViewModel(application) {
             switches = _uiState.value.switches + (setting to value),
         )
         MmkvManager.encodeSettings(setting.key, value)
+        if (setting == SettingSwitch.DynamicColor) {
+            _dynamicColor.value = value
+        }
         SettingsChangeManager.notifySettingChanged(setting.key)
     }
 

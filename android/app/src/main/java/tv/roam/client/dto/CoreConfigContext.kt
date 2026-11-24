@@ -1,7 +1,7 @@
 package tv.roam.client.dto
 
 import android.content.Context
-import tv.roam.client.dto.entities.ProfileItem
+import tv.roam.client.dto.entities.ProfileEntry
 import tv.roam.client.enums.CoreResolvedType
 
 data class CoreConfigContext(
@@ -13,8 +13,8 @@ data class CoreConfigContext(
 ) {
     data class ResolvedOutbound(
         val tag: String,
-        val profile: ProfileItem,
-        val resolvedProfiles: List<ProfileItem>,
+        val entry: ProfileEntry,
+        val resolvedEntries: List<ProfileEntry>,
         val resolvedType: CoreResolvedType,
     )
 

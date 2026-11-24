@@ -57,6 +57,7 @@ enum class ServerField(
     EchConfigList(R.string.server_lab_ech_config_list),
     VerifyPeerCertByName(R.string.server_lab_verify_peer_cert_by_name),
     PinnedCa256(R.string.server_lab_pinned_ca256),
+    Headers(R.string.sub_setting_request_headers, ServerFieldKind.Multiline),
     Content(R.string.server_lab_content, ServerFieldKind.Multiline),
 }
 
@@ -144,7 +145,7 @@ object ServerEditorDefinition {
         val type = state.configType
         val fields = mutableListOf<ServerField>()
         fields += ServerField.Remarks
-        if (type == EConfigType.CUSTOM) {
+        if (type == EConfigType.CUSTOM || type == EConfigType.CUSTOM_OUTBOUND) {
             fields += ServerField.Content
             return fields
         }
@@ -183,6 +184,17 @@ object ServerEditorDefinition {
                 fields += ServerField.Mtu
                 fields += ServerField.RemoteDns
                 fields += ServerField.FinalMask
+            }
+
+            EConfigType.MASQUE -> {
+                fields += ServerField.SecretKey
+                fields += ServerField.PublicKey
+                fields += ServerField.LocalAddress
+                fields += ServerField.RemoteDns
+                fields += ServerField.Host
+                fields += ServerField.Path
+                fields += ServerField.Alpn
+                fields += ServerField.Headers
             }
 
             EConfigType.HYSTERIA2 -> {
@@ -293,6 +305,7 @@ object ServerEditorDefinition {
 
         ServerField.XhttpExtra,
         ServerField.FinalMask,
+        ServerField.Headers,
         -> ServerSection.Advanced
 
         else -> ServerSection.Protocol

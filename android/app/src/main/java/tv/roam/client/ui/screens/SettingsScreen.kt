@@ -229,6 +229,20 @@ fun SettingsScreen(
                             viewModel.onAction(SettingsAction.SetSwitch(setting, value))
                         },
                     )
+                    switchItem(
+                        key = "dynamic_color",
+                        titleRes = R.string.title_pref_dynamic_color,
+                        summaryRes = R.string.summary_pref_dynamic_color,
+                        setting = SettingSwitch.DynamicColor,
+                        state = state,
+                        enabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S,
+                        rowFocus = rowFocus,
+                        onFocused = { focusedKey = it },
+                        onToggle = { setting, value ->
+                            lastKey = "switch_${setting.name}"
+                            viewModel.onAction(SettingsAction.SetSwitch(setting, value))
+                        },
+                    )
                     item(key = "language") {
                         FocusedSetting("language", rowFocus, { focusedKey = it }) { rowModifier ->
                             TvSettingsRow(

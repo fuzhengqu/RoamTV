@@ -74,7 +74,9 @@ class ServerEditorViewModel(
             } else {
                 ServerEditorMapper.initialState(configType).copy(guid = guid)
             }
-            val withRaw = if (existing?.configType == EConfigType.CUSTOM) {
+            val withRaw = if (existing?.configType == EConfigType.CUSTOM ||
+                existing?.configType == EConfigType.CUSTOM_OUTBOUND
+            ) {
                 state.copy(
                     values = state.values + (
                         ServerField.Content to dataSource.loadRaw(guid).orEmpty()
@@ -120,16 +122,22 @@ class ServerEditorViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val savedGuid: String
-                if (current.configType == EConfigType.CUSTOM) {
+                if (current.configType == EConfigType.CUSTOM ||
+                    current.configType == EConfigType.CUSTOM_OUTBOUND
+                ) {
                     val content = current.value(ServerField.Content)
-                    val parsed = dataSource.parseCustom(content)
-                    val item = parsed.copy(
-                        configType = EConfigType.CUSTOM,
+                    val parsed = if (current.configType == EConfigType.CUSTOM_OUTBOUND) {
+                        dataSource.parseCustomOutbound(content)
+                    } else {
+                        dataSource.parseCustom(content) to content
+                    }
+                    val item = parsed.first.copy(
+                        configType = current.configType,
                         remarks = current.value(ServerField.Remarks).trim(),
                     )
                     item.description = dataSource.description(item)
                     savedGuid = dataSource.save(current.guid, item)
-                    dataSource.saveRaw(savedGuid, content)
+                    dataSource.saveRaw(savedGuid, parsed.second)
                 } else {
                     val item = ServerEditorMapper.toProfile(current, initialConfig)
                     item.description = dataSource.description(item)
@@ -145,7 +153,9 @@ class ServerEditorViewModel(
                 LogUtil.e(AppConfig.TAG, "Failed to save server profile", e)
                 _uiState.value = _uiState.value.copy(
                     isSaving = false,
-                    generalError = if (current.configType == EConfigType.CUSTOM) {
+                    generalError = if (current.configType == EConfigType.CUSTOM ||
+                        current.configType == EConfigType.CUSTOM_OUTBOUND
+                    ) {
                         R.string.toast_malformed_json
                     } else {
                         R.string.toast_failure

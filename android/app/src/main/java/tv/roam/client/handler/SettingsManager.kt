@@ -14,6 +14,7 @@ import tv.roam.client.AppConfig.VPN
 import tv.roam.client.dto.V2rayConfig
 import tv.roam.client.dto.entities.ProfileItem
 import tv.roam.client.dto.entities.RulesetItem
+import tv.roam.client.dto.entities.ProfileEntry
 import tv.roam.client.dto.entities.SubscriptionItem
 import tv.roam.client.enums.EConfigType
 import tv.roam.client.enums.RoutingType
@@ -207,13 +208,18 @@ object SettingsManager {
      * @return The ProfileItem.
      */
     fun getServerViaRemarks(remarks: String?): ProfileItem? {
+        return getProfileEntryViaRemarks(remarks)?.profile
+    }
+
+    /** Same lookup as [getServerViaRemarks], retaining the MMKV GUID. */
+    fun getProfileEntryViaRemarks(remarks: String?): ProfileEntry? {
         if (remarks.isNullOrEmpty()) {
             return null
         }
-        val serverList = decodeAllServerList()
-        return serverList
-            .mapNotNull { guid -> decodeServerConfig(guid) }
-            .firstOrNull { it.remarks == remarks }
+        return decodeAllServerList()
+            .asSequence()
+            .mapNotNull { guid -> decodeServerConfig(guid)?.let { ProfileEntry(guid, it) } }
+            .firstOrNull { it.profile.remarks == remarks }
     }
 
     /**

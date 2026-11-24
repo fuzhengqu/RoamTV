@@ -112,6 +112,8 @@ tags untouched.
   and before/after 1080p TV screenshots.
 - If `README.md` or `README.en.md` changed, update both complete versions and
   check the language switcher and relative links.
+- If v2rayNG protocol/feature code was ported, update
+  `docs/UPSTREAM_V2RAYNG.md`, `NOTICE` and `docs/COMPLIANCE.md`.
 - Check whether `master` is protected. If direct pushes are blocked, use a
   release pull request and tag after it merges.
 

@@ -54,8 +54,10 @@ require incompatible actions.
   Keep content inside the 5% safe area at 720p, 1080p and 4K.
 - Body text is at least 16sp; primary rows and buttons are at least 52dp high.
   Do not use thin font weights or low-contrast grey for essential information.
-- The theme is fixed dark. Do not add light/dark switching, dynamic colour, or a
-  phone-style bottom navigation bar.
+- The base theme is dark and light mode is not supported. Monet dynamic colour
+  is allowed only through the existing Settings switch (Android 12+) and must
+  keep the dark, high-contrast palette; it must not change layout, focus,
+  typography or navigation. Do not add a phone-style bottom navigation bar.
 - Layouts must survive a 1.3x font scale, RTL locales (ar/fa/bqi), and a short
   content area. Scroll the content, not the key-hint bar.
 - The bottom key-hint bar is part of the screen contract: it tells the viewer

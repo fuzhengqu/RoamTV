@@ -89,6 +89,11 @@
         <item>randomized</item>
     </string-array>
 
+    <string-array name="masque_alpn" translatable="false">
+        <item>h3</item>
+        <item>h2</item>
+    </string-array>
+
     <string-array name="streamsecurity_alpn" translatable="false">
         <item />
         <item>h3</item>

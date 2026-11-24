@@ -2,6 +2,7 @@ package tv.roam.client.feature.server
 
 import tv.roam.client.dto.entities.ProfileItem
 import tv.roam.client.fmt.CustomFmt
+import tv.roam.client.fmt.CustomOutboundFmt
 import tv.roam.client.handler.AngConfigManager
 import tv.roam.client.handler.MmkvManager
 
@@ -15,6 +16,7 @@ interface ServerEditorDataSource {
     fun selectedGuid(): String?
     fun description(item: ProfileItem): String
     fun parseCustom(content: String): ProfileItem
+    fun parseCustomOutbound(content: String): Pair<ProfileItem, String>
 }
 
 class ServerEditorRepository : ServerEditorDataSource {
@@ -37,4 +39,7 @@ class ServerEditorRepository : ServerEditorDataSource {
         AngConfigManager.generateDescription(item)
 
     override fun parseCustom(content: String): ProfileItem = CustomFmt.parse(content)
+
+    override fun parseCustomOutbound(content: String): Pair<ProfileItem, String> =
+        CustomOutboundFmt.parse(content)
 }

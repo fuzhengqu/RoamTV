@@ -14,8 +14,10 @@ Origin and license
 ------------------
 RoamTV is derived from v2rayNG version 2.3.15 (upstream repository
 2dust/v2rayNG), obtained at commit 57907cf354d9769200ed4717b4430d605abe0952.
-The upstream program is licensed under the GNU General Public License,
-version 3, or (at your option) any later version. A verbatim copy of that
+Selected protocol, import, theme and security changes were adapted from the
+2.4.1 pre-release (reviewed 2026-11-24); the upstream phone/TV UI refactor was
+not adopted. The upstream program is licensed under the GNU General Public
+License, version 3, or (at your option) any later version. A verbatim copy of that
 license is included in the file LICENSE at the root of this repository.
 
 In accordance with GPLv3 section 5(c), this entire derivative work is
