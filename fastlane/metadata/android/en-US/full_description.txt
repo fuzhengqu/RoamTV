@@ -19,9 +19,12 @@ in one action pane.</li>
 <ul>
 <li>Manual profiles and groups, subscription groups, search, sorting, latency
 test, and live speed.</li>
-<li>VLESS (including Reality/XTLS), VMess, Shadowsocks, Trojan, WireGuard, SOCKS
-and HTTP through the bundled Xray core.</li>
-<li>Routing rules, DNS, per-app proxy, and geoip/geosite asset files.</li>
+<li>VLESS (including Reality/XTLS), VMess, Shadowsocks, Trojan, WireGuard,
+MASQUE (+WARP), SOCKS and HTTP through the bundled Xray core.</li>
+<li>Custom outbound JSON import and full custom client configurations.</li>
+<li>Routing rules, DNS, per-app proxy, and geoip/geosite asset files. A
+ruleset can also be imported from an HTTP/HTTPS URL in the clipboard.</li>
+<li>Monet dynamic colour in Settings on Android 12+.</li>
 <li>VPN, proxy-only, and root modes.</li>
 </ul>
 

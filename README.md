@@ -8,7 +8,7 @@ RoamTV 是面向 **Android TV 和 Google TV** 的 Xray/V2Ray 代理客户端。�
 
 RoamTV 不提供代理服务器、账号或 VPN 服务。你需要自备节点或订阅。
 
-![RoamTV 首页](docs/assets/ui/home.png)
+![RoamTV 中文首页](docs/assets/ui/zh/home.png)
 
 [![API](https://img.shields.io/badge/API-26%2B-yellow.svg?style=flat)](https://developer.android.com/about/versions/oreo)
 [![Kotlin Version](https://img.shields.io/badge/Kotlin-2.4.21-blue.svg)](https://kotlinlang.org)
@@ -33,8 +33,10 @@ RoamTV 不提供代理服务器、账号或 VPN 服务。你需要自备节点�
 
 - 手动节点和分组，支持剪贴板、本地文件、手机配对页面（二维码 + 一次性配对码）以及完整 JSON 配置导入。
 - 订阅分组支持更新、重命名和删除。
-- 节点编辑器覆盖 VMess、VLESS、Shadowsocks、SOCKS、HTTP、Trojan、WireGuard、Hysteria2 和自定义配置；实际连接能力见[限制](#限制)。
+- 节点编辑器覆盖 VMess、VLESS、Shadowsocks、SOCKS、HTTP、Trojan、WireGuard、MASQUE (+WARP)、Hysteria2 和自定义配置；实际连接能力见[限制](#限制)。
+- 支持自定义 outbound JSON 和完整的自定义客户端配置。
 - 搜索、排序、延时测试和实时代理速度。
+- 设置页支持莫奈动态色彩（Android 12+，只改变配色）。
 
 **路由与 DNS**
 
@@ -61,6 +63,12 @@ RoamTV 不提供代理服务器、账号或 VPN 服务。你需要自备节点�
 - 通过系统文件选择器备份和恢复配置。
 - 更新检查、开源许可和 About 页面（显示内置 Xray 和 hev-socks5-tunnel 版本）。
 
+## 界面
+
+| 设置 | 更多 |
+|---|---|
+| ![设置](docs/assets/ui/zh/settings.png) | ![更多](docs/assets/ui/zh/more.png) |
+
 ## 协议与 ABI
 
 内置 **Xray-core** 支持：
@@ -70,7 +78,9 @@ RoamTV 不提供代理服务器、账号或 VPN 服务。你需要自备节点�
 - Shadowsocks
 - Trojan
 - WireGuard
+- MASQUE (+WARP)
 - SOCKS 和 HTTP（出站）
+- 自定义 outbound JSON（单条 outbound 注入）
 
 Hysteria2 的编辑字段和分享链接解析仍保留，以兼容导入的配置；但内置 Xray 核心没有 Hysteria2 出站。实际连接请使用上面的协议。
 
@@ -125,6 +135,7 @@ RoamTV 不包含分析、广告或遥测。节点、设置和日志保存在设�
 - 工具链、原生库构建与发布复现：[docs/COMPLIANCE.md](docs/COMPLIANCE.md)。
 - 内置核心版本和更新流程：[docs/NATIVE_CORES.md](docs/NATIVE_CORES.md)。
 - 电视布局基线：[docs/UI_BASELINE.md](docs/UI_BASELINE.md)。
+- v2rayNG 上游跟进与功能矩阵：[docs/UPSTREAM_V2RAYNG.md](docs/UPSTREAM_V2RAYNG.md)。
 - 所有构建工具位于仓库内的 `.tooling/` 目录，不修改系统级环境变量。
 
 ## 许可证

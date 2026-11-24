@@ -12,7 +12,7 @@ Menu (or the on-screen More button) for the actions of the focused item.
 RoamTV does not provide proxy servers, accounts, or a VPN service. You need
 your own server or subscription from a provider you trust.
 
-![RoamTV Home screen](docs/assets/ui/home.png)
+![RoamTV Home screen](docs/assets/ui/en/home.png)
 
 [![API](https://img.shields.io/badge/API-26%2B-yellow.svg?style=flat)](https://developer.android.com/about/versions/oreo)
 [![Kotlin Version](https://img.shields.io/badge/Kotlin-2.4.21-blue.svg)](https://kotlinlang.org)
@@ -45,9 +45,12 @@ your own server or subscription from a provider you trust.
   configuration.
 - Subscription groups with update, rename, and delete.
 - Server editor for VMess, VLESS, Shadowsocks, SOCKS, HTTP, Trojan, WireGuard,
-  Hysteria2, and custom configurations. See [Limitations](#limitations) for the
-  protocols the bundled core can actually carry.
+  MASQUE (+WARP), Hysteria2, and custom configurations. See
+  [Limitations](#limitations) for the protocols the bundled core can actually
+  carry.
+- Imports custom outbound JSON and full custom client configurations.
 - Search, sort, latency test, and live proxy speed.
+- Monet dynamic colour in Settings on Android 12+ (colour only).
 
 **Routing and DNS**
 
@@ -78,6 +81,12 @@ your own server or subscription from a provider you trust.
 - Update check, open-source licenses, and an About screen with the bundled
   Xray and hev-socks5-tunnel versions.
 
+## Screenshots
+
+| Settings | More |
+|---|---|
+| ![Settings](docs/assets/ui/en/settings.png) | ![More](docs/assets/ui/en/more.png) |
+
 ## Protocols and ABIs
 
 The bundled **Xray-core** carries:
@@ -87,7 +96,9 @@ The bundled **Xray-core** carries:
 - Shadowsocks
 - Trojan
 - WireGuard
+- MASQUE (+WARP)
 - SOCKS and HTTP (outbound)
+- Custom outbound JSON (single outbound injection)
 
 Hysteria2 fields and share-link import exist in the editor for compatibility
 with imported configurations, but the bundled Xray core does not provide a
@@ -163,6 +174,8 @@ subscriptions, update endpoint, and asset URLs that you configure. See
 - Native core versions and update procedure:
   [docs/NATIVE_CORES.md](docs/NATIVE_CORES.md).
 - Frozen TV layout: [docs/UI_BASELINE.md](docs/UI_BASELINE.md).
+- v2rayNG upstream tracking and feature matrix:
+  [docs/UPSTREAM_V2RAYNG.md](docs/UPSTREAM_V2RAYNG.md).
 - All build tools live under the repository's `.tooling/` directory; no system
   environment variable is changed.
 
