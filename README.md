@@ -37,6 +37,7 @@ RoamTV 不提供代理服务器、账号或 VPN 服务。你需要自备节点�
 - 支持自定义 outbound JSON 和完整的自定义客户端配置。
 - 搜索、排序、延时测试和实时代理速度。
 - 设置页支持莫奈动态色彩（Android 12+，只改变配色）。
+- xdrive 传输支持服务、远程目录、密钥和额外 JSON。
 
 **路由与 DNS**
 
@@ -79,6 +80,7 @@ RoamTV 不提供代理服务器、账号或 VPN 服务。你需要自备节点�
 - Trojan
 - WireGuard
 - MASQUE (+WARP)
+- xdrive（Google Drive、S3、template、local）
 - SOCKS 和 HTTP（出站）
 - 自定义 outbound JSON（单条 outbound 注入）
 

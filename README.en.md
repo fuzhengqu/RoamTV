@@ -51,6 +51,7 @@ your own server or subscription from a provider you trust.
 - Imports custom outbound JSON and full custom client configurations.
 - Search, sort, latency test, and live proxy speed.
 - Monet dynamic colour in Settings on Android 12+ (colour only).
+- xdrive transport with service, remote folder, secrets and extra JSON.
 
 **Routing and DNS**
 
@@ -97,6 +98,7 @@ The bundled **Xray-core** carries:
 - Trojan
 - WireGuard
 - MASQUE (+WARP)
+- xdrive (Google Drive, S3, template, local)
 - SOCKS and HTTP (outbound)
 - Custom outbound JSON (single outbound injection)
 
