@@ -3,6 +3,7 @@ package tv.roam.client.feature.routing
 import androidx.annotation.StringRes
 import tv.roam.client.R
 import tv.roam.client.dto.entities.RulesetItem
+import tv.roam.client.dto.entities.ensureUniqueIds
 import java.util.UUID
 
 enum class RoutingField(
@@ -65,16 +66,7 @@ object RoutingRules {
             .filter { it.isNotEmpty() }
             .takeIf { it.isNotEmpty() }
 
-    fun ensureIds(rules: MutableList<RulesetItem>): Boolean {
-        var changed = false
-        rules.forEach { rule ->
-            if (rule.id.isBlank()) {
-                rule.id = UUID.randomUUID().toString()
-                changed = true
-            }
-        }
-        return changed
-    }
+    fun ensureIds(rules: MutableList<RulesetItem>): Boolean = rules.ensureUniqueIds()
 
     fun fromRuleset(rule: RulesetItem): RoutingEditorState {
         val values = linkedMapOf(

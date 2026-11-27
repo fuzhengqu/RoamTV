@@ -36,6 +36,9 @@ data class ProfileItem(
     var authority: String? = null,
     var xhttpMode: String? = null,
     var xhttpExtra: String? = null,
+    var xdriveService: String? = null,
+    var xdriveSecrets: String? = null,
+    var xdriveExtra: String? = null,
     var finalMask: String? = null,
 
     var security: String? = null,
@@ -72,7 +75,9 @@ data class ProfileItem(
     var policyGroupFilter: String? = null,
     var policyGroupTestOutbounds: Boolean? = null,
     var policyGroupFallbackTag: String? = null,
+    @Deprecated("Use proxyChainProfileList")
     var proxyChainProfiles: String? = null,
+    var proxyChainProfileList: List<String>? = null,
 
     var browserDialerMode: String? = null,
 ) {

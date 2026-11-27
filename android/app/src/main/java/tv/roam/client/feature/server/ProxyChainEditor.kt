@@ -14,6 +14,7 @@ import tv.roam.client.R
 import tv.roam.client.dto.entities.ProfileItem
 import tv.roam.client.enums.EConfigType
 import tv.roam.client.handler.MmkvManager
+import tv.roam.client.handler.ProxyChainStorage
 import tv.roam.client.handler.SettingsManager
 import tv.roam.client.util.LogUtil
 
@@ -153,10 +154,8 @@ class ProxyChainEditorViewModel(
         loadJob = viewModelScope.launch(Dispatchers.IO) {
             val existing = if (guid.isBlank()) null else dataSource.load(guid)
             initialConfig = existing
-            val members = existing?.proxyChainProfiles
-                ?.split(',')
-                ?.map { it.trim() }
-                ?.filter { it.isNotEmpty() }
+            val members = existing
+                ?.let { ProxyChainStorage.decode(it) }
                 ?.takeIf { it.size >= 2 }
                 ?: listOf("", "")
             _uiState.value = ProxyChainEditorState(
@@ -187,7 +186,7 @@ class ProxyChainEditorViewModel(
             try {
                 val config = initialConfig ?: ProfileItem.create(EConfigType.PROXYCHAIN)
                 config.remarks = state.remarks.trim()
-                config.proxyChainProfiles = members.joinToString(",")
+                ProxyChainStorage.encode(config, members)
                 config.description = members.joinToString(" -> ")
                 val savedGuid = dataSource.save(state.guid, config)
                 _uiState.value = _uiState.value.copy(

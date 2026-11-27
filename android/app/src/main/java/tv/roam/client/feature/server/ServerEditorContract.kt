@@ -40,6 +40,9 @@ enum class ServerField(
     Host(R.string.server_lab_request_host),
     Path(R.string.server_lab_path),
     XhttpExtra(R.string.server_lab_xhttp_extra, ServerFieldKind.Multiline),
+    XdriveService(R.string.server_lab_xdrive_service, ServerFieldKind.Dropdown),
+    XdriveSecrets(R.string.server_lab_xdrive_secrets, secret = true),
+    XdriveExtra(R.string.server_lab_xdrive_extra, ServerFieldKind.Multiline),
     FinalMask(R.string.server_lab_final_mask, ServerFieldKind.Multiline),
     Seed(R.string.server_lab_path_kcp),
     KcpMtu(R.string.server_lab_kcp_mtu, ServerFieldKind.Number),
@@ -221,8 +224,15 @@ object ServerEditorDefinition {
                 NetworkType.KCP.type -> fields += ServerField.HeaderType
                 NetworkType.GRPC.type -> fields += ServerField.Mode
                 NetworkType.XHTTP.type -> fields += ServerField.XhttpMode
+                NetworkType.XDRIVE.type -> {
+                    fields += ServerField.XdriveService
+                    fields += ServerField.XdriveSecrets
+                    fields += ServerField.XdriveExtra
+                }
             }
-            fields += ServerField.Host
+            if (state.value(ServerField.Network) != NetworkType.XDRIVE.type) {
+                fields += ServerField.Host
+            }
             if (state.value(ServerField.Network) != NetworkType.KCP.type) {
                 fields += ServerField.Path
             }
@@ -304,6 +314,7 @@ object ServerEditorDefinition {
         -> ServerSection.Security
 
         ServerField.XhttpExtra,
+        ServerField.XdriveExtra,
         ServerField.FinalMask,
         ServerField.Headers,
         -> ServerSection.Advanced

@@ -15,6 +15,7 @@ import tv.roam.client.dto.V2rayConfig
 import tv.roam.client.dto.entities.ProfileItem
 import tv.roam.client.dto.entities.RulesetItem
 import tv.roam.client.dto.entities.ProfileEntry
+import tv.roam.client.dto.entities.ensureUniqueIds
 import tv.roam.client.dto.entities.SubscriptionItem
 import tv.roam.client.enums.EConfigType
 import tv.roam.client.enums.RoutingType
@@ -44,6 +45,7 @@ object SettingsManager {
         initRoutingRulesets(context)
         migrateServerListToSubscriptions()
         migrateHysteria2PinSHA256()
+        migrateProxyChainProfileList()
     }
 
     /**
@@ -120,6 +122,7 @@ object SettingsManager {
         }
 
         rulesetNew.addAll(rulesetList)
+        rulesetNew.ensureUniqueIds()
         MmkvManager.encodeRoutingRulesets(rulesetNew)
     }
 
@@ -509,6 +512,32 @@ object SettingsManager {
             }
             profile.pinnedCA256 = profile.pinSHA256
             profile.pinSHA256 = null
+            MmkvManager.encodeServerConfig(guid, profile)
+        }
+
+        MmkvManager.encodeSettings(migrationKey, true)
+    }
+
+    /**
+     * Move legacy comma-separated proxy chain members into the list field.
+     * The legacy format cannot represent a comma inside a remark, so this is a
+     * best-effort migration; new edits always store the list.
+     */
+    private fun migrateProxyChainProfileList() {
+        val migrationKey = "proxy_chain_profile_list_migrated"
+        if (MmkvManager.decodeSettingsBool(migrationKey, false)) {
+            return
+        }
+
+        for (guid in decodeAllServerList()) {
+            val profile = decodeServerConfig(guid) ?: continue
+            if (profile.proxyChainProfiles.isNullOrEmpty() ||
+                !profile.proxyChainProfileList.isNullOrEmpty()
+            ) {
+                continue
+            }
+            profile.proxyChainProfileList = ProxyChainStorage.splitLegacy(profile.proxyChainProfiles)
+            profile.proxyChainProfiles = null
             MmkvManager.encodeServerConfig(guid, profile)
         }
 

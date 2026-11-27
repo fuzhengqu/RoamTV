@@ -61,7 +61,14 @@ object CoreOutboundBuilder {
                 muxEnabled = false
             }
 
-            if (muxEnabled) {
+            if (outbound.streamSettings?.network == NetworkType.XDRIVE.type) {
+                // Xray refuses xdrive unless Mux.Cool carries every connection.
+                outbound.mux = buildXdriveMux(
+                    concurrency = MmkvManager.decodeSettingsString(AppConfig.PREF_MUX_CONCURRENCY, "8"),
+                    xudpConcurrency = MmkvManager.decodeSettingsString(AppConfig.PREF_MUX_XUDP_CONCURRENCY, AppConfig.DEFAULT_MUX_XUDP_CONCURRENCY),
+                    xudpProxyUDP443 = MmkvManager.decodeSettingsString(AppConfig.PREF_MUX_XUDP_QUIC, "reject"),
+                )
+            } else if (muxEnabled) {
                 outbound.mux?.enabled = true
                 outbound.mux?.concurrency = MmkvManager.decodeSettingsString(AppConfig.PREF_MUX_CONCURRENCY, "8").orEmpty().toInt()
                 outbound.mux?.xudpConcurrency = MmkvManager.decodeSettingsString(AppConfig.PREF_MUX_XUDP_CONCURRENCY, AppConfig.DEFAULT_MUX_XUDP_CONCURRENCY).orEmpty().toInt()
@@ -147,7 +154,7 @@ object CoreOutboundBuilder {
             settings.port = profileItem.serverPort.orEmpty().toInt()
             settings.id = profileItem.password.orEmpty()
             settings.encryption = profileItem.method
-            settings.flow = profileItem.flow
+            settings.flow = if (profileItem.network == NetworkType.XDRIVE.type) null else profileItem.flow
             settings.level = AppConfig.DEFAULT_LEVEL
         }
 
@@ -427,6 +434,56 @@ object CoreOutboundBuilder {
     }
 
     /**
+     * Builds xdriveSettings from a profile. The extra JSON may carry any
+     * XDriveConfig field; dedicated service, remote folder and secret fields
+     * override it when set.
+     */
+    fun buildXdriveSettings(profileItem: ProfileItem): OutboundBean.StreamSettingsBean.XdriveSettingsBean? {
+        val extra = profileItem.xdriveExtra?.nullIfBlank()
+        val settings = if (extra == null) {
+            OutboundBean.StreamSettingsBean.XdriveSettingsBean()
+        } else {
+            try {
+                JsonUtil.fromJson(
+                    extra,
+                    OutboundBean.StreamSettingsBean.XdriveSettingsBean::class.java,
+                ) ?: return null
+            } catch (_: Exception) {
+                return null
+            }
+        }
+        profileItem.xdriveService?.nullIfBlank()?.let { settings.service = it.trim() }
+        // "Google Drive" is the deprecated spelling mapped by Xray-core.
+        if (settings.service.isNullOrBlank() || settings.service == "Google Drive") {
+            settings.service = AppConfig.XDRIVE_SERVICE_GOOGLE_DRIVE
+        }
+        profileItem.path?.nullIfBlank()?.let { settings.remoteFolder = it.trim() }
+        profileItem.xdriveSecrets
+            ?.split(",")
+            ?.map { it.trim() }
+            ?.filter { it.isNotEmpty() }
+            ?.ifEmpty { null }
+            ?.let { settings.secrets = it }
+        return settings
+    }
+
+    /**
+     * Mux settings for xdrive: always enabled and coerced into the ranges
+     * Xray-core accepts for this transport.
+     */
+    fun buildXdriveMux(
+        concurrency: String?,
+        xudpConcurrency: String?,
+        xudpProxyUDP443: String?,
+    ): OutboundBean.MuxBean = OutboundBean.MuxBean(
+        enabled = true,
+        concurrency = concurrency?.trim()?.toIntOrNull()?.takeIf { it > 0 } ?: 8,
+        xudpConcurrency = xudpConcurrency?.trim()?.toIntOrNull()?.takeIf { it >= 0 }
+            ?: AppConfig.DEFAULT_MUX_XUDP_CONCURRENCY.toInt(),
+        xudpProxyUDP443 = xudpProxyUDP443?.takeIf { it.isNotBlank() && it != "skip" } ?: "reject",
+    )
+
+    /**
      * Configures transport settings for an outbound connection.
      *
      * Sets up protocol-specific transport options based on the profile settings.
@@ -539,6 +596,13 @@ object CoreOutboundBuilder {
                 xhttpSetting.mode = xhttpMode
                 xhttpSetting.extra = JsonUtil.parseString(xhttpExtra)
                 streamSettings.xhttpSettings = xhttpSetting
+            }
+
+            NetworkType.XDRIVE.type -> {
+                streamSettings.xdriveSettings = buildXdriveSettings(profileItem)
+                if (streamSettings.xdriveSettings == null) {
+                    LogUtil.e(AppConfig.TAG, "Failed to build xdrive settings: extra is not a valid XDriveConfig JSON object")
+                }
             }
 
             NetworkType.H2.type, NetworkType.HTTP.type -> {

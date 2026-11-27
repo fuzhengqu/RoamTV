@@ -28,6 +28,7 @@ object ServerEditorMapper {
             values[ServerField.Port] = AppConfig.DEFAULT_PORT.toString()
             values[ServerField.Network] = NetworkType.TCP.type
             values[ServerField.HeaderType] = "none"
+            values[ServerField.XdriveService] = AppConfig.XDRIVE_SERVICE_GOOGLE_DRIVE
             values[ServerField.StreamSecurity] = when (type) {
                 EConfigType.TROJAN -> AppConfig.TLS
                 EConfigType.HYSTERIA2 -> AppConfig.TLS
@@ -99,6 +100,10 @@ object ServerEditorMapper {
         values[ServerField.Host] = item.host.orEmpty()
         values[ServerField.Path] = item.path.orEmpty()
         values[ServerField.XhttpExtra] = item.xhttpExtra.orEmpty()
+        values[ServerField.XdriveService] =
+            item.xdriveService ?: AppConfig.XDRIVE_SERVICE_GOOGLE_DRIVE
+        values[ServerField.XdriveSecrets] = item.xdriveSecrets.orEmpty()
+        values[ServerField.XdriveExtra] = item.xdriveExtra.orEmpty()
         values[ServerField.FinalMask] = item.finalMask.orEmpty()
         values[ServerField.Seed] = item.seed.orEmpty()
         values[ServerField.KcpMtu] = item.kcpMtu?.toString().orEmpty()
@@ -185,6 +190,21 @@ object ServerEditorMapper {
             host = state.value(ServerField.Host),
             path = state.value(ServerField.Path),
             xhttpExtra = state.value(ServerField.XhttpExtra).nullIfBlank(),
+            xdriveService = if (state.value(ServerField.Network) == NetworkType.XDRIVE.type) {
+                state.value(ServerField.XdriveService).ifBlank { AppConfig.XDRIVE_SERVICE_GOOGLE_DRIVE }
+            } else {
+                null
+            },
+            xdriveSecrets = if (state.value(ServerField.Network) == NetworkType.XDRIVE.type) {
+                state.value(ServerField.XdriveSecrets).nullIfBlank()
+            } else {
+                null
+            },
+            xdriveExtra = if (state.value(ServerField.Network) == NetworkType.XDRIVE.type) {
+                state.value(ServerField.XdriveExtra).nullIfBlank()
+            } else {
+                null
+            },
             finalMask = state.value(ServerField.FinalMask).nullIfBlank(),
             seed = state.value(ServerField.Seed).nullIfBlank(),
             kcpMtu = state.value(ServerField.KcpMtu).toIntOrNull(),
@@ -261,6 +281,12 @@ object ServerEditorMapper {
         ) {
             errors[ServerField.FinalMask] = R.string.tv_editor_error_json
         }
+        if (state.value(ServerField.Network) == NetworkType.XDRIVE.type &&
+            state.value(ServerField.XdriveExtra).isNotBlank() &&
+            !isJsonObject(state.value(ServerField.XdriveExtra))
+        ) {
+            errors[ServerField.XdriveExtra] = R.string.tv_editor_error_json
+        }
         if (type == EConfigType.MASQUE) {
             if (state.value(ServerField.Alpn).trim() !in setOf("h2", "h3")) {
                 errors[ServerField.Alpn] = R.string.tv_editor_error_required
@@ -312,6 +338,7 @@ object ServerEditorMapper {
         }
 
         ServerField.Path -> when (values[ServerField.Network]) {
+            NetworkType.XDRIVE.type -> R.string.server_lab_xdrive_remote_folder
             NetworkType.WS.type -> R.string.server_lab_path_ws
             NetworkType.HTTP_UPGRADE.type -> R.string.server_lab_path_httpupgrade
             NetworkType.XHTTP.type -> R.string.server_lab_path_xhttp
@@ -346,6 +373,7 @@ object ServerEditorMapper {
 
         ServerField.Mode -> R.array.mode_type_grpc
         ServerField.XhttpMode -> R.array.xhttp_mode
+        ServerField.XdriveService -> R.array.xdrive_service
         ServerField.BrowserDialerMode -> R.array.browser_dialer_mode_value
         ServerField.StreamSecurity -> R.array.streamsecurityxs
         ServerField.Fingerprint -> R.array.streamsecurity_utls

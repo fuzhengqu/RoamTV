@@ -14,6 +14,7 @@ import tv.roam.client.dto.entities.RulesetItem
 import tv.roam.client.enums.BalancerStrategyType
 import tv.roam.client.enums.CoreResolvedType
 import tv.roam.client.enums.EConfigType
+import tv.roam.client.enums.NetworkType
 import tv.roam.client.extension.isNotNullEmpty
 import tv.roam.client.handler.MmkvManager
 import tv.roam.client.handler.SettingsManager
@@ -462,7 +463,10 @@ object CoreConfigManager {
         v2rayConfig.fakedns = null
         v2rayConfig.stats = null
         v2rayConfig.policy = null
-        v2rayConfig.outbounds.forEach { key -> key.mux = null }
+        // xdrive must keep mux; Xray refuses to load it without Mux.Cool.
+        v2rayConfig.outbounds
+            .filter { it.streamSettings?.network != NetworkType.XDRIVE.type }
+            .forEach { key -> key.mux = null }
     }
 
     /**

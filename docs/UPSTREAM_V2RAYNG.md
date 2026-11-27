@@ -12,8 +12,8 @@ baseline, the feature-porting policy, and the recurring review procedure.
 | Stable baseline | `2.3.15` |
 | Baseline commit | `57907cf354d9769200ed4717b4430d605abe0952` |
 | Baseline date | 2026-11-01 |
-| Last reviewed | 2026-11-24 |
-| Reviewed pre-release | `2.4.1` (2026-11-24) |
+| Last reviewed | 2026-11-27 |
+| Reviewed pre-release | `2.4.3` (2026-11-27) |
 | Xray core in RoamTV | `26.11.9` (AndroidLibXrayLite `v26.11.9`) |
 
 RoamTV is not a general-purpose phone client. The TV screens, navigation,
@@ -42,6 +42,7 @@ known gap.
 
 | Area | Upstream feature | Status | Notes |
 |---|---|---|---|
+| Transport | xdrive | Ported (v1.18) | Service, remote folder, secrets, extra JSON; Mux forced; VLESS flow dropped; no xdrive share-link parameters |
 | Protocol | MASQUE (+WARP) | Ported (v1.17) | `masque://`, WARP keys, local address, remote DNS, headers, ALPN h2/h3 |
 | Protocol | Xray 26.11.9 MASQUE transport | Present | AndroidLibXrayLite `v26.11.9` |
 | Protocol | VLESS, VMess, Shadowsocks, Trojan, WireGuard, SOCKS, HTTP | Present | Existing core and editor |
@@ -57,8 +58,12 @@ known gap.
 | Diagnostics | TCP ping with concurrency | Present | `onlyTcp` path and `PREF_REAL_PING_CONCURRENCY` |
 | Transport | WireGuard remoteDNS | Present | Existing WireGuard builder |
 | Security | HTTPS→HTTP redirect blocked | Ported (v1.17) | `HttpUtil.getUrlContentWithUserAgent` |
-| Fix | Proxy chain member remarks containing commas | Pending | Current storage is comma-separated; needs a list migration |
+| Fix | Proxy chain member remarks containing commas | Ported (v1.18) | Added `proxyChainProfileList`; legacy comma string migrated once |
+| Fix | Routing rule IDs unique after import | Ported (v1.18) | Blank/duplicate IDs regenerated; order preserved |
 | Fix | Imported profiles found in Default group | Pending | Needs import destination review |
+| Fix | Hy2 global port hopping interval | Not applicable | Hysteria2 has no outbound in the bundled Xray core |
+| DNS | Validate region, parallel query, serve stale | Pending | Behavior-changing; needs a dedicated DNS test matrix |
+| Subscription | Traffic info and single-subscription update | Pending/UI | UI-only upstream change; data is parsed but not displayed |
 | Fix | Root hotspot DNS when LAN sharing is off | Pending | Needs root-mode audit |
 | UI | Monet dynamic colour | Ported (v1.17) | Settings switch; Android 12+ system palette; default brand palette otherwise |
 | UI | Phone Compose migration, TV main/settings screens, pill tabs, snackbars | Not applicable | Frozen TV baseline |

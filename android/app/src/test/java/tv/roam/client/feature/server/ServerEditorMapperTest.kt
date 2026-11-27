@@ -265,3 +265,49 @@ class MasqueEditorTest {
         assertEquals(R.string.tv_editor_error_json, errors[ServerField.Headers])
     }
 }
+
+class XdriveEditorTest {
+
+    @Test
+    fun `xdrive fields survive a round trip`() {
+        val item = ProfileItem.create(EConfigType.VLESS).copy(
+            remarks = "Drive",
+            server = "storage.example.com",
+            serverPort = "443",
+            password = "uuid",
+            network = "xdrive",
+            path = "/folder",
+            security = AppConfig.TLS,
+            xdriveService = "s3",
+            xdriveSecrets = "access,secret",
+            xdriveExtra = """{"segmentBytes":2048}""",
+        )
+
+        val state = ServerEditorMapper.fromProfile(item)
+        val restored = ServerEditorMapper.toProfile(state, ProfileItem.create(EConfigType.VLESS))
+
+        assertEquals("xdrive", restored.network)
+        assertEquals("s3", restored.xdriveService)
+        assertEquals("access,secret", restored.xdriveSecrets)
+        assertEquals("""{"segmentBytes":2048}""", restored.xdriveExtra)
+        assertEquals("/folder", restored.path)
+    }
+
+    @Test
+    fun `xdrive invalid extra is rejected`() {
+        val state = ServerEditorMapper.initialState(EConfigType.VLESS).copy(
+            values = mapOf(
+                ServerField.Remarks to "Drive",
+                ServerField.Address to "storage.example.com",
+                ServerField.Port to "443",
+                ServerField.Password to "uuid",
+                ServerField.Network to "xdrive",
+                ServerField.XdriveExtra to "[1,2]",
+            ),
+        )
+
+        val errors = ServerEditorMapper.validate(state)
+
+        assertEquals(R.string.tv_editor_error_json, errors[ServerField.XdriveExtra])
+    }
+}

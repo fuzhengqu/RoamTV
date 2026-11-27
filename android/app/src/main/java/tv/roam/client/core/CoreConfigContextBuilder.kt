@@ -10,6 +10,7 @@ import tv.roam.client.enums.EConfigType
 import tv.roam.client.extension.isComplexType
 import tv.roam.client.extension.isNotNullEmpty
 import tv.roam.client.handler.MmkvManager
+import tv.roam.client.handler.ProxyChainStorage
 import tv.roam.client.handler.SettingsManager
 import tv.roam.client.util.LogUtil
 import tv.roam.client.util.Utils
@@ -189,12 +190,13 @@ object CoreConfigContextBuilder {
     }
 
     private fun resolveProxyChainEntries(config: ProfileEntry): List<ProfileEntry> {
-        if (config.profile.proxyChainProfiles.isNullOrBlank()) {
+        val chainRemarks = ProxyChainStorage.decode(config.profile)
+        if (chainRemarks.isEmpty()) {
             return listOf(config)
         }
 
         try {
-            return config.profile.proxyChainProfiles.orEmpty().split(",")
+            return chainRemarks
                 .asSequence()
                 .mapNotNull { remark -> SettingsManager.getProfileEntryViaRemarks(remark) }
                 .filter { it.profile.server.isNotNullEmpty() }

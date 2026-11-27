@@ -275,6 +275,7 @@ object AppConfig {
     const val DEFAULT_NETWORK = "tcp"
     const val TLS = "tls"
     const val REALITY = "reality"
+    const val XDRIVE_SERVICE_GOOGLE_DRIVE = "google-drive"
     const val HEADER_TYPE_HTTP = "http"
 
     const val UNIDENTIFIED_PACKAGE = "__unknown_app__"

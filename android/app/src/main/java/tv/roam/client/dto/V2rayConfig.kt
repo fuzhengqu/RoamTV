@@ -1,5 +1,6 @@
 package tv.roam.client.dto
 
+import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
 import tv.roam.client.AppConfig
 import tv.roam.client.enums.EConfigType
@@ -123,6 +124,7 @@ data class V2rayConfig(
             var grpcSettings: GrpcSettingsBean? = null,
             var hysteriaSettings: HysteriaSettingsBean? = null,
             var masqueSettings: MasqueSettingsBean? = null,
+            var xdriveSettings: XdriveSettingsBean? = null,
             var finalmask: Any? = null,
             val dsSettings: Any? = null,
             var sockopt: SockoptBean? = null
@@ -266,6 +268,39 @@ data class V2rayConfig(
                     var privateKey: String,
                     var publicKey: String,
                     var address: List<String>,
+                )
+            }
+
+            data class XdriveSettingsBean(
+                var service: String? = null,
+                var remoteFolder: String? = null,
+                var secrets: List<String>? = null,
+                var segmentBytes: Int? = null,
+                var flushIntervalMs: Int? = null,
+                var pollIntervalMs: Int? = null,
+                var maxPollIntervalMs: Int? = null,
+                var sessionTtlSeconds: Int? = null,
+                var concurrency: Int? = null,
+                var eagerWindowMs: Int? = null,
+                var holeTimeoutMs: Int? = null,
+                var template: JsonObject? = null,
+                var s3: S3Bean? = null,
+                var xmux: XmuxSettingsBean? = null,
+            ) {
+                data class S3Bean(
+                    var endpoint: String? = null,
+                    var region: String? = null,
+                    var bucket: String? = null,
+                    var pathStyle: Boolean? = null,
+                )
+
+                data class XmuxSettingsBean(
+                    var maxConnections: Any? = null,
+                    var maxConcurrency: Any? = null,
+                    var cMaxReuseTimes: Any? = null,
+                    var hMaxRequestTimes: Any? = null,
+                    var hMaxReusableSecs: Any? = null,
+                    var hKeepAlivePeriod: Any? = null,
                 )
             }
 

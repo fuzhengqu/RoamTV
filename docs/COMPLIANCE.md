@@ -8,8 +8,9 @@ version 3, section 6.
 
 RoamTV is derived from v2rayNG 2.3.15 (upstream `2dust/v2rayNG`, commit
 `57907cf354d9769200ed4717b4430d605abe0952`), licensed GPL-3.0. Selected
-protocol, import, theme and security changes were adapted from the 2.4.1
-pre-release reviewed on 2026-11-24; the upstream phone/TV UI refactor was not
+protocol, import, theme and security changes were adapted from the 2.4.1-2.4.3
+pre-releases reviewed on 2026-11-27, including xdrive transport, proxy-chain
+list storage and routing-ID repair; the upstream phone/TV UI refactor was not
 adopted. See `docs/UPSTREAM_V2RAYNG.md`. The full text
 is in `LICENSE` at the repository root and must remain verbatim. The
 modification declaration and date are in `NOTICE`. Third-party copyright and
